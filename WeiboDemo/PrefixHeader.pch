@@ -20,21 +20,31 @@
  Apple ID：223333
  Bundle ID：com.myz.weibo
  App Key：2706277070
- App Secret：f61c3813262d439406b9459de732d3bb
  
  */
 
 #ifdef __OBJC__
 
 #import "WeiboSDK.h"
-
+#import "MYZTools.h"
+#import "MYZHttpTools.h"
 
 #define kAppKey         @"2706277070"
 #define kRedirectURI    @"http://weibo.com"
 
-
+//document 根路径
 #define MYZFileRootPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 
+//NSLog打印
+#ifdef DEBUG // 调试状态,
+#define MYZLog(...) NSLog(__VA_ARGS__)
+#else // 发布状态, 关闭
+#define MYZLog(...)
+#endif
+
+//屏幕宽高
+#define SCREEN_W [UIScreen mainScreen].bounds.size.width
+#define SCREEN_H [UIScreen mainScreen].bounds.size.height
 
 #endif
 

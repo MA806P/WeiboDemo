@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1858B87A1DAB92F1004E81A7 /* MYZAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858B8791DAB92F1004E81A7 /* MYZAccount.m */; };
 		1858B87D1DAB930B004E81A7 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858B87C1DAB930B004E81A7 /* MYZUserInfo.m */; };
+		189C52921DACCFA900C71EED /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C52911DACCFA900C71EED /* MYZHttpTools.m */; };
+		18CBE96B1DACAFCE0068832E /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96A1DACAFCE0068832E /* MYZTools.m */; };
+		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA5D88481D86F4EE00583136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5D88471D86F4EE00583136 /* Assets.xcassets */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
@@ -46,6 +49,12 @@
 		1858B8791DAB92F1004E81A7 /* MYZAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZAccount.m; path = WeiboDemo/MYZAccount.m; sourceTree = SOURCE_ROOT; };
 		1858B87B1DAB930B004E81A7 /* MYZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZUserInfo.h; path = WeiboDemo/MYZUserInfo.h; sourceTree = SOURCE_ROOT; };
 		1858B87C1DAB930B004E81A7 /* MYZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZUserInfo.m; path = WeiboDemo/MYZUserInfo.m; sourceTree = SOURCE_ROOT; };
+		189C52901DACCFA900C71EED /* MYZHttpTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZHttpTools.h; path = WeiboDemo/Classes/Main/Controller/MYZHttpTools.h; sourceTree = SOURCE_ROOT; };
+		189C52911DACCFA900C71EED /* MYZHttpTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZHttpTools.m; path = WeiboDemo/Classes/Main/Controller/MYZHttpTools.m; sourceTree = SOURCE_ROOT; };
+		18CBE9691DACAFCE0068832E /* MYZTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZTools.h; path = WeiboDemo/MYZTools.h; sourceTree = SOURCE_ROOT; };
+		18CBE96A1DACAFCE0068832E /* MYZTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZTools.m; path = WeiboDemo/MYZTools.m; sourceTree = SOURCE_ROOT; };
+		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
+		18CBE96D1DACB6510068832E /* MYZOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZOAuthController.m; sourceTree = "<group>"; };
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
 		75D0F767266298436492BE54 /* Pods-WeiboDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeiboDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,6 +252,8 @@
 				DA73CA8A1D97CF0E00CF5839 /* MYZNavController.m */,
 				DA73CA8C1D97CF2A00CF5839 /* MYZTabBarController.h */,
 				DA73CA8D1D97CF2A00CF5839 /* MYZTabBarController.m */,
+				18CBE96C1DACB6510068832E /* MYZOAuthController.h */,
+				18CBE96D1DACB6510068832E /* MYZOAuthController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -261,6 +272,10 @@
 		DA73CA841D97CC1100CF5839 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				18CBE9691DACAFCE0068832E /* MYZTools.h */,
+				18CBE96A1DACAFCE0068832E /* MYZTools.m */,
+				189C52901DACCFA900C71EED /* MYZHttpTools.h */,
+				189C52911DACCFA900C71EED /* MYZHttpTools.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -466,11 +481,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
+				189C52921DACCFA900C71EED /* MYZHttpTools.m in Sources */,
 				1858B87A1DAB92F1004E81A7 /* MYZAccount.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
+				18CBE96B1DACAFCE0068832E /* MYZTools.m in Sources */,
 				1858B87D1DAB930B004E81A7 /* MYZUserInfo.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,

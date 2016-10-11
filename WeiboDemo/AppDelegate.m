@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MYZTabBarController.h"
+#import "MYZOAuthController.h"
+#import "MYZAccount.h"
 
 @interface AppDelegate ()
 
@@ -25,8 +27,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     
-    MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
-    self.window.rootViewController = tabBarController;
+    MYZAccount * account = [MYZTools account];
+    if (account)
+    {
+        MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
+        self.window.rootViewController = tabBarController;
+    }
+    else
+    {
+        MYZOAuthController * oauth = [[MYZOAuthController alloc] init];
+        self.window.rootViewController = oauth;
+    }
+    
     
     return YES;
 }
@@ -51,7 +63,37 @@
 
 - (void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
-    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+    
+    if ([response isKindOfClass:WBAuthorizeResponse.class])
+    {
+        //认证结果
+        /*
+         response.userInfo =  {
+         "access_token" = "2.00fGpGJGKSQJxC1000b95775sTGalB";
+         app =     { logo = "**.jpg"; name = ""; };
+         "expires_in" = 157679999;
+         "refresh_token" = "2.00fGpGJGKSQJxC5629ccf3c00EXbKQ";
+         "remind_in" = 157679999;
+         scope = "follow_app_official_microblog";
+         uid = 123; }
+         */
+        
+        MYZLog(@"--- 响应状态: %d ", (int)response.statusCode);
+        if ((int)response.statusCode == 0 && [(WBAuthorizeResponse *)response accessToken].length > 0)
+        {
+            //认证成功, 保存认证信息
+            MYZAccount * account = [MYZAccount accountWithDict:response.userInfo];
+            [MYZTools saveAccount:account];
+            
+            //进入主界面
+            MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
+            self.window.rootViewController = tabBarController;
+        }
+        
+        
+    }
+    
+    else if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
     {
         NSString *title = NSLocalizedString(@"发送结果", nil);
         NSString *message = [NSString stringWithFormat:@"%@: %d\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode, NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil),response.requestUserInfo];
@@ -64,32 +106,12 @@
         NSString* accessToken = [sendMessageToWeiboResponse.authResponse accessToken];
         if (accessToken)
         {
-            self.wbtoken = accessToken;
+            //self.wbtoken = accessToken;
         }
         NSString* userID = [sendMessageToWeiboResponse.authResponse userID];
         if (userID) {
-            self.wbCurrentUserID = userID;
+            //self.wbCurrentUserID = userID;
         }
-        [alert show];
-    }
-    else if ([response isKindOfClass:WBAuthorizeResponse.class])
-    {
-        NSString *title = NSLocalizedString(@"认证结果", nil);
-        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
-                                              otherButtonTitles:nil];
-        
-        self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
-        self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
-        self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
-        
-        
-        NSLog(@"----- %@ ", response);
-        
-        
         [alert show];
     }
     else if ([response isKindOfClass:WBPaymentResponse.class])
@@ -127,11 +149,11 @@
         NSString* accessToken = [shareMessageToContactResponse.authResponse accessToken];
         if (accessToken)
         {
-            self.wbtoken = accessToken;
+            //self.wbtoken = accessToken;
         }
         NSString* userID = [shareMessageToContactResponse.authResponse userID];
         if (userID) {
-            self.wbCurrentUserID = userID;
+            //self.wbCurrentUserID = userID;
         }
         [alert show];
     }

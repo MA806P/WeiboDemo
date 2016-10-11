@@ -51,4 +51,10 @@
 }
 
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@  %@  %@", self.access_token, self.uid, self.expires_time];
+}
+
+
 @end
