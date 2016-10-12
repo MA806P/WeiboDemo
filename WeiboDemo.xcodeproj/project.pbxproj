@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1858B87A1DAB92F1004E81A7 /* MYZAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858B8791DAB92F1004E81A7 /* MYZAccount.m */; };
-		1858B87D1DAB930B004E81A7 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1858B87C1DAB930B004E81A7 /* MYZUserInfo.m */; };
-		189C52921DACCFA900C71EED /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C52911DACCFA900C71EED /* MYZHttpTools.m */; };
-		18CBE96B1DACAFCE0068832E /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96A1DACAFCE0068832E /* MYZTools.m */; };
+		18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2A1DAE023600B1D963 /* MYZAccount.m */; };
+		18467D301DAE023600B1D963 /* MYZDog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2C1DAE023600B1D963 /* MYZDog.m */; };
+		18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2E1DAE023600B1D963 /* MYZUserInfo.m */; };
+		18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D351DAE026C00B1D963 /* MYZHttpTools.m */; };
+		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA5D88481D86F4EE00583136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5D88471D86F4EE00583136 /* Assets.xcassets */; };
@@ -44,15 +45,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18467D291DAE023600B1D963 /* MYZAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZAccount.h; sourceTree = "<group>"; };
+		18467D2A1DAE023600B1D963 /* MYZAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZAccount.m; sourceTree = "<group>"; };
+		18467D2B1DAE023600B1D963 /* MYZDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZDog.h; sourceTree = "<group>"; };
+		18467D2C1DAE023600B1D963 /* MYZDog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZDog.m; sourceTree = "<group>"; };
+		18467D2D1DAE023600B1D963 /* MYZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZUserInfo.h; sourceTree = "<group>"; };
+		18467D2E1DAE023600B1D963 /* MYZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZUserInfo.m; sourceTree = "<group>"; };
+		18467D341DAE026C00B1D963 /* MYZHttpTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZHttpTools.h; sourceTree = "<group>"; };
+		18467D351DAE026C00B1D963 /* MYZHttpTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZHttpTools.m; sourceTree = "<group>"; };
+		18467D361DAE026C00B1D963 /* MYZTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZTools.h; sourceTree = "<group>"; };
+		18467D371DAE026C00B1D963 /* MYZTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZTools.m; sourceTree = "<group>"; };
 		1858B8771DAB6722004E81A7 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		1858B8781DAB92F1004E81A7 /* MYZAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZAccount.h; path = WeiboDemo/MYZAccount.h; sourceTree = SOURCE_ROOT; };
-		1858B8791DAB92F1004E81A7 /* MYZAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZAccount.m; path = WeiboDemo/MYZAccount.m; sourceTree = SOURCE_ROOT; };
-		1858B87B1DAB930B004E81A7 /* MYZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZUserInfo.h; path = WeiboDemo/MYZUserInfo.h; sourceTree = SOURCE_ROOT; };
-		1858B87C1DAB930B004E81A7 /* MYZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZUserInfo.m; path = WeiboDemo/MYZUserInfo.m; sourceTree = SOURCE_ROOT; };
-		189C52901DACCFA900C71EED /* MYZHttpTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZHttpTools.h; path = WeiboDemo/Classes/Main/Controller/MYZHttpTools.h; sourceTree = SOURCE_ROOT; };
-		189C52911DACCFA900C71EED /* MYZHttpTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZHttpTools.m; path = WeiboDemo/Classes/Main/Controller/MYZHttpTools.m; sourceTree = SOURCE_ROOT; };
-		18CBE9691DACAFCE0068832E /* MYZTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZTools.h; path = WeiboDemo/MYZTools.h; sourceTree = SOURCE_ROOT; };
-		18CBE96A1DACAFCE0068832E /* MYZTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZTools.m; path = WeiboDemo/MYZTools.m; sourceTree = SOURCE_ROOT; };
 		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
 		18CBE96D1DACB6510068832E /* MYZOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZOAuthController.m; sourceTree = "<group>"; };
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +113,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18467D281DAE023600B1D963 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18467D291DAE023600B1D963 /* MYZAccount.h */,
+				18467D2A1DAE023600B1D963 /* MYZAccount.m */,
+				18467D2B1DAE023600B1D963 /* MYZDog.h */,
+				18467D2C1DAE023600B1D963 /* MYZDog.m */,
+				18467D2D1DAE023600B1D963 /* MYZUserInfo.h */,
+				18467D2E1DAE023600B1D963 /* MYZUserInfo.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18467D321DAE023E00B1D963 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		18467D331DAE026C00B1D963 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				18467D341DAE026C00B1D963 /* MYZHttpTools.h */,
+				18467D351DAE026C00B1D963 /* MYZHttpTools.m */,
+				18467D361DAE026C00B1D963 /* MYZTools.h */,
+				18467D371DAE026C00B1D963 /* MYZTools.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		979F5D576E1E8CD6B202B04E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				DA73CA7C1D97CC1100CF5839 /* Main */,
-				DA73CA7B1D97CC1100CF5839 /* Lib */,
 				DA73CA7A1D97CC1100CF5839 /* Home */,
 				DA73CA861D97CC1100CF5839 /* Profile */,
 				DA73CA791D97CC1100CF5839 /* Compose */,
@@ -219,30 +252,16 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		DA73CA7B1D97CC1100CF5839 /* Lib */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Lib;
-			sourceTree = "<group>";
-		};
 		DA73CA7C1D97CC1100CF5839 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				DA73CA7D1D97CC1100CF5839 /* Category */,
+				18467D331DAE026C00B1D963 /* Tool */,
+				18467D321DAE023E00B1D963 /* Category */,
+				18467D281DAE023600B1D963 /* Model */,
 				DA73CA7E1D97CC1100CF5839 /* Controller */,
-				DA73CA7F1D97CC1100CF5839 /* Model */,
-				DA73CA841D97CC1100CF5839 /* Tool */,
 				DA73CA851D97CC1100CF5839 /* View */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		DA73CA7D1D97CC1100CF5839 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 		DA73CA7E1D97CC1100CF5839 /* Controller */ = {
@@ -256,28 +275,6 @@
 				18CBE96D1DACB6510068832E /* MYZOAuthController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		DA73CA7F1D97CC1100CF5839 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1858B8781DAB92F1004E81A7 /* MYZAccount.h */,
-				1858B8791DAB92F1004E81A7 /* MYZAccount.m */,
-				1858B87B1DAB930B004E81A7 /* MYZUserInfo.h */,
-				1858B87C1DAB930B004E81A7 /* MYZUserInfo.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		DA73CA841D97CC1100CF5839 /* Tool */ = {
-			isa = PBXGroup;
-			children = (
-				18CBE9691DACAFCE0068832E /* MYZTools.h */,
-				18CBE96A1DACAFCE0068832E /* MYZTools.m */,
-				189C52901DACCFA900C71EED /* MYZHttpTools.h */,
-				189C52911DACCFA900C71EED /* MYZHttpTools.m */,
-			);
-			path = Tool;
 			sourceTree = "<group>";
 		};
 		DA73CA851D97CC1100CF5839 /* View */ = {
@@ -484,13 +481,14 @@
 				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
-				189C52921DACCFA900C71EED /* MYZHttpTools.m in Sources */,
-				1858B87A1DAB92F1004E81A7 /* MYZAccount.m in Sources */,
+				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
-				18CBE96B1DACAFCE0068832E /* MYZTools.m in Sources */,
-				1858B87D1DAB930B004E81A7 /* MYZUserInfo.m in Sources */,
+				18467D301DAE023600B1D963 /* MYZDog.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
+				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
+				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
+				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
 				DA65B9F01D9AC26D00251B38 /* MYZHomeController.m in Sources */,
