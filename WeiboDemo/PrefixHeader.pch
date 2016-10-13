@@ -29,6 +29,8 @@
 #import "MYZTools.h"
 #import "MYZHttpTools.h"
 
+#import "SVProgressHUD.h"
+
 #define kAppKey         @"2706277070"
 #define kRedirectURI    @"http://weibo.com"
 

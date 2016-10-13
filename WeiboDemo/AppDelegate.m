@@ -13,6 +13,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) MYZOAuthController * oauth;
+
 @end
 
 @implementation AppDelegate
@@ -35,8 +37,8 @@
     }
     else
     {
-        MYZOAuthController * oauth = [[MYZOAuthController alloc] init];
-        self.window.rootViewController = oauth;
+        self.oauth = [[MYZOAuthController alloc] init];
+        self.window.rootViewController = self.oauth;
     }
     
     
@@ -79,15 +81,15 @@
          */
         
         MYZLog(@"--- 响应状态: %d ", (int)response.statusCode);
+        
         if ((int)response.statusCode == 0 && [(WBAuthorizeResponse *)response accessToken].length > 0)
         {
             //认证成功, 保存认证信息
             MYZAccount * account = [MYZAccount accountWithDict:response.userInfo];
             [MYZTools saveAccount:account];
             
-            //进入主界面
-            MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
-            self.window.rootViewController = tabBarController;
+            //调用授权页面,通过过的的accesstoken获取用户信息
+            [self.oauth oauthSuccessWithAccount:account];
         }
         
         

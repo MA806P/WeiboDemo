@@ -15,11 +15,17 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - MJRefresh (3.1.12)
+  - Realm (2.0.2):
+    - Realm/Headers (= 2.0.2)
+  - Realm/Headers (2.0.2)
+  - SVProgressHUD (2.0.3)
   - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - MJRefresh
+  - Realm
+  - SVProgressHUD
   - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
 
 EXTERNAL SOURCES:
@@ -34,8 +40,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 239960c94bb57a1c9e588e662f269eeb4af0e688
+PODFILE CHECKSUM: 3233fcfcaae17f155eb0255559708c741f232557
 
 COCOAPODS: 1.0.0.beta.4

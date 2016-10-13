@@ -7,6 +7,8 @@
 //
 
 #import "MYZOAuthController.h"
+#import "MYZAccount.h"
+#import "MYZUserInfo.h"
 
 @interface MYZOAuthController ()
 
@@ -54,6 +56,36 @@
     [WeiboSDK sendRequest:request];
 }
 
+
+- (void)oauthSuccessWithAccount:(MYZAccount *)account
+{
+    MYZLog(@"--- %@ %@ ", account.access_token, account.uid);
+    if(account == nil) { return; }
+    
+    [SVProgressHUD show];
+    
+    NSDictionary * parameter = @{@"access_token":account.access_token, @"uid":account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:parameter progress:nil success:^(id response) {
+        
+        NSDictionary * dic = (NSDictionary *)response;
+        MYZUserInfo * usetInfo = [MYZUserInfo userInfoWithDict:dic];
+        
+        
+        
+        MYZLog(@"--- %@ ", usetInfo.screen_name);
+        [SVProgressHUD dismiss];
+        
+    } failure:^(NSError *error) {
+        MYZLog(@"--- %@", error);
+        [SVProgressHUD dismiss];
+    }];
+    
+    
+    //进入主界面
+//    MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
+//    self.window.rootViewController = tabBarController;
+    
+}
 
 
 @end

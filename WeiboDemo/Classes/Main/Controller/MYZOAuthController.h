@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MYZAccount;
 
 @interface MYZOAuthController : UIViewController
+
+- (void)oauthSuccessWithAccount:(MYZAccount *)account;
 
 @end
