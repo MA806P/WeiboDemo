@@ -11,9 +11,12 @@
 
 #import "MYZTools.h"
 #import "MYZAccount.h"
+#import "Realm.h"
 
 @implementation MYZTools
 
+
+#pragma mark - 账号授权信息
 
 + (MYZAccount *)account
 {
@@ -37,6 +40,23 @@
     //归档
     [NSKeyedArchiver archiveRootObject:account toFile:MYZAccountFilepath];
 }
+
+
+#pragma mark - 用户信息
+
+//+ (MYZUserInfo *)userInfo
+//{
+//    
+//}
+
+
++ (void)saveUserInfo:(MYZUserInfo *)userInfo
+{
+    
+}
+
+
+
 
 
 @end

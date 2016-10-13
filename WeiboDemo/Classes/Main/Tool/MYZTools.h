@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZAccount;
+@class MYZAccount, MYZUserInfo;
 
 @interface MYZTools : NSObject
 
 + (MYZAccount *)account;
 + (void)saveAccount:(MYZAccount *)account;
+
++ (MYZUserInfo *)userInfo;
++ (void)saveUserInfo:(MYZUserInfo *)userInfo;
 
 @end
