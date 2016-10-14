@@ -62,17 +62,20 @@
     MYZLog(@"--- %@ %@ ", account.access_token, account.uid);
     if(account == nil) { return; }
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     [SVProgressHUD show];
     
     NSDictionary * parameter = @{@"access_token":account.access_token, @"uid":account.uid};
     [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:parameter progress:nil success:^(id response) {
         
-        NSDictionary * dic = (NSDictionary *)response;
-        MYZUserInfo * usetInfo = [MYZUserInfo userInfoWithDict:dic];
+        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:response];
+        [dic setObject:dic[@"description"] forKey:@"desc"];
+        [dic removeObjectForKey:@"description"];
         
+        MYZUserInfo * userInfo = [[MYZUserInfo alloc] initWithValue:dic];
+        [MYZTools saveUserInfo:userInfo];
         
-        
-        MYZLog(@"--- %@ ", usetInfo.screen_name);
+        MYZLog(@"--- %@ ", userInfo);
         [SVProgressHUD dismiss];
         
     } failure:^(NSError *error) {

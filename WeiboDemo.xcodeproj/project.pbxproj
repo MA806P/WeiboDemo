@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2A1DAE023600B1D963 /* MYZAccount.m */; };
-		18467D301DAE023600B1D963 /* MYZDog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2C1DAE023600B1D963 /* MYZDog.m */; };
 		18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2E1DAE023600B1D963 /* MYZUserInfo.m */; };
 		18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D351DAE026C00B1D963 /* MYZHttpTools.m */; };
 		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
@@ -47,8 +46,6 @@
 /* Begin PBXFileReference section */
 		18467D291DAE023600B1D963 /* MYZAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZAccount.h; sourceTree = "<group>"; };
 		18467D2A1DAE023600B1D963 /* MYZAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZAccount.m; sourceTree = "<group>"; };
-		18467D2B1DAE023600B1D963 /* MYZDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZDog.h; sourceTree = "<group>"; };
-		18467D2C1DAE023600B1D963 /* MYZDog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZDog.m; sourceTree = "<group>"; };
 		18467D2D1DAE023600B1D963 /* MYZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZUserInfo.h; sourceTree = "<group>"; };
 		18467D2E1DAE023600B1D963 /* MYZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZUserInfo.m; sourceTree = "<group>"; };
 		18467D341DAE026C00B1D963 /* MYZHttpTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZHttpTools.h; sourceTree = "<group>"; };
@@ -118,8 +115,6 @@
 			children = (
 				18467D291DAE023600B1D963 /* MYZAccount.h */,
 				18467D2A1DAE023600B1D963 /* MYZAccount.m */,
-				18467D2B1DAE023600B1D963 /* MYZDog.h */,
-				18467D2C1DAE023600B1D963 /* MYZDog.m */,
 				18467D2D1DAE023600B1D963 /* MYZUserInfo.h */,
 				18467D2E1DAE023600B1D963 /* MYZUserInfo.m */,
 			);
@@ -484,7 +479,6 @@
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
-				18467D301DAE023600B1D963 /* MYZDog.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,

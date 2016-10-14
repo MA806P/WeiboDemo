@@ -11,7 +11,7 @@
 
 #import "MYZTools.h"
 #import "MYZAccount.h"
-#import "Realm.h"
+#import "MYZUserInfo.h"
 
 @implementation MYZTools
 
@@ -44,15 +44,23 @@
 
 #pragma mark - 用户信息
 
-//+ (MYZUserInfo *)userInfo
-//{
-//    
-//}
-
-
-+ (void)saveUserInfo:(MYZUserInfo *)userInfo
++ (MYZUserInfo *)userInfo
 {
+    MYZAccount * account = [self account];
+    NSString * uid = account.uid;
+    if (account == nil || uid == nil) { return nil; }
     
+    RLMResults<MYZUserInfo *> *userInfo = [MYZUserInfo objectsWhere:@"idstr = %@",uid];
+    return (MYZUserInfo *)userInfo;
+}
+
+
++ (void)saveUserInfo:(MYZUserInfo * _Nonnull)userInfo
+{
+    RLMRealm * realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addObject:userInfo];
+    [realm commitWriteTransaction];
 }
 
 
