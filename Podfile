@@ -7,5 +7,6 @@ target 'WeiboDemo' do
     pod 'MJRefresh'
     pod 'SVProgressHUD'
     pod 'Realm'
+    pod 'SDWebImage', '~>3.8'
 end
 
