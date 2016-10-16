@@ -14,6 +14,8 @@
 #import "MYZUserInfo.h"
 #import "MJRefresh.h"
 
+#import "MYZStatus.h"
+
 @interface MYZHomeController ()
 
 @property (nonatomic, strong) MYZAccount * account;
@@ -65,7 +67,51 @@
     NSDictionary * parameter = @{@"access_token":self.account.access_token, @"since_id":@(0), @"count":@(20)};
     [MYZHttpTools get:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameter progress:nil success:^(id response) {
         
+        NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
+        //NSLog(@"%@", statusDicts);
+        [statusDicts enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            MYZStatus * status = [[MYZStatus alloc] initWithValue:obj];
+            
+            RLMRealm * realm = [RLMRealm defaultRealm];
+            [realm beginWriteTransaction];
+            [realm addObject:status];
+            [realm commitWriteTransaction];
+            
+        }];
+        
+        
+        
+//        // 属性跟字典的key一一对应
+//        NSMutableString *codes = [NSMutableString string];
+//        // 遍历字典中所有key取出来
+//        //NSLog(@"-- %@ ", [[statusesDict objectForKey:@"statuses"] firstObject]);
+//        [[[statusesDict objectForKey:@"statuses"] firstObject] enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//            // key:属性名
+//            NSString *code;
+//            if ([obj isKindOfClass:[NSString class]]) {
+//                code = [NSString stringWithFormat:@"/**   */\n@property NSString *%@;",key];
+//            }else if ([obj isKindOfClass:NSClassFromString(@"__NSCFBoolean")]){
+//                code = [NSString stringWithFormat:@"/**   */\n@property BOOL %@;",key];
+//            }else if ([obj isKindOfClass:[NSNumber class]]){
+//                code = [NSString stringWithFormat:@"/**   */\n@property NSInteger %@;",key];
+//            }else if ([obj isKindOfClass:[NSArray class]]){
+//                code = [NSString stringWithFormat:@"/**   */\n@property NSArray *%@;",key];
+//            }else if ([obj isKindOfClass:[NSDictionary class]]){
+//                code = [NSString stringWithFormat:@"/**   */\n@property NSDictionary *%@;",key];
+//            }
+//            [codes appendFormat:@"\n%@\n",code];
+//            
+//        }];
+//        NSLog(@"%@",codes);
+        
+        
+        
         MYZLog(@"--- success ");
+        
+        
+        
+        
         
     } failure:^(NSError *error) {
         MYZLog(@"--- %@", error);

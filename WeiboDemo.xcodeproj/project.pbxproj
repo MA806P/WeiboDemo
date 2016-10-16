@@ -17,13 +17,15 @@
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
 		DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9EC1D9AC0B700251B38 /* MYZTabBar.m */; };
-		DA65B9F01D9AC26D00251B38 /* MYZHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9EF1D9AC26D00251B38 /* MYZHomeController.m */; };
 		DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9F21D9AC29100251B38 /* MYZProfileController.m */; };
 		DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9F51D9AC2AB00251B38 /* MYZComposeController.m */; };
 		DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9F81D9AC2F800251B38 /* AppDelegate.m */; };
 		DA65B9FB1D9AC2F800251B38 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9F91D9AC2F800251B38 /* main.m */; };
 		DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA73CA8A1D97CF0E00CF5839 /* MYZNavController.m */; };
 		DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA73CA8D1D97CF2A00CF5839 /* MYZTabBarController.m */; };
+		DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F21DB3693C00DD29AF /* MYZHomeController.m */; };
+		DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F71DB369A700DD29AF /* MYZStatus.m */; };
+		DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,8 +71,6 @@
 		DA5D88621D86F4EE00583136 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA65B9EB1D9AC0B700251B38 /* MYZTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZTabBar.h; sourceTree = "<group>"; };
 		DA65B9EC1D9AC0B700251B38 /* MYZTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZTabBar.m; sourceTree = "<group>"; };
-		DA65B9EE1D9AC26D00251B38 /* MYZHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZHomeController.h; sourceTree = "<group>"; };
-		DA65B9EF1D9AC26D00251B38 /* MYZHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZHomeController.m; sourceTree = "<group>"; };
 		DA65B9F11D9AC29100251B38 /* MYZProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZProfileController.h; sourceTree = "<group>"; };
 		DA65B9F21D9AC29100251B38 /* MYZProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZProfileController.m; sourceTree = "<group>"; };
 		DA65B9F41D9AC2AB00251B38 /* MYZComposeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeController.h; sourceTree = "<group>"; };
@@ -82,6 +82,12 @@
 		DA73CA8A1D97CF0E00CF5839 /* MYZNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZNavController.m; sourceTree = "<group>"; };
 		DA73CA8C1D97CF2A00CF5839 /* MYZTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZTabBarController.h; sourceTree = "<group>"; };
 		DA73CA8D1D97CF2A00CF5839 /* MYZTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZTabBarController.m; sourceTree = "<group>"; };
+		DAA521F11DB3693C00DD29AF /* MYZHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZHomeController.h; sourceTree = "<group>"; };
+		DAA521F21DB3693C00DD29AF /* MYZHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZHomeController.m; sourceTree = "<group>"; };
+		DAA521F61DB369A700DD29AF /* MYZStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatus.h; sourceTree = "<group>"; };
+		DAA521F71DB369A700DD29AF /* MYZStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatus.m; sourceTree = "<group>"; };
+		DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPic.h; sourceTree = "<group>"; };
+		DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,8 +247,9 @@
 		DA73CA7A1D97CC1100CF5839 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				DA65B9EE1D9AC26D00251B38 /* MYZHomeController.h */,
-				DA65B9EF1D9AC26D00251B38 /* MYZHomeController.m */,
+				DAA521F31DB3693C00DD29AF /* model */,
+				DAA521F01DB3693C00DD29AF /* controller */,
+				DAA521F41DB3693C00DD29AF /* view */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -288,6 +295,33 @@
 				DA65B9F21D9AC29100251B38 /* MYZProfileController.m */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		DAA521F01DB3693C00DD29AF /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				DAA521F11DB3693C00DD29AF /* MYZHomeController.h */,
+				DAA521F21DB3693C00DD29AF /* MYZHomeController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		DAA521F31DB3693C00DD29AF /* model */ = {
+			isa = PBXGroup;
+			children = (
+				DAA521F61DB369A700DD29AF /* MYZStatus.h */,
+				DAA521F71DB369A700DD29AF /* MYZStatus.m */,
+				DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */,
+				DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		DAA521F41DB3693C00DD29AF /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,14 +512,16 @@
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
+				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
+				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
+				DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
-				DA65B9F01D9AC26D00251B38 /* MYZHomeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

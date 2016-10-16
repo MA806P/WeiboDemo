@@ -7,6 +7,7 @@
 //
 
 #import "MYZOAuthController.h"
+#import "MYZTabBarController.h"
 #import "MYZAccount.h"
 #import "MYZUserInfo.h"
 
@@ -74,6 +75,10 @@
         
         MYZUserInfo * userInfo = [[MYZUserInfo alloc] initWithValue:dic];
         [MYZTools saveUserInfo:userInfo];
+        
+        //设置主控制器，显示主页面
+        MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
+        [[[UIApplication sharedApplication] keyWindow] setRootViewController:tabBarController];
         
         MYZLog(@"--- %@ ", userInfo);
         [SVProgressHUD dismiss];
