@@ -16,6 +16,7 @@
 		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
+		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
 		DA5D88481D86F4EE00583136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5D88471D86F4EE00583136 /* Assets.xcassets */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
@@ -69,6 +70,8 @@
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
 		75D0F767266298436492BE54 /* Pods-WeiboDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeiboDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusRetweeted.h; sourceTree = "<group>"; };
+		DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusRetweeted.m; sourceTree = "<group>"; };
 		DA5D88381D86F4EE00583136 /* WeiboDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeiboDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5D88471D86F4EE00583136 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA5D884C1D86F4EE00583136 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 			children = (
 				DAA521F61DB369A700DD29AF /* MYZStatus.h */,
 				DAA521F71DB369A700DD29AF /* MYZStatus.m */,
+				DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */,
+				DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */,
 				DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */,
 				DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */,
 				18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */,
@@ -523,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
+				DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,

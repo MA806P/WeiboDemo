@@ -11,6 +11,16 @@
 
 @implementation MYZUserInfo
 
+- (instancetype)initWithValue:(id)value
+{
+    if (self = [super initWithValue:value])
+    {
+        //NSLog(@"---  %@ ",value);
+        self.desc = value[@"description"];
+    }
+    return self;
+}
+
 + (NSString *)primaryKey
 {
     return @"idstr";

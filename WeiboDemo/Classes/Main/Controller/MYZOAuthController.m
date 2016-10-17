@@ -69,11 +69,11 @@
     NSDictionary * parameter = @{@"access_token":account.access_token, @"uid":account.uid};
     [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:parameter progress:nil success:^(id response) {
         
-        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:response];
-        [dic setObject:dic[@"description"] forKey:@"desc"];
-        [dic removeObjectForKey:@"description"];
+//        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:response];
+//        [dic setObject:dic[@"description"] forKey:@"desc"];
+//        [dic removeObjectForKey:@"description"];
         
-        MYZUserInfo * userInfo = [[MYZUserInfo alloc] initWithValue:dic];
+        MYZUserInfo * userInfo = [[MYZUserInfo alloc] initWithValue:response];
         [MYZTools saveUserInfo:userInfo];
         
         //设置主控制器，显示主页面

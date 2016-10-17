@@ -51,7 +51,7 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         [weakSelf homeGetStatuses];
-        [weakSelf.tableView.mj_header endRefreshing];
+        
         
     }];
     
@@ -120,12 +120,13 @@
         
         MYZLog(@"--- success ");
         
-        
+        [self.tableView.mj_header endRefreshing];
         
         
         
     } failure:^(NSError *error) {
         MYZLog(@"--- %@", error);
+        [self.tableView.mj_header endRefreshing];
     }];
     
 }
