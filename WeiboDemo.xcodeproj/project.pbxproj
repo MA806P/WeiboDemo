@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */; };
+		18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */; };
+		18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */; };
 		18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2A1DAE023600B1D963 /* MYZAccount.m */; };
 		18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2E1DAE023600B1D963 /* MYZUserInfo.m */; };
 		18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D351DAE026C00B1D963 /* MYZHttpTools.m */; };
@@ -46,6 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrame.h; sourceTree = "<group>"; };
+		18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrame.m; sourceTree = "<group>"; };
+		18432AD01DB4C80400E21F6E /* MYZStatusFrameTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrameTop.h; sourceTree = "<group>"; };
+		18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrameTop.m; sourceTree = "<group>"; };
+		18432AD31DB4C83600E21F6E /* MYZStatusFrameMiddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrameMiddle.h; sourceTree = "<group>"; };
+		18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrameMiddle.m; sourceTree = "<group>"; };
 		18467D291DAE023600B1D963 /* MYZAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZAccount.h; sourceTree = "<group>"; };
 		18467D2A1DAE023600B1D963 /* MYZAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZAccount.m; sourceTree = "<group>"; };
 		18467D2D1DAE023600B1D963 /* MYZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZUserInfo.h; sourceTree = "<group>"; };
@@ -313,6 +322,12 @@
 				DAA521F71DB369A700DD29AF /* MYZStatus.m */,
 				DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */,
 				DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */,
+				18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */,
+				18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */,
+				18432AD01DB4C80400E21F6E /* MYZStatusFrameTop.h */,
+				18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */,
+				18432AD31DB4C83600E21F6E /* MYZStatusFrameMiddle.h */,
+				18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -512,16 +527,19 @@
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
+				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */,
+				18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
+				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

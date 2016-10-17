@@ -12,11 +12,11 @@
 @implementation MYZStatus
 
 + (NSDictionary *)linkingObjectsProperties {
-    return @{@"retweeted_status":@"MYZStatus", @"user":@"MYZUserInfo"};
+    return @{@"MYZStatus":@"retweeted_status", @"MYZUserInfo":@"user"};
 }
 
 + (NSString *)primaryKey {
-    return @"idstr";
+    return @"mid";
 }
 
 

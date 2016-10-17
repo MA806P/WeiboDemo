@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MYZStatusPic.h"
 
+RLM_ARRAY_TYPE(MYZStatusPic)
 
 @interface MYZStatus : RLMObject
 
@@ -23,13 +24,14 @@
 
 /** 微博MID */
 @property NSString *mid;
+/** 字符串型的微博ID 和上面的一样*/
+//@property NSString *idstr;
 
 /** 微博配图 */
-@property RLMArray<MYZStatusPic *> *pic_urls;
+@property RLMArray<MYZStatusPic> *pic_urls;
 /** 微博信息内容 */
 @property NSString *text;
-/** 字符串型的微博ID */
-@property NSString *idstr;
+
 
 
 /** 被转发的原微博信息字段，当该微博为转发微博时返回 */
@@ -46,14 +48,6 @@
 
 
 
-/** 微博的可见性及指定可见分组信息。该object中type取值，0：普通微博，1：私密微博，3：指定分组微博，4：密友微博；list_id为分组的组号 */
-@property NSDictionary *visible;
-
-
-
-/** object 地理信息字段 */
-@property NSDictionary * geo;
-
 /** GIF */
 @property NSString *gif_ids;
 
@@ -65,44 +59,50 @@
 @property NSString * original_pic;
 
 
-
 /** 是否被截断，true：是，false：否 */
 @property BOOL truncated;
 /** 长微博 */
 @property BOOL isLongText;
+
+
+/** 微博的可见性及指定可见分组信息。该object中type取值，0：普通微博，1：私密微博，3：指定分组微博，4：密友微博；list_id为分组的组号 */
+//@property NSDictionary *visible;
+/** object 地理信息字段 */
+//@property NSDictionary * geo;
+
+
 /** 公告 */
-@property NSInteger is_show_bulletin;
+//@property NSInteger is_show_bulletin;
 
 
-/** （暂未支持）回复人UID */
-@property NSString *in_reply_to_user_id;
-/** 暂未支持）回复人昵称 */
-@property NSString *in_reply_to_screen_name;
-/** （暂未支持）回复ID */
-@property NSString *in_reply_to_status_id;
+///** （暂未支持）回复人UID */
+//@property NSString *in_reply_to_user_id;
+///** 暂未支持）回复人昵称 */
+//@property NSString *in_reply_to_screen_name;
+///** （暂未支持）回复ID */
+//@property NSString *in_reply_to_status_id;
 
 
-
-/**  */
-@property NSInteger hasActionTypeCard;
-/**  */
-@property NSInteger source_type;
-/**  */
-@property NSArray *hot_weibo_tags;
-/**  */
-@property NSArray *text_tag_tips;
-/**  */
-@property NSInteger source_allowclick;
-/**  */
-@property NSInteger biz_feature;
-/**  */
-@property NSInteger positive_recom_flag;
-/**  */
-@property NSArray *darwin_tags;
-/**  */
-@property NSString *rid;
-/**  */
-@property NSInteger userType;
+///**  */
+//@property NSInteger hasActionTypeCard;
+///**  */
+//@property NSInteger source_type;
+///**  */
+//@property NSArray *hot_weibo_tags;
+///**  */
+//@property NSArray *text_tag_tips;
+///**  */
+//@property NSInteger source_allowclick;
+///**  */
+//@property NSInteger biz_feature;
+///**  */
+//@property NSInteger positive_recom_flag;
+///**  */
+//@property NSArray *darwin_tags;
+///**  */
+//@property NSString *rid;
+///**  */
+//@property NSInteger userType;
 
 
 @end

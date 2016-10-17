@@ -59,7 +59,7 @@
 {
     RLMRealm * realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
-    [realm addObject:userInfo];
+    [realm addOrUpdateObject:userInfo];
     [realm commitWriteTransaction];
 }
 

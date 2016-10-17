@@ -10,17 +10,17 @@
 
 @implementation MYZStatusPic
 
-+ (NSDictionary*)JSONInboundMappingDictionary {
-    
-    return @{ @"thumbnail_pic":@"thumbnail_pic" };
-    
-}
-
-+ (NSDictionary*)JSONOutboundMappingDictionary {
-    
-    return @{ @"thumbnail_pic":@"thumbnail_pic" };
-    
-}
+//+ (NSDictionary*)JSONInboundMappingDictionary {
+//    
+//    return @{ @"thumbnail_pic":@"thumbnail_pic" };
+//    
+//}
+//
+//+ (NSDictionary*)JSONOutboundMappingDictionary {
+//    
+//    return @{ @"thumbnail_pic":@"thumbnail_pic" };
+//    
+//}
 
 
 @end

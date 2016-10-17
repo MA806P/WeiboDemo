@@ -21,10 +21,21 @@
 @property (nonatomic, strong) MYZAccount * account;
 @property (nonatomic, strong) MYZUserInfo * userInfo;
 
+@property (nonatomic, strong) NSMutableArray * statusDataArray;
+
 @end
 
 @implementation MYZHomeController
 
+
+- (NSMutableArray *)statusDataArray
+{
+    if (_statusDataArray == nil)
+    {
+        _statusDataArray = [NSMutableArray array];
+    }
+    return _statusDataArray;
+}
 
 
 - (void)viewDidLoad
@@ -75,7 +86,7 @@
             
             RLMRealm * realm = [RLMRealm defaultRealm];
             [realm beginWriteTransaction];
-            [realm addObject:status];
+            [realm addOrUpdateObject:status];
             [realm commitWriteTransaction];
             
         }];
