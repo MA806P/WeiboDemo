@@ -28,5 +28,6 @@
 /** cell下部分评论等frame */
 @property (nonatomic, assign) CGRect frameBottom;
 
++ (id)statusFrameWithStatus:(MYZStatus *)status;
 
 @end

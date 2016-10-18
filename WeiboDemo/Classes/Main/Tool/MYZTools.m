@@ -65,6 +65,42 @@
 
 
 
+// 添加提示信息，几秒钟后自动消失
++ (void)showAlertWithText:(NSString *)text
+{
+    UIFont * font =[UIFont systemFontOfSize:14];
+    
+    UILabel * label=[[UILabel alloc] init];
+    // label.backgroundColor=[UIColor colorWithWhite:0.377 alpha:0.300];
+    label.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    label.textColor = [UIColor whiteColor];
+    label.text=text;
+    label.textAlignment=NSTextAlignmentCenter;
+    label.font=font;
+    label.layer.cornerRadius=10;
+    label.clipsToBounds=YES;
+    label.alpha=0;
+    
+    label.frame = CGRectMake(0, 0, [text sizeWithAttributes:@{NSFontAttributeName:font}].width+60, 40);
+    label.center=CGPointMake(SCREEN_W*0.5, SCREEN_H*0.4);
+    
+    UIWindow * window=[[UIApplication sharedApplication] keyWindow];
+    [window addSubview:label];
+    
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        label.alpha=1;
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.2 delay:0.5 options:UIViewAnimationOptionCurveLinear animations:^{
+            label.alpha=0;
+        } completion:^(BOOL finished) {
+            [label removeFromSuperview];
+        }];
+        
+    }];
+}
+
 
 
 @end

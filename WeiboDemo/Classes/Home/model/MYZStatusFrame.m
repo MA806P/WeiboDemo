@@ -15,6 +15,14 @@ CGFloat const BottomH = 37.0;
 
 @implementation MYZStatusFrame
 
++ (id)statusFrameWithStatus:(MYZStatus *)status
+{
+    MYZStatusFrame * statusFrame = [[self alloc] init];
+    statusFrame.status = status;
+    return statusFrame;
+}
+
+
 - (void)setStatus:(MYZStatus *)status
 {
     _status = status;
@@ -34,7 +42,7 @@ CGFloat const BottomH = 37.0;
 - (void)calcuateFrameTop
 {
     MYZStatusFrameTop * frameTop = [[MYZStatusFrameTop alloc] init];
-    
+    frameTop.status = self.status;
     self.frameTop = frameTop;
 }
 
@@ -42,15 +50,13 @@ CGFloat const BottomH = 37.0;
 - (void)calcuateFrameMiddle
 {
     MYZStatusFrameMiddle * frameMiddle = [[MYZStatusFrameMiddle alloc] init];
-    
+    frameMiddle.status = self.status;
     self.frameMiddle = frameMiddle;
 }
 
 //计算评论的frame
 - (void)calcuateFrameBottom
 {
-    
-    
     self.frameBottom = CGRectMake(0, CGRectGetMaxY(self.frameMiddle.frame), SCREEN_W, BottomH);
     
     self.cellHeight = CGRectGetMaxY(self.frameBottom);

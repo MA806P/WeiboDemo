@@ -63,7 +63,7 @@
     MYZLog(@"--- %@ %@ ", account.access_token, account.uid);
     if(account == nil) { return; }
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
     [SVProgressHUD show];
     
     NSDictionary * parameter = @{@"access_token":account.access_token, @"uid":account.uid};

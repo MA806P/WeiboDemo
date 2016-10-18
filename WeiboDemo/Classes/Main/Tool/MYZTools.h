@@ -18,4 +18,7 @@
 + (MYZUserInfo *)userInfo;
 + (void)saveUserInfo:(MYZUserInfo *)userInfo;
 
+
++ (void)showAlertWithText:(NSString *)text;
+
 @end

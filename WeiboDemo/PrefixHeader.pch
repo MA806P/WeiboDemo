@@ -30,8 +30,8 @@
 #import "MYZHttpTools.h"
 
 #import "SVProgressHUD.h"
-
 #import "Realm.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #define kAppKey         @"2706277070"
 #define kRedirectURI    @"http://weibo.com"

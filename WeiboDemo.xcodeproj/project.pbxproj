@@ -14,6 +14,9 @@
 		18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2E1DAE023600B1D963 /* MYZUserInfo.m */; };
 		18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D351DAE026C00B1D963 /* MYZHttpTools.m */; };
 		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
+		188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */; };
+		188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */; };
+		188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAEA01DB627F100A8274F /* UIView+MYZ.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
@@ -65,6 +68,12 @@
 		18467D361DAE026C00B1D963 /* MYZTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZTools.h; sourceTree = "<group>"; };
 		18467D371DAE026C00B1D963 /* MYZTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZTools.m; sourceTree = "<group>"; };
 		1858B8771DAB6722004E81A7 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		188AAE9A1DB627DC00A8274F /* NSString+MYZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MYZ.h"; sourceTree = "<group>"; };
+		188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MYZ.m"; sourceTree = "<group>"; };
+		188AAE9D1DB627F100A8274F /* UIImage+MYZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MYZ.h"; sourceTree = "<group>"; };
+		188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MYZ.m"; sourceTree = "<group>"; };
+		188AAE9F1DB627F100A8274F /* UIView+MYZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MYZ.h"; sourceTree = "<group>"; };
+		188AAEA01DB627F100A8274F /* UIView+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MYZ.m"; sourceTree = "<group>"; };
 		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
 		18CBE96D1DACB6510068832E /* MYZOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZOAuthController.m; sourceTree = "<group>"; };
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +151,12 @@
 		18467D321DAE023E00B1D963 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				188AAE9D1DB627F100A8274F /* UIImage+MYZ.h */,
+				188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */,
+				188AAE9F1DB627F100A8274F /* UIView+MYZ.h */,
+				188AAEA01DB627F100A8274F /* UIView+MYZ.m */,
+				188AAE9A1DB627DC00A8274F /* NSString+MYZ.h */,
+				188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -528,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
+				188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */,
 				DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
@@ -536,9 +552,11 @@
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
+				188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */,
+				188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */,
 				18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,

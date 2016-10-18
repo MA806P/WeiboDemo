@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZUserInfo;
+@class MYZStatus;
 
 @interface MYZStatusFrameTop : NSObject
 
@@ -27,11 +27,13 @@
 /** 来源标签 */
 @property (nonatomic, assign) CGRect frameSource;
 
+/** 微博内容标签 */
+@property (nonatomic, assign) CGRect frameText;
 
 /** 自己的frame */
 @property (nonatomic, assign) CGRect frame;
 
 /** 微博数据 */
-@property (nonatomic, strong) MYZUserInfo * userInfo;
+@property (nonatomic, strong) MYZStatus * status;
 
 @end

@@ -25,10 +25,10 @@
     return self;
 }
 
-+ (NSArray<NSString *> *)ignoredProperties
-{
-    return @[@"retweeted_status"];
-}
+//+ (NSArray<NSString *> *)ignoredProperties
+//{
+//    return @[@"retweeted_status"];
+//}
 
 
 
