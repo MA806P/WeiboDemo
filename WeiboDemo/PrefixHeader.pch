@@ -39,6 +39,9 @@
 //document 根路径
 #define MYZFileRootPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 
+//realm 数据库保存路径, 缓存
+#define MYZCacheFilePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+
 //NSLog打印
 #ifdef DEBUG // 调试状态,
 #define MYZLog(...) NSLog(__VA_ARGS__)

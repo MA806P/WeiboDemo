@@ -6,16 +6,19 @@
 //  Copyright © 2016年 MA806P. All rights reserved.
 //
 
-#define TempFilepath [MYZFileRootPath stringByAppendingPathComponent:@"property.txt"]
-#define TempFilepath2 [MYZFileRootPath stringByAppendingPathComponent:@"propertyDic.txt"]
+
 
 #import "MYZHomeController.h"
+#import "MYZOAuthController.h"
 #import "MYZAccount.h"
 #import "MYZUserInfo.h"
 #import "MJRefresh.h"
 
 #import "MYZStatus.h"
 #import "MYZStatusFrame.h"
+#import "MYZStatusCell.h"
+
+NSString * const StatusCellID = @"StatusCellID";
 
 @interface MYZHomeController ()
 
@@ -39,22 +42,28 @@
 }
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //判断是否授权
     self.account = [MYZTools account];
-    if (self.account == nil) { return; }
-    
-    //查询所有微博状态的结果, mid从大到小排序
-    RLMResults * statusResults = [[MYZStatus allObjects] sortedResultsUsingProperty:@"mid" ascending:NO];
-    //得到微博数据模型, 转化模型计算各控件frame
-    for (NSInteger i=0; i<statusResults.count; i++)
+    if (self.account == nil)
     {
-        MYZStatus * status = [statusResults objectAtIndex:i];
-        MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
-        [self.statusDataArray addObject:statusFrame];
+        [MYZTools showAlertWithText:@"用户未登录"];
+        MYZOAuthController * oauthVC = [[MYZOAuthController alloc] init];
+        [[[UIApplication sharedApplication] keyWindow] setRootViewController:oauthVC];
+        return;
     }
+    
+    //tableView 设置
+    [self.tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:StatusCellID];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    //获取缓存的数据
+    [self statusDataSortWithArray:nil];
     
     //下拉刷新
     __weak typeof(self) weakSelf = self;
@@ -71,6 +80,36 @@
     
     
     
+}
+
+#pragma mark - 数据处理
+
+- (void)statusDataSortWithArray:(NSArray *)dataArray
+{
+    if (dataArray != nil)
+    {
+        [dataArray enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            MYZStatus * status = [[MYZStatus alloc] initWithValue:obj];
+            RLMRealm * realm = [RLMRealm defaultRealm];
+            [realm beginWriteTransaction];
+            [realm addOrUpdateObject:status];
+            [realm commitWriteTransaction];
+            
+        }];
+    }
+    
+    //查询所有微博状态的结果, mid从大到小排序
+    RLMResults * statusResults = [[MYZStatus allObjects] sortedResultsUsingProperty:@"mid" ascending:NO];
+    [self.statusDataArray removeAllObjects];
+    
+    //得到微博数据模型, 转化模型计算各控件frame
+    for (NSInteger i=0; i<statusResults.count; i++)
+    {
+        MYZStatus * status = [statusResults objectAtIndex:i];
+        MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
+        [self.statusDataArray addObject:statusFrame];
+    }
 }
 
 
@@ -92,26 +131,29 @@
      */
     MYZStatus * statusMax = [[self.statusDataArray firstObject] status];
     NSString * sinceIdStr = statusMax == nil ? @"0" : statusMax.mid;
-    
     MYZLog(@"--- since_id = %@", sinceIdStr);
     
-    NSDictionary * parameter = @{@"access_token":self.account.access_token, @"since_id":sinceIdStr, @"count":@(2)};
+    int count = 100;
+    
+    NSDictionary * parameter = @{@"access_token":self.account.access_token, @"since_id":sinceIdStr, @"count":@(count)};
     [MYZHttpTools get:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameter progress:nil success:^(id response) {
         
         NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
-        //NSLog(@"%@", statusDicts);
-        [statusDicts enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            MYZStatus * status = [[MYZStatus alloc] initWithValue:obj];
-            [self.statusDataArray insertObject:[MYZStatusFrame statusFrameWithStatus:status] atIndex:0];
+        
+        //如果返回的微博条数等于要求返回的数,
+        //可能微博较多 缓存的和刷新出来的中间还有微博, 把缓存的清理掉, 防止上拉加载更多, 中间漏掉微博
+        if (statusDicts.count >= count)
+        {
+            [self.statusDataArray removeAllObjects];
             
             RLMRealm * realm = [RLMRealm defaultRealm];
             [realm beginWriteTransaction];
-            [realm addOrUpdateObject:status];
+            [realm deleteAllObjects];
             [realm commitWriteTransaction];
-            
-        }];
+        }
         
+        //数据处理排序转化
+        [self statusDataSortWithArray:statusDicts];
         
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
@@ -131,30 +173,20 @@
 
 - (void)homeGetOldStatuses
 {
-    /*
-     max_id	        false	int64	若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
-     */
+    //max_id false	int64 若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
+    
     MYZStatus * statusMax = [[self.statusDataArray lastObject] status];
     //减1防止返回等于max_id的微博
     NSNumber * maxIdStr = statusMax == nil ? @(0) : @([statusMax.mid longLongValue] -1);
     MYZLog(@"--- max_id = %@", maxIdStr);
     
-    NSDictionary * parameter = @{@"access_token":self.account.access_token, @"max_id":maxIdStr, @"count":@(2)};
+    NSDictionary * parameter = @{@"access_token":self.account.access_token, @"max_id":maxIdStr, @"count":@(20)};
     [MYZHttpTools get:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameter progress:nil success:^(id response) {
         
         NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
-        //NSLog(@"%@", statusDicts);
-        [statusDicts enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            MYZStatus * status = [[MYZStatus alloc] initWithValue:obj];
-            [self.statusDataArray addObject:[MYZStatusFrame statusFrameWithStatus:status]];
-            
-            RLMRealm * realm = [RLMRealm defaultRealm];
-            [realm beginWriteTransaction];
-            [realm addOrUpdateObject:status];
-            [realm commitWriteTransaction];
-            
-        }];
+        
+        //数据处理排序转化
+        [self statusDataSortWithArray:statusDicts];
         
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
@@ -180,51 +212,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MYZStatus * status = [[self.statusDataArray objectAtIndex:indexPath.row] status];
-    
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"statusCell"];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"statusCell"];
-    }
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:status.user.profile_image_url] placeholderImage:[UIImage imageNamed:@"avator_default"]];
-    cell.textLabel.text = status.user.name;
-    cell.detailTextLabel.text = status.text;
-    
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    MYZStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:StatusCellID forIndexPath:indexPath];
+    cell.statusFrame = statusFrame;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.0;
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    return statusFrame.cellHeight;
 }
 
 
-#pragma mark - -------
 
-
-//        // 属性跟字典的key一一对应
-//        NSMutableString *codes = [NSMutableString string];
-//        // 遍历字典中所有key取出来
-//        //NSLog(@"-- %@ ", [[statusesDict objectForKey:@"statuses"] firstObject]);
-//        [[[statusesDict objectForKey:@"statuses"] firstObject] enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//            // key:属性名
-//            NSString *code;
-//            if ([obj isKindOfClass:[NSString class]]) {
-//                code = [NSString stringWithFormat:@"/**   */\n@property NSString *%@;",key];
-//            }else if ([obj isKindOfClass:NSClassFromString(@"__NSCFBoolean")]){
-//                code = [NSString stringWithFormat:@"/**   */\n@property BOOL %@;",key];
-//            }else if ([obj isKindOfClass:[NSNumber class]]){
-//                code = [NSString stringWithFormat:@"/**   */\n@property NSInteger %@;",key];
-//            }else if ([obj isKindOfClass:[NSArray class]]){
-//                code = [NSString stringWithFormat:@"/**   */\n@property NSArray *%@;",key];
-//            }else if ([obj isKindOfClass:[NSDictionary class]]){
-//                code = [NSString stringWithFormat:@"/**   */\n@property NSDictionary *%@;",key];
-//            }
-//            [codes appendFormat:@"\n%@\n",code];
-//
-//        }];
-//        NSLog(@"%@",codes);
 
 
 

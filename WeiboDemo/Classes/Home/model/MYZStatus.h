@@ -19,9 +19,13 @@ RLM_ARRAY_TYPE(MYZStatusPic)
 
 /** 微博创建时间 */
 @property NSString *created_at;
+/** 处理过的创建时间 */
+@property (nonatomic, copy) NSString * createdStr;
 
 /** 微博来源 */
 @property NSString *source;
+/** 处理过的微博来源 */
+@property (nonatomic, copy) NSString * sourceStr;
 
 /** 微博MID */
 @property NSString *mid;

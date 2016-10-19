@@ -25,17 +25,14 @@
     }
     
     
-    CGFloat marginT = 15;
-    CGFloat marginL = 13;
     
     //头像
-    self.frameIcon = CGRectMake(marginL, marginT, 40, 40);
+    self.frameIcon = CGRectMake(StatusMarginLR, StatusMarginT, 40, 40);
     
     //名字
-    CGFloat marginIconName = 15;
-    CGFloat nameX = CGRectGetMaxX(self.frameName) + marginIconName;
-    CGFloat nameY = self.frameName.origin.y;
-    CGFloat nameW = self.frame.size.width - nameX;
+    CGFloat nameX = CGRectGetMaxX(self.frameIcon) + StatusMarginIconName;
+    CGFloat nameY = self.frameIcon.origin.y;
+    CGFloat nameW = SCREEN_W - nameX;
     CGFloat nameH = 25;
     self.frameName = CGRectMake(nameX, nameY, nameW, nameH);
     
@@ -43,23 +40,22 @@
     CGFloat timeX = nameX;
     CGFloat timeY = CGRectGetMaxY(self.frameName);
     CGFloat timeH = 15;
-    CGFloat timeW = [_status.created_at myz_stringSizeWithMaxSize:CGSizeMake(nameW, timeH) andFont:[UIFont systemFontOfSize:12]].width;
+    CGFloat timeW = [_status.createdStr myz_stringSizeWithMaxSize:CGSizeMake(nameW, timeH) andFont:[UIFont systemFontOfSize:StatusFontTimeFromSize]].width;
     self.frameTime = CGRectMake(timeX, timeY, timeW, timeH);
     
     //来源
     CGFloat sourceX = CGRectGetMaxX(self.frameTime) + 5 ;
-    CGFloat sourceW = self.frame.size.width - sourceX;
+    CGFloat sourceW = SCREEN_W - sourceX;
     self.frameSource = CGRectMake(sourceX, timeY, sourceW, timeH);
     
     //微博内容
-    CGFloat marginIconText = 10;
     CGFloat textX = self.frameIcon.origin.x;
-    CGFloat textY = CGRectGetMaxY(self.frameIcon) + marginIconText;
-    CGFloat textW = self.frame.size.width - marginL * 2;
-    CGFloat textH = [self.status.text myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:14]].height;
+    CGFloat textY = CGRectGetMaxY(self.frameIcon) + StatusMarginIconText;
+    CGFloat textW = SCREEN_W - StatusMarginLR * 2;
+    CGFloat textH = [self.status.text myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height;
     self.frameText = CGRectMake(textX, textY, textW, textH);
     
-    self.frame = CGRectMake(0, 0, SCREEN_W, CGRectGetMaxY(self.frameText));
+    self.frame = CGRectMake(0, 0, SCREEN_W, CGRectGetMaxY(self.frameText)+StatusMarginTextB);
 }
 
 
