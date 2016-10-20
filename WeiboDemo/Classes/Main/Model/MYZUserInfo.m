@@ -17,6 +17,8 @@
     {
         //NSLog(@"---  %@ ",value);
         self.desc = value[@"description"];
+        
+        self.isVip = [value[@"mbtype"] integerValue] > 2 ;
     }
     return self;
 }
