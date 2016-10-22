@@ -152,7 +152,7 @@
 @property NSString *verified_reason;
 
 
-/** 会员类型 0(个人) 2(企业)不是会员, 11(个人) 12(企业) 是会员 >2 的是会员 */
+/** 会员类型 0(个人) 2(企业)不是会员, 11(vip) 12(urank等级) 是会员 >2 的是会员 */
 @property NSInteger mbtype;
 /** 是否是会员 */
 @property BOOL isVip;

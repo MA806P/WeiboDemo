@@ -24,8 +24,8 @@ RLM_ARRAY_TYPE(MYZStatusPic)
 
 /** 微博来源 */
 @property NSString *source;
-/** 处理过的微博来源 */
-@property (nonatomic, copy) NSString * sourceStr;
+///** 处理过的微博来源 */
+//@property (nonatomic, copy) NSString * sourceStr;
 
 /** 微博MID */
 @property NSString *mid;

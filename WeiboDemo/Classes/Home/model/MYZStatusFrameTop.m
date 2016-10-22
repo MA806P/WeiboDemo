@@ -8,7 +8,7 @@
 
 #import "MYZStatusFrameTop.h"
 #import "MYZStatus.h"
-#import "NSString+MYZ.h"
+
 
 @implementation MYZStatusFrameTop
 
@@ -44,7 +44,7 @@
     self.frameTime = CGRectMake(timeX, timeY, timeW, timeH);
     
     //来源
-    CGFloat sourceX = CGRectGetMaxX(self.frameTime) + 5 ;
+    CGFloat sourceX = CGRectGetMaxX(self.frameTime) + StatusMarginTimeFrom;
     CGFloat sourceW = SCREEN_W - sourceX;
     self.frameSource = CGRectMake(sourceX, timeY, sourceW, timeH);
     

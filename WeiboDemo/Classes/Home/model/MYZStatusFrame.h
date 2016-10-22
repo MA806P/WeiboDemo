@@ -19,6 +19,9 @@
 /** 微博状态cell的高度 */
 @property (nonatomic, assign) CGFloat cellHeight;
 
+/** 自己的frame */
+@property (nonatomic, assign) CGRect frame;
+
 /** cell上部分frame */
 @property (nonatomic, strong) MYZStatusFrameTop * frameTop;
 

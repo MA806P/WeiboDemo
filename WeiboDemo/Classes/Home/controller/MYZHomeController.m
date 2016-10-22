@@ -46,6 +46,10 @@ NSString * const StatusCellID = @"StatusCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.backgroundColor = MYZColor(211, 211, 211);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
     
     //判断是否授权
     self.account = [MYZTools account];

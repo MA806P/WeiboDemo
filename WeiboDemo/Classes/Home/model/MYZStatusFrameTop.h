@@ -16,6 +16,7 @@ FOUNDATION_EXPORT CGFloat const StatusMarginT; //微博cell上部间距
 FOUNDATION_EXPORT CGFloat const StatusMarginIconName; //头像和昵称左右间距
 FOUNDATION_EXPORT CGFloat const StatusMarginIconText; //头像和微博正文上下间距
 FOUNDATION_EXPORT CGFloat const StatusMarginTextB; //原创正文下部间距
+FOUNDATION_EXPORT CGFloat const StatusMarginTimeFrom; //时间和来源左右间距
 
 FOUNDATION_EXPORT CGFloat const StatusFontNameSize; //昵称字体大小
 FOUNDATION_EXPORT CGFloat const StatusFontTimeFromSize; //时间和来源字体大小

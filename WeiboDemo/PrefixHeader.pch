@@ -29,6 +29,10 @@
 #import "MYZTools.h"
 #import "MYZHttpTools.h"
 
+#import "NSString+MYZ.h"
+#import "UIView+MYZ.h"
+#import "UIImage+MYZ.h"
+
 #import "SVProgressHUD.h"
 #import "Realm.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -52,6 +56,10 @@
 //屏幕宽高
 #define SCREEN_W [UIScreen mainScreen].bounds.size.width
 #define SCREEN_H [UIScreen mainScreen].bounds.size.height
+
+// 颜色
+#define MYZColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
 
 #endif
 

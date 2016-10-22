@@ -31,12 +31,21 @@
         }
         
         
-//        //来源
-//        NSString * sourceStr = value[@"source"];
-//        NSUInteger location = [sourceStr rangeOfString:@">"].location + 1;
-//        NSUInteger length = [sourceStr rangeOfString:@"</"].location - location;
-//        self.source = [sourceStr substringWithRange:NSMakeRange(location, length)];
-
+        //来源, 这个不像时间是不变的所以直接存储就行了
+        //不用重写getter方法不用每次都调用
+        NSString * sourceStr = value[@"source"];
+        if (sourceStr.length > 1)
+        {
+            NSUInteger location = [sourceStr rangeOfString:@">"].location + 1;
+            NSUInteger length = [sourceStr rangeOfString:@"</"].location - location;
+            self.source = [sourceStr substringWithRange:NSMakeRange(location, length)];
+        }
+        else
+        {
+            self.source = @"";
+        }
+        
+        
         
     }
     return self;
@@ -53,7 +62,7 @@
 
 + (NSArray<NSString *> *)ignoredProperties
 {
-    return @[@"createdStr", @"sourceStr"];
+    return @[@"createdStr"];
 }
 
 
@@ -88,15 +97,15 @@
 //            NSDateComponents * fromNowComp = [calendar components:units fromDate:createDate toDate:nowDate options:0];
 //            if (fromNowComp.hour >= 1)
 //            {
-//                return [NSString stringWithFormat:@"%ld小时前", fromNowComp.hour];
+//                _createdStr = [NSString stringWithFormat:@"%ld小时前", fromNowComp.hour];
 //            }
 //            else if (fromNowComp.minute >= 1)
 //            {
-//                return [NSString stringWithFormat:@"%ld分钟前", fromNowComp.minute];
+//                _createdStr = [NSString stringWithFormat:@"%ld分钟前", fromNowComp.minute];
 //            }
 //            else
 //            {
-//                return @"刚刚";
+//                _createdStr = @"刚刚";
 //            }
             
             dateFormatter.dateFormat = @"HH:mm";
@@ -113,26 +122,12 @@
         dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
         _createdStr =  [dateFormatter stringFromDate:createDate];
     }
-    
+    //MYZLog(@" MYZStatus createStr --- %@  %@ ", createDate , _createdStr);
     return _createdStr;
 }
 
-//微博来源重写getter方法, 返回处理过的来源信息
-- (NSString *)sourceStr
-{
-    if (self.source.length > 1)
-    {
-        NSUInteger location = [self.source rangeOfString:@">"].location + 1;
-        NSUInteger length = [self.source rangeOfString:@"</"].location - location;
-        
-        return [self.source substringWithRange:NSMakeRange(location, length)];
-    }
-    else
-    {
-        return @"";
-    }
-    
-}
+
+
 
 
 @end

@@ -10,7 +10,7 @@
 #import "MYZStatus.h"
 #import "MYZStatusRetweeted.h"
 #import "MYZUserInfo.h"
-#import "NSString+MYZ.h"
+
 
 @implementation MYZStatusFrameMiddle
 

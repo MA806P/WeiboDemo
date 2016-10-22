@@ -77,6 +77,8 @@
 + (UIImage *)myz_imageWithAnimatedGIFURL:(NSURL *)url;
 
 
+/** 拉伸图片，只拉伸中间点 */
++ (UIImage *)myz_stretchImageWithName:(NSString *)name;
 
 
 @end

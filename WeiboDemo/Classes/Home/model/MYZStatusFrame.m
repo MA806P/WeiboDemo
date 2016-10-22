@@ -18,6 +18,7 @@ CGFloat const StatusMarginT = 15.0; //微博cell上部间距
 CGFloat const StatusMarginIconName = 15.0; //头像和昵称左右间距
 CGFloat const StatusMarginIconText = 10.0; //头像和微博正文上下间距
 CGFloat const StatusMarginTextB = 8.0; //原创正文下部间距
+CGFloat const StatusMarginTimeFrom = 5.0; //时间和来源左右间距
 
 CGFloat const StatusMarginReTextT = 10.0; //转发微博的正文和上部间距
 CGFloat const StatusMarginReTextB = 8.0; //转发微博的正文和下部部间距
@@ -25,6 +26,8 @@ CGFloat const StatusMarginReTextB = 8.0; //转发微博的正文和下部部间�
 CGFloat const StatusFontNameSize = 14.0; //昵称字体大小
 CGFloat const StatusFontTimeFromSize = 12.0; //时间和来源字体大小
 CGFloat const StatusFontTextSize = 14.0; //微博正文字体大小
+
+CGFloat const StatusMarginBetweenCell = 8; //两微博之间的间隙
 
 @implementation MYZStatusFrame
 
@@ -77,6 +80,8 @@ CGFloat const StatusFontTextSize = 14.0; //微博正文字体大小
 {
     self.frameBottom = CGRectMake(0, CGRectGetMaxY(self.frameMiddle.frame), SCREEN_W, StatusBottomH);
     
-    self.cellHeight = CGRectGetMaxY(self.frameBottom);
+    CGFloat statusW = CGRectGetMaxY(self.frameBottom);
+    self.cellHeight = statusW + StatusMarginBetweenCell;
+    self.frame = CGRectMake(0, 0, SCREEN_W, statusW);
 }
 @end
