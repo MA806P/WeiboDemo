@@ -55,7 +55,39 @@
     CGFloat textH = [self.status.text myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height;
     self.frameText = CGRectMake(textX, textY, textW, textH);
     
-    self.frame = CGRectMake(0, 0, SCREEN_W, CGRectGetMaxY(self.frameText)+StatusMarginTextB);
+    
+    //转发微博的图片显示视图
+    self.framePicsContent = CGRectMake(textX, CGRectGetMaxY(self.frameText) + StatusMarginTextB, 0, 0);
+    NSInteger picsCount = status.pic_urls.count;
+    if(picsCount > 0)
+    {
+        CGFloat picContentW = 0.0;
+        CGFloat picContentH = 0.0;
+        CGFloat statusPicWH = 0.0;
+        
+        if(picsCount == 1)
+        {
+            picContentW = (SCREEN_W - textX*2.0) * 0.5;
+            picContentH = picContentW;
+        }
+        else
+        {
+            NSInteger rows = picsCount == 4 ? 2 : 3;
+            NSInteger rowCount = (picsCount - 1) / rows;
+            NSInteger columnCount = (picsCount - 1) % rows;
+            
+            picContentW = SCREEN_W - textX*2.0;
+            statusPicWH = (picContentW - StatusMarginPics*2) /3.0;
+            
+            picContentW = (statusPicWH + StatusMarginPics) * columnCount + statusPicWH;
+            picContentH = (statusPicWH + StatusMarginPics) * rowCount + statusPicWH;
+        }
+        
+        self.framePicsContent = CGRectMake(textX, CGRectGetMaxY(self.frameText) + StatusMarginTextB, picContentW, picContentH);
+    }
+    
+    
+    self.frame = CGRectMake(0, StatusMarginBetweenCell, SCREEN_W, CGRectGetMaxY(self.framePicsContent)+StatusMarginTextB);
 }
 
 

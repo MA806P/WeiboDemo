@@ -46,9 +46,9 @@ NSString * const StatusCellID = @"StatusCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = MYZColor(211, 211, 211);
+    self.tableView.backgroundColor = MYZColor(242, 242, 242);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    //self.tableView.allowsSelection = NO;
     
     
     //判断是否授权

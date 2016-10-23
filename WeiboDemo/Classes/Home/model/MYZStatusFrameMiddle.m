@@ -7,7 +7,6 @@
 //
 
 #import "MYZStatusFrameMiddle.h"
-#import "MYZStatus.h"
 #import "MYZStatusRetweeted.h"
 #import "MYZUserInfo.h"
 
@@ -15,40 +14,60 @@
 @implementation MYZStatusFrameMiddle
 
 
-- (void)setStatus:(MYZStatus *)status
+-(void)setStatusRetweeted:(MYZStatusRetweeted *)statusRetweeted
 {
-    _status = status;
+    _statusRetweeted = statusRetweeted;
     
-    if (status == nil)
-    {
-        self.frame = CGRectZero;
-        return;
-    }
-  
     
     //判断是否有转发微博
-    if(status.retweeted_status != nil)
-    {
-        //转发微博的用户名
-        NSString * textStr = [NSString stringWithFormat:@"@%@: %@",status.retweeted_status.user.name, status.retweeted_status.text];
-        
-        CGFloat textX = StatusMarginLR;
-        CGFloat textY = StatusMarginReTextT;
-        CGFloat textW = SCREEN_W - textX * 2.0;
-        CGFloat textH = [textStr myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height;
-        
-        self.frameReText = CGRectMake(textX, textY, textW, textH);
-        
-        self.frame = CGRectMake(0, 0, SCREEN_W, textH + StatusMarginReTextT + StatusMarginReTextB);
-        
-    }
-    else
+    if (statusRetweeted == nil)
     {
         self.frame = CGRectZero;
         self.frameReText = CGRectZero;
+        return;
+    }
+    
+    //转发微博的用户名
+    NSString * textStr = [NSString stringWithFormat:@"@%@: %@",statusRetweeted.user.name, statusRetweeted.text];
+    
+    CGFloat textX = StatusMarginLR;
+    CGFloat textY = StatusMarginReTextT;
+    CGFloat textW = SCREEN_W - textX * 2.0;
+    CGFloat textH = [textStr myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height;
+    
+    self.frameReText = CGRectMake(textX, textY, textW, textH);
+    
+    //转发微博的图片显示视图
+    self.frameRePicContent = CGRectMake(textX, CGRectGetMaxY(self.frameReText) + StatusMarginReTextB, 0, 0);
+    NSInteger picsCount = statusRetweeted.pic_urls.count;
+    if(picsCount > 0)
+    {
+        CGFloat picContentW = 0.0;
+        CGFloat picContentH = 0.0;
+        CGFloat statusPicsWH = 0.0;
+        if(picsCount == 1)
+        {
+            picContentW = (SCREEN_W - textX*2.0) * 0.5;
+            picContentH = picContentW;
+        }
+        else
+        {
+            NSInteger rows = picsCount == 4 ? 2 : 3;
+            NSInteger rowCount = (picsCount - 1) / rows;
+            
+            picContentW = SCREEN_W - textX*2.0;
+            statusPicsWH = (picContentW - StatusMarginPics*2) /3.0;
+            picContentH = (statusPicsWH + StatusMarginPics) * rowCount + statusPicsWH;
+        }
+        
+        self.frameRePicContent = CGRectMake(textX, CGRectGetMaxY(self.frameReText) + StatusMarginReTextB, picContentW, picContentH);
     }
     
     
+    
+    
+    self.frame = CGRectMake(0, 0, SCREEN_W, CGRectGetMaxY(self.frameRePicContent));
+        
     
 }
 

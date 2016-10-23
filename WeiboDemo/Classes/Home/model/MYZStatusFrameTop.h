@@ -22,6 +22,9 @@ FOUNDATION_EXPORT CGFloat const StatusFontNameSize; //昵称字体大小
 FOUNDATION_EXPORT CGFloat const StatusFontTimeFromSize; //时间和来源字体大小
 FOUNDATION_EXPORT CGFloat const StatusFontTextSize; //微博正文字体大小
 
+FOUNDATION_EXPORT CGFloat const StatusMarginBetweenCell; //两微博之间的间隙,上方空出
+
+FOUNDATION_EXPORT CGFloat const StatusMarginPics; //配图之间的间隙
 
 @interface MYZStatusFrameTop : NSObject
 
@@ -42,6 +45,9 @@ FOUNDATION_EXPORT CGFloat const StatusFontTextSize; //微博正文字体大小
 
 /** 微博内容标签 */
 @property (nonatomic, assign) CGRect frameText;
+
+/** 原创微博配图 */
+@property (nonatomic, assign) CGRect framePicsContent;
 
 /** 自己的frame */
 @property (nonatomic, assign) CGRect frame;

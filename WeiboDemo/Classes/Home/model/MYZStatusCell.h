@@ -8,14 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @class MYZStatusFrame;
-
-FOUNDATION_EXPORT CGFloat const StatusFontNameSize; //昵称字体大小
-FOUNDATION_EXPORT CGFloat const StatusFontTimeFromSize; //时间和来源字体大小
-FOUNDATION_EXPORT CGFloat const StatusFontTextSize; //微博正文字体大小
-
-FOUNDATION_EXPORT CGFloat const StatusMarginTimeFrom; //时间和来源左右间距
-FOUNDATION_EXPORT CGFloat const StatusMarginBetweenCell; //两微博之间的间隙
 
 @interface MYZStatusCell : UITableViewCell
 

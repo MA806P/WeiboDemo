@@ -21,7 +21,6 @@
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
-		DA5D88481D86F4EE00583136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5D88471D86F4EE00583136 /* Assets.xcassets */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
 		DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DA65B9EC1D9AC0B700251B38 /* MYZTabBar.m */; };
@@ -34,6 +33,10 @@
 		DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F21DB3693C00DD29AF /* MYZHomeController.m */; };
 		DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F71DB369A700DD29AF /* MYZStatus.m */; };
 		DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */; };
+		DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8061DBC599600DD7ADE /* MYZStatusTopView.m */; };
+		DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */; };
+		DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */; };
+		DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +88,6 @@
 		DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusRetweeted.h; sourceTree = "<group>"; };
 		DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusRetweeted.m; sourceTree = "<group>"; };
 		DA5D88381D86F4EE00583136 /* WeiboDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeiboDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA5D88471D86F4EE00583136 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA5D884C1D86F4EE00583136 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA5D88511D86F4EE00583136 /* WeiboDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeiboDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeiboDemoTests.m; sourceTree = "<group>"; };
@@ -112,6 +114,13 @@
 		DAA521F71DB369A700DD29AF /* MYZStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatus.m; sourceTree = "<group>"; };
 		DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPic.h; sourceTree = "<group>"; };
 		DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPic.m; sourceTree = "<group>"; };
+		DAEEC8051DBC599600DD7ADE /* MYZStatusTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTopView.h; sourceTree = "<group>"; };
+		DAEEC8061DBC599600DD7ADE /* MYZStatusTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusTopView.m; sourceTree = "<group>"; };
+		DAEEC8081DBC59AC00DD7ADE /* MYZStatusMiddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusMiddleView.h; sourceTree = "<group>"; };
+		DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusMiddleView.m; sourceTree = "<group>"; };
+		DAEEC80B1DBC59BF00DD7ADE /* MYZStatusBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusBottomView.h; sourceTree = "<group>"; };
+		DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusBottomView.m; sourceTree = "<group>"; };
+		DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,11 +235,11 @@
 		DA5D883B1D86F4EE00583136 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */,
 				DA65B9F71D9AC2F800251B38 /* AppDelegate.h */,
 				DA65B9F81D9AC2F800251B38 /* AppDelegate.m */,
 				1858B8771DAB6722004E81A7 /* PrefixHeader.pch */,
 				DA65B9F91D9AC2F800251B38 /* main.m */,
-				DA5D88471D86F4EE00583136 /* Assets.xcassets */,
 				DA5D884C1D86F4EE00583136 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -360,6 +369,12 @@
 			children = (
 				18711B5C1DB71DCE007A0A1D /* MYZStatusCell.h */,
 				18711B5D1DB71DCE007A0A1D /* MYZStatusCell.m */,
+				DAEEC8051DBC599600DD7ADE /* MYZStatusTopView.h */,
+				DAEEC8061DBC599600DD7ADE /* MYZStatusTopView.m */,
+				DAEEC8081DBC59AC00DD7ADE /* MYZStatusMiddleView.h */,
+				DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */,
+				DAEEC80B1DBC59BF00DD7ADE /* MYZStatusBottomView.h */,
+				DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -474,7 +489,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA5D88481D86F4EE00583136 /* Assets.xcassets in Resources */,
+				DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,16 +572,19 @@
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
+				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
 				188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */,
 				DA65B9F61D9AC2AB00251B38 /* MYZComposeController.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */,
 				188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */,
+				DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */,
 				18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
+				DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
 				18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */,
 				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
