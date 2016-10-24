@@ -60,7 +60,7 @@
     self.reTextLabel.text = [NSString stringWithFormat:@"@%@: %@",user.name, statusRetweeted.text];
     
     
-    //MYZLog(@" --- %ld  %@", statusRetweeted.pic_urls.count, NSStringFromCGRect(statusFrameMiddle.frameRePicContent));
+    MYZLog(@"retweeted --- %ld  %@", statusRetweeted.pic_urls.count, NSStringFromCGRect(statusFrameMiddle.frameRePicContent));
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
     
 }

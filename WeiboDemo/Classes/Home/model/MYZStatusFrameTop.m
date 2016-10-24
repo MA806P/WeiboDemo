@@ -67,6 +67,7 @@
         
         if(picsCount == 1)
         {
+            picContentW *= 0.5;
             picContentH = picContentW;
         }
         else if (picsCount == 4)
