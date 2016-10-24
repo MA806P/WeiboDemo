@@ -42,27 +42,30 @@
     NSInteger picsCount = statusRetweeted.pic_urls.count;
     if(picsCount > 0)
     {
-        CGFloat picContentW = 0.0;
+        CGFloat picContentW = (SCREEN_W - textX*2.0);
         CGFloat picContentH = 0.0;
-        CGFloat statusPicsWH = 0.0;
+        CGFloat statusPicWH = (picContentW - StatusMarginPics*2) /3.0;
+        
         if(picsCount == 1)
         {
-            picContentW = (SCREEN_W - textX*2.0) * 0.5;
+            picContentH = picContentW;
+        }
+        else if (picsCount == 4)
+        {
+            picContentW = statusPicWH * 2.0 + StatusMarginPics;
             picContentH = picContentW;
         }
         else
         {
-            NSInteger rows = picsCount == 4 ? 2 : 3;
-            NSInteger rowCount = (picsCount - 1) / rows;
+            NSInteger rowCount = (picsCount - 1) / 3;
+            NSInteger columnCount = rowCount > 0 ? 2 : (picsCount - 1) % 3;
             
-            picContentW = SCREEN_W - textX*2.0;
-            statusPicsWH = (picContentW - StatusMarginPics*2) /3.0;
-            picContentH = (statusPicsWH + StatusMarginPics) * rowCount + statusPicsWH;
+            picContentW = (statusPicWH + StatusMarginPics) * columnCount + statusPicWH;
+            picContentH = (statusPicWH + StatusMarginPics) * rowCount + statusPicWH;
         }
         
         self.frameRePicContent = CGRectMake(textX, CGRectGetMaxY(self.frameReText) + StatusMarginReTextB, picContentW, picContentH);
     }
-    
     
     
     
