@@ -19,6 +19,8 @@
 		188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */; };
 		188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAEA01DB627F100A8274F /* UIView+MYZ.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
+		18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */; };
+		18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17F1DB9A72900375480 /* MYZMenuView.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
@@ -82,6 +84,10 @@
 		188AAEA01DB627F100A8274F /* UIView+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MYZ.m"; sourceTree = "<group>"; };
 		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
 		18CBE96D1DACB6510068832E /* MYZOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZOAuthController.m; sourceTree = "<group>"; };
+		18E5A17B1DB9A6FE00375480 /* MYZMenuPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMenuPageController.h; sourceTree = "<group>"; };
+		18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMenuPageController.m; sourceTree = "<group>"; };
+		18E5A17E1DB9A72900375480 /* MYZMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMenuView.h; sourceTree = "<group>"; };
+		18E5A17F1DB9A72900375480 /* MYZMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMenuView.m; sourceTree = "<group>"; };
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
 		75D0F767266298436492BE54 /* Pods-WeiboDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeiboDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +190,17 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		18E5A17A1DB9A6A600375480 /* Temp */ = {
+			isa = PBXGroup;
+			children = (
+				18E5A17B1DB9A6FE00375480 /* MYZMenuPageController.h */,
+				18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */,
+				18E5A17E1DB9A72900375480 /* MYZMenuView.h */,
+				18E5A17F1DB9A72900375480 /* MYZMenuView.m */,
+			);
+			path = Temp;
+			sourceTree = "<group>";
+		};
 		979F5D576E1E8CD6B202B04E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +283,7 @@
 		DA73CA781D97CC1100CF5839 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				18E5A17A1DB9A6A600375480 /* Temp */,
 				DA73CA7C1D97CC1100CF5839 /* Main */,
 				DA73CA7A1D97CC1100CF5839 /* Home */,
 				DA73CA861D97CC1100CF5839 /* Profile */,
@@ -570,6 +588,8 @@
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
+				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
+				18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
