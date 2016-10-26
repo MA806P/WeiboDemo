@@ -50,6 +50,7 @@
 		DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */; };
 		DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */; };
 		DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */; };
+		DAF843BC1DC0F6CB00F505DC /* MYZComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF843BB1DC0F6CB00F505DC /* MYZComposeTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,8 @@
 		DAEEC80B1DBC59BF00DD7ADE /* MYZStatusBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusBottomView.h; sourceTree = "<group>"; };
 		DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusBottomView.m; sourceTree = "<group>"; };
 		DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DAF843BA1DC0F6CB00F505DC /* MYZComposeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZComposeTextView.h; path = WeiboDemo/Classes/Main/Category/MYZComposeTextView.h; sourceTree = SOURCE_ROOT; };
+		DAF843BB1DC0F6CB00F505DC /* MYZComposeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZComposeTextView.m; path = WeiboDemo/Classes/Main/Category/MYZComposeTextView.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +266,8 @@
 		18C7CE7F1DC0ACB400B4D997 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DAF843BA1DC0F6CB00F505DC /* MYZComposeTextView.h */,
+				DAF843BB1DC0F6CB00F505DC /* MYZComposeTextView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -700,6 +705,7 @@
 				18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
 				DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */,
+				DAF843BC1DC0F6CB00F505DC /* MYZComposeTextView.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
 				18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */,
 				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
