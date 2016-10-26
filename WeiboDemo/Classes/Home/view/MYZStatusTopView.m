@@ -10,6 +10,7 @@
 #import "MYZUserInfo.h"
 #import "MYZStatus.h"
 #import "MYZStatusFrameTop.h"
+#import "MYZStatusPicContentView.h"
 
 @interface MYZStatusTopView ()
 
@@ -20,7 +21,7 @@
 @property (nonatomic, weak) UILabel * timeLabel; //时间
 @property (nonatomic, weak) UILabel * fromLabel; //来源
 @property (nonatomic, weak) UILabel * selfTextLabel; //原创微博正文
-@property (nonatomic, weak) UIView * picsContentView; //原创微博配图
+@property (nonatomic, weak) MYZStatusPicContentView * picsContentView; //原创微博配图
 
 @end
 
@@ -84,7 +85,7 @@
     self.selfTextLabel = selfTextLabel;
     
     //原创微博配图
-    UIView * picsContentView = [[UIView alloc] init];
+    MYZStatusPicContentView * picsContentView = [[MYZStatusPicContentView alloc] init];
     picsContentView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:picsContentView];
     self.picsContentView = picsContentView;
@@ -156,9 +157,9 @@
     self.selfTextLabel.frame = statusFrameTop.frameText;
     self.selfTextLabel.text = status.text;
     
-    MYZLog(@" --- %ld  %@", status.pic_urls.count, NSStringFromCGRect(statusFrameTop.framePicsContent));
+    //MYZLog(@" --- %ld  %@", status.pic_urls.count, NSStringFromCGRect(statusFrameTop.framePicsContent));
     self.picsContentView.frame = statusFrameTop.framePicsContent;
-    
+    self.picsContentView.picArray = status.pic_urls;
 }
 
 

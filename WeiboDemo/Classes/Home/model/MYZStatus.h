@@ -51,15 +51,14 @@ RLM_ARRAY_TYPE(MYZStatusPic)
 
 
 
-/** GIF */
-@property NSString *gif_ids;
-
-/**缩略图片地址，没有时不返回此字段*/
-@property NSString * thumbnail_pic;
-/**中等尺寸图片地址，没有时不返回此字段*/
-@property NSString * bmiddle_pic;
-/**原始图片地址，没有时不返回此字段*/
-@property NSString * original_pic;
+///** GIF */
+//@property NSString *gif_ids;
+///**缩略图片地址，没有时不返回此字段*/
+//@property NSString * thumbnail_pic;
+///**中等尺寸图片地址，没有时不返回此字段*/
+//@property NSString * bmiddle_pic;
+///**原始图片地址，没有时不返回此字段*/
+//@property NSString * original_pic;
 
 
 /** 是否被截断，true：是，false：否 */

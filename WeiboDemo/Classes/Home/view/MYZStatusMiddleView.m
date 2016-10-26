@@ -10,12 +10,13 @@
 #import "MYZUserInfo.h"
 #import "MYZStatusRetweeted.h"
 #import "MYZStatusFrameMiddle.h"
+#import "MYZStatusPicContentView.h"
 
 @interface MYZStatusMiddleView ()
 
 @property (nonatomic, weak) UILabel * reTextLabel;
 
-@property (nonatomic, weak) UIView * picsContentView;
+@property (nonatomic, weak) MYZStatusPicContentView * picsContentView;
 
 @end
 
@@ -43,7 +44,7 @@
     [self addSubview:reTextLabel];
     self.reTextLabel = reTextLabel;
     
-    UIView * picsContentView = [[UIView alloc] init];
+    MYZStatusPicContentView * picsContentView = [[MYZStatusPicContentView alloc] init];
     picsContentView.backgroundColor = [UIColor orangeColor];
     [self addSubview:picsContentView];
     self.picsContentView = picsContentView;
@@ -60,9 +61,9 @@
     self.reTextLabel.text = [NSString stringWithFormat:@"@%@: %@",user.name, statusRetweeted.text];
     
     
-    MYZLog(@"retweeted --- %ld  %@", statusRetweeted.pic_urls.count, NSStringFromCGRect(statusFrameMiddle.frameRePicContent));
+    //MYZLog(@"retweeted --- %ld  %@", statusRetweeted.pic_urls.count, NSStringFromCGRect(statusFrameMiddle.frameRePicContent));
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
-    
+    self.picsContentView.picArray = statusRetweeted.pic_urls;
 }
 
 //微博cell的选中状态，根据此值来设置背景图

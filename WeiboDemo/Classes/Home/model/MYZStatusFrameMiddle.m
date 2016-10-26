@@ -58,10 +58,9 @@
         }
         else
         {
+            //注意其他的无论几张, 宽度都是固定的, 两张 三张 都是那么长, 没有的不显示
             NSInteger rowCount = (picsCount - 1) / 3;
-            NSInteger columnCount = rowCount > 0 ? 2 : (picsCount - 1) % 3;
-            
-            picContentW = (statusPicWH + StatusMarginPics) * columnCount + statusPicWH;
+            picContentW = (statusPicWH + StatusMarginPics) * 2 + statusPicWH;
             picContentH = (statusPicWH + StatusMarginPics) * rowCount + statusPicWH;
         }
         
