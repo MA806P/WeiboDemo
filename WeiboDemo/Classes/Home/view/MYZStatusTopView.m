@@ -86,7 +86,7 @@
     
     //原创微博配图
     MYZStatusPicContentView * picsContentView = [[MYZStatusPicContentView alloc] init];
-    picsContentView.backgroundColor = [UIColor lightGrayColor];
+    //picsContentView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:picsContentView];
     self.picsContentView = picsContentView;
 }

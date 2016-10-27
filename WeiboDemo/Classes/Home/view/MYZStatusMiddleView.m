@@ -45,7 +45,7 @@
     self.reTextLabel = reTextLabel;
     
     MYZStatusPicContentView * picsContentView = [[MYZStatusPicContentView alloc] init];
-    picsContentView.backgroundColor = [UIColor orangeColor];
+    //picsContentView.backgroundColor = [UIColor orangeColor];
     [self addSubview:picsContentView];
     self.picsContentView = picsContentView;
 }

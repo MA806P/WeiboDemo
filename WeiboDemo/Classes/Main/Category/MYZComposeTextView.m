@@ -21,12 +21,17 @@
     if (self = [super initWithFrame:frame])
     {
         self.backgroundColor = [UIColor clearColor];
+        self.alwaysBounceVertical = YES; //垂直方向滚动弹簧效果
+        self.showsVerticalScrollIndicator = NO;
+        
+        UIFont * textFont = [UIFont systemFontOfSize:17];
+        self.font = textFont;
         
         UILabel * placeholderLabel = [[UILabel alloc] init];
         placeholderLabel.backgroundColor = [UIColor clearColor];
         placeholderLabel.textColor = [UIColor lightGrayColor];
         placeholderLabel.numberOfLines = 0;
-        placeholderLabel.font = [UIFont systemFontOfSize:15];
+        placeholderLabel.font = textFont;
         [self addSubview:placeholderLabel];
         self.placeholderLabel = placeholderLabel;
         
@@ -69,8 +74,8 @@
 {
     [super layoutSubviews];
     
-    CGFloat labelX = 8.0;
-    CGFloat labelY = 5.0;
+    CGFloat labelX = 5.0;
+    CGFloat labelY = 10.0;
     CGFloat labelMaxW = self.width - labelX * 2.0;
     
     CGSize placeholderSize = [self.placeholder myz_stringSizeWithMaxSize:CGSizeMake(labelMaxW, MAXFLOAT) andFont:self.placeholderLabel.font];

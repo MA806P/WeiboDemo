@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */; };
+		1805ADC81DC1F7D500F27388 /* MYZComposePicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */; };
 		18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */; };
 		18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */; };
 		18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */; };
@@ -71,6 +73,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1805ADC31DC1D58000F27388 /* MYZComposeToolsBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeToolsBar.h; sourceTree = "<group>"; };
+		1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeToolsBar.m; sourceTree = "<group>"; };
+		1805ADC61DC1F7D500F27388 /* MYZComposePicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposePicsView.h; sourceTree = "<group>"; };
+		1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposePicsView.m; sourceTree = "<group>"; };
 		18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrame.h; sourceTree = "<group>"; };
 		18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrame.m; sourceTree = "<group>"; };
 		18432AD01DB4C80400E21F6E /* MYZStatusFrameTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrameTop.h; sourceTree = "<group>"; };
@@ -268,6 +274,10 @@
 			children = (
 				DAF843BA1DC0F6CB00F505DC /* MYZComposeTextView.h */,
 				DAF843BB1DC0F6CB00F505DC /* MYZComposeTextView.m */,
+				1805ADC61DC1F7D500F27388 /* MYZComposePicsView.h */,
+				1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */,
+				1805ADC31DC1D58000F27388 /* MYZComposeToolsBar.h */,
+				1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -558,7 +568,8 @@
 				TargetAttributes = {
 					DA5D88371D86F4EE00583136 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = ET38CG2G34;
+						DevelopmentTeam = 3ZPEAN2426;
+						ProvisioningStyle = Manual;
 					};
 					DA5D88501D86F4EE00583136 = {
 						CreatedOnToolsVersion = 7.3;
@@ -690,6 +701,7 @@
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
+				1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */,
 				188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				18C7CE7A1DC0A5E900B4D997 /* SDWebImageManager+MJ.m in Sources */,
@@ -704,6 +716,7 @@
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
+				1805ADC81DC1F7D500F27388 /* MYZComposePicsView.m in Sources */,
 				DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */,
 				DAF843BC1DC0F6CB00F505DC /* MYZComposeTextView.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
@@ -834,13 +847,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = ET38CG2G34;
+				DEVELOPMENT_TEAM = 3ZPEAN2426;
 				GCC_PREFIX_HEADER = WeiboDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = WeiboDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.myz.weibo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "58922cbf-b31a-4916-83b6-e915b558d4a7";
+				PROVISIONING_PROFILE_SPECIFIER = WildcardTest;
 			};
 			name = Debug;
 		};
@@ -851,7 +866,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = ET38CG2G34;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = WeiboDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = WeiboDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
