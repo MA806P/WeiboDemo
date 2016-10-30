@@ -36,6 +36,7 @@
         
         UIImageView * imgView = self.subviews[i];
         imgView.frame = CGRectMake(imageX, imageY, imageWH, imageWH);
+        
     }
     
 }

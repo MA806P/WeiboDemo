@@ -35,6 +35,8 @@
 		18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */; };
 		18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17F1DB9A72900375480 /* MYZMenuView.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
+		DA115E501DC6331600C22743 /* EmotionIcons in Resources */ = {isa = PBXBuildFile; fileRef = DA115E4F1DC6331600C22743 /* EmotionIcons */; };
+		DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
@@ -130,6 +132,9 @@
 		5A78459A4FCE9534853ED10E /* Pods-WeiboDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.release.xcconfig"; sourceTree = "<group>"; };
 		75D0F767266298436492BE54 /* Pods-WeiboDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeiboDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeiboDemo/Pods-WeiboDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeiboDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA115E4F1DC6331600C22743 /* EmotionIcons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EmotionIcons; sourceTree = "<group>"; };
+		DA115E571DC6346400C22743 /* MYZComposeEmotionKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeEmotionKeyboard.h; sourceTree = "<group>"; };
+		DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeEmotionKeyboard.m; sourceTree = "<group>"; };
 		DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusRetweeted.h; sourceTree = "<group>"; };
 		DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusRetweeted.m; sourceTree = "<group>"; };
 		DA5D88381D86F4EE00583136 /* WeiboDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeiboDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +277,7 @@
 		18C7CE7F1DC0ACB400B4D997 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA115C871DC626E800C22743 /* EmtionKeyboard */,
 				DAF843BA1DC0F6CB00F505DC /* MYZComposeTextView.h */,
 				DAF843BB1DC0F6CB00F505DC /* MYZComposeTextView.m */,
 				1805ADC61DC1F7D500F27388 /* MYZComposePicsView.h */,
@@ -313,6 +319,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA115C871DC626E800C22743 /* EmtionKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DA115E571DC6346400C22743 /* MYZComposeEmotionKeyboard.h */,
+				DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */,
+			);
+			path = EmtionKeyboard;
+			sourceTree = "<group>";
+		};
 		DA5D882F1D86F4EE00583136 = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +362,7 @@
 		DA5D883B1D86F4EE00583136 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DA115E4F1DC6331600C22743 /* EmotionIcons */,
 				DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */,
 				DA65B9F71D9AC2F800251B38 /* AppDelegate.h */,
 				DA65B9F81D9AC2F800251B38 /* AppDelegate.m */,
@@ -608,6 +624,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA115E501DC6331600C22743 /* EmotionIcons in Resources */,
 				18C7CE741DC0A5E900B4D997 /* MJPhotoBrowser.bundle in Resources */,
 				DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */,
 			);
@@ -694,6 +711,7 @@
 				18C7CE751DC0A5E900B4D997 /* MJPhotoBrowser.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */,
+				DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */,
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
 				18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */,

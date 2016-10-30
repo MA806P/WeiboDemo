@@ -10,12 +10,13 @@
 #import "MYZComposeTextView.h"
 #import "MYZComposeToolsBar.h"
 #import "MYZComposePicsView.h"
+#import "MYZComposeEmotionKeyboard.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
 
 NSInteger const ComposePicRowColumnCount = 3; //要发布的图片每行每列展示的个数
-CGFloat const ComposePicMarginLR = 13.0; //要展示的图片大视图左右间距
+CGFloat const ComposePicMarginLR = 10.0; //要展示的图片大视图左右间距
 CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的间隙
 
 
@@ -30,9 +31,25 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 //键盘上的工具条
 @property (nonatomic, weak) MYZComposeToolsBar * toolsBar;
 
+//是否正在切换键盘标志
+@property (nonatomic, assign, getter=isChangingKeyboard) BOOL changingKeyboard;
+
+//表情键盘
+@property (nonatomic, strong) MYZComposeEmotionKeyboard * emotionKeyboard;
+
 @end
 
 @implementation MYZComposeController
+
+- (MYZComposeEmotionKeyboard *)emotionKeyboard
+{
+    if (_emotionKeyboard == nil)
+    {
+        _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, 0, 216)];
+    }
+    return _emotionKeyboard;
+}
+
 
 - (void)viewDidLoad
 {
@@ -99,8 +116,7 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
     
     //选择图片展示的视图
     MYZComposePicsView * picsView = [[MYZComposePicsView alloc] initWithFrame:CGRectMake(0, 110, textViewW, textViewW)];
-    picsView.backgroundColor = [UIColor lightGrayColor];
-    [self.textView addSubview:picsView];
+    [textView addSubview:picsView];
     self.picsView = picsView;
 }
 
@@ -202,22 +218,38 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 
 - (void)openEmotion
 {
+    self.changingKeyboard = YES;
+    
+    if (self.textView.inputView)
+    {
+        self.textView.inputView = nil;
+        self.toolsBar.showEmotionButton = YES;
+    }
+    else
+    {
+        self.textView.inputView = self.emotionKeyboard;
+        self.toolsBar.showEmotionButton = NO;
+    }
+    
+    
+    [self.textView resignFirstResponder]; //这个要放在self.changingKeyboard = YES;的后面否则toolbar收不回去
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.textView becomeFirstResponder];
+    });
     
 }
 
 #pragma mark - Imagepicker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [picker dismissViewControllerAnimated:YES completion:^{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
+    UIImage * originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    //NSData * headImageData = UIImageJPEGRepresentation(originImage, 1.0); //UIImagePNGRepresentation(originImage);
+    //NSUInteger headImageSize = headImageData.length;
+    //if (headImageSize > 100 * 1024) //图片大小 100K
     
-        UIImage * originImage = [info objectForKey:UIImagePickerControllerEditedImage];
-        //NSData * headImageData = UIImageJPEGRepresentation(originImage, 1.0); //UIImagePNGRepresentation(originImage);
-        //NSUInteger headImageSize = headImageData.length;
-        //if (headImageSize > 100 * 1024) //图片大小 100K
-        
-        [self.picsView addImageInView:originImage];
-    
-    }];
+    [self.picsView addImageInView:originImage];
     
     
 }
@@ -241,6 +273,13 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 
 - (void)composeKeyboardWillHide:(NSNotification *)notification
 {
+    //是否正在切换emotion键盘，是就不需要移动toolsbar了
+    if(self.isChangingKeyboard)
+    {
+        self.changingKeyboard = NO;
+        return;
+    }
+    
     //键盘回收时间
     NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     

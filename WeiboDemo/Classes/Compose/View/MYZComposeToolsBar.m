@@ -8,6 +8,13 @@
 
 #import "MYZComposeToolsBar.h"
 
+@interface MYZComposeToolsBar ()
+
+//弹出表情键盘按钮
+@property (nonatomic, weak) UIButton * emotionButton;
+
+@end
+
 @implementation MYZComposeToolsBar
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -35,6 +42,11 @@
     btn.tag = btnType;
     [btn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btn];
+    
+    if (btnType == ComposeToolsBarButtonTypeEmotion)
+    {
+        self.emotionButton = btn;
+    }
 }
 
 - (void)layoutSubviews
@@ -55,6 +67,23 @@
     }
     
     
+}
+
+
+- (void)setShowEmotionButton:(BOOL)showEmotionButton
+{
+    _showEmotionButton = showEmotionButton;
+    
+    if (showEmotionButton)
+    {
+        [self.emotionButton setImage:[UIImage imageNamed:@"compose_emoticonbutton_background"] forState:UIControlStateNormal];
+        [self.emotionButton setImage:[UIImage imageNamed:@"compose_emoticonbutton_background_highlighted"] forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        [self.emotionButton setImage:[UIImage imageNamed:@"compose_keyboardbutton_background"] forState:UIControlStateNormal];
+        [self.emotionButton setImage:[UIImage imageNamed:@"compose_keyboardbutton_background_highlighted"] forState:UIControlStateHighlighted];
+    }
 }
 
 

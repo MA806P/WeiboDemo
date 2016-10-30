@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, ComposeToolsBarButtonType)
 
 @interface MYZComposeToolsBar : UIView
 
+@property (nonatomic, assign, getter=isShowEmotionButton) BOOL showEmotionButton;
+
 @property (nonatomic, assign) id<MYZComposeToolsBarDelegate> delegate;
 
 @end
