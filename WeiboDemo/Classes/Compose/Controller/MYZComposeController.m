@@ -45,7 +45,7 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 {
     if (_emotionKeyboard == nil)
     {
-        _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, 0, 216)];
+        _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 216)];
     }
     return _emotionKeyboard;
 }

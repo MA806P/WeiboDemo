@@ -7,6 +7,19 @@
 //
 
 #import "MYZComposeEmotionKeyboard.h"
+#import "MYZEmotionListView.h"
+#import "MYZEmotionToolBar.h"
+
+
+@interface MYZComposeEmotionKeyboard ()
+
+/** 表情列表视图 */
+@property (nonatomic, weak) MYZEmotionListView * listView;
+
+/** 底部工具条 */
+@property (nonatomic, weak) MYZEmotionToolBar * toolBar;
+
+@end
 
 @implementation MYZComposeEmotionKeyboard
 
@@ -14,9 +27,34 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.backgroundColor = [UIColor redColor];
+        //表情列表
+        MYZEmotionListView * listView = [[MYZEmotionListView alloc] init];
+        [self addSubview:listView];
+        self.listView = listView;
+        
+        //工具条
+        MYZEmotionToolBar * toolBar = [[MYZEmotionToolBar alloc] init];
+        [self addSubview:toolBar];
+        self.toolBar = toolBar;
+        
     }
     return self;
 }
+
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    CGFloat keyBoardW = self.frame.size.width;
+    CGFloat toolbarH = 35;
+    CGFloat toolbarY = self.frame.size.height - toolbarH;
+    
+    self.toolBar.frame = CGRectMake(0, toolbarY, keyBoardW, toolbarH);
+    self.listView.frame = CGRectMake(0, 0, keyBoardW, toolbarY);
+}
+
+
+
 
 @end

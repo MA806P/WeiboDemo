@@ -16,6 +16,8 @@
 		18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D2E1DAE023600B1D963 /* MYZUserInfo.m */; };
 		18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D351DAE026C00B1D963 /* MYZHttpTools.m */; };
 		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
+		184E0AA01DC75FF9004246ED /* MYZEmotionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E0A9F1DC75FF9004246ED /* MYZEmotionListView.m */; };
+		184E0AA31DC76011004246ED /* MYZEmotionToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */; };
 		18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18711B5D1DB71DCE007A0A1D /* MYZStatusCell.m */; };
 		188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */; };
 		188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */; };
@@ -93,6 +95,10 @@
 		18467D351DAE026C00B1D963 /* MYZHttpTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZHttpTools.m; sourceTree = "<group>"; };
 		18467D361DAE026C00B1D963 /* MYZTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZTools.h; sourceTree = "<group>"; };
 		18467D371DAE026C00B1D963 /* MYZTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZTools.m; sourceTree = "<group>"; };
+		184E0A9E1DC75FF9004246ED /* MYZEmotionListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionListView.h; sourceTree = "<group>"; };
+		184E0A9F1DC75FF9004246ED /* MYZEmotionListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionListView.m; sourceTree = "<group>"; };
+		184E0AA11DC76011004246ED /* MYZEmotionToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionToolBar.h; sourceTree = "<group>"; };
+		184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionToolBar.m; sourceTree = "<group>"; };
 		1858B8771DAB6722004E81A7 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		18711B5C1DB71DCE007A0A1D /* MYZStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZStatusCell.h; path = WeiboDemo/Classes/Home/model/MYZStatusCell.h; sourceTree = SOURCE_ROOT; };
 		18711B5D1DB71DCE007A0A1D /* MYZStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZStatusCell.m; path = WeiboDemo/Classes/Home/model/MYZStatusCell.m; sourceTree = SOURCE_ROOT; };
@@ -324,6 +330,10 @@
 			children = (
 				DA115E571DC6346400C22743 /* MYZComposeEmotionKeyboard.h */,
 				DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */,
+				184E0A9E1DC75FF9004246ED /* MYZEmotionListView.h */,
+				184E0A9F1DC75FF9004246ED /* MYZEmotionListView.m */,
+				184E0AA11DC76011004246ED /* MYZEmotionToolBar.h */,
+				184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */,
 			);
 			path = EmtionKeyboard;
 			sourceTree = "<group>";
@@ -727,9 +737,11 @@
 				188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */,
 				18C7CE791DC0A5E900B4D997 /* MJPhotoView.m in Sources */,
 				DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */,
+				184E0AA01DC75FF9004246ED /* MYZEmotionListView.m in Sources */,
 				18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18C7CE781DC0A5E900B4D997 /* MJPhotoToolbar.m in Sources */,
+				184E0AA31DC76011004246ED /* MYZEmotionToolBar.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */,
