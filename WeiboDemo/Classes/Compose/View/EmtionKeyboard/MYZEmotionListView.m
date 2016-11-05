@@ -14,6 +14,15 @@
 {
     if (self = [super initWithFrame:frame])
     {
+        UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
+        UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        //collectionView.delegate = self;
+        //collectionView.dataSource = self;
+        collectionView.pagingEnabled = YES;
+        collectionView.showsVerticalScrollIndicator = NO;
+        [self addSubview:collectionView];
         
     }
     return self;

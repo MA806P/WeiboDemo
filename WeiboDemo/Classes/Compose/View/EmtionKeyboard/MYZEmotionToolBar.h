@@ -10,13 +10,13 @@
 
 typedef NS_ENUM(NSUInteger, MYZEmotionToolBarButtonType)
 {
-    MYZEmotionToolBarButtonTypeRecent, //最近
+    MYZEmotionToolBarButtonTypeRecent = 5, //最近
     MYZEmotionToolBarButtonTypeDefault, //默认
     MYZEmotionToolBarButtonTypeEmoji, //Emoji
     MYZEmotionToolBarButtonTypeLang //浪小花
 };
 
 
-@interface MYZEmotionToolBar : UIView
+@interface MYZEmotionToolBar : UIImageView
 
 @end

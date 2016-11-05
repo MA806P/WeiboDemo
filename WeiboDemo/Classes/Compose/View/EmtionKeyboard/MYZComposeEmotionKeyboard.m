@@ -47,7 +47,7 @@
     [super layoutSubviews];
     
     CGFloat keyBoardW = self.frame.size.width;
-    CGFloat toolbarH = 35;
+    CGFloat toolbarH = 37;
     CGFloat toolbarY = self.frame.size.height - toolbarH;
     
     self.toolBar.frame = CGRectMake(0, toolbarY, keyBoardW, toolbarH);
