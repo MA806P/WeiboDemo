@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+FOUNDATION_EXPORT CGFloat const ComposeEmotionKeyboardH; //表情键盘高度
+FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的选择表情的按钮
+
 @interface MYZEmotionListView : UIView
 
 @end

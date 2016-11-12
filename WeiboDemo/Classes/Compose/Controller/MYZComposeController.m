@@ -19,6 +19,7 @@ NSInteger const ComposePicRowColumnCount = 3; //要发布的图片每行每列�
 CGFloat const ComposePicMarginLR = 10.0; //要展示的图片大视图左右间距
 CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的间隙
 
+CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
 
 @interface MYZComposeController () <UITextViewDelegate, MYZComposeToolsBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -45,7 +46,7 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 {
     if (_emotionKeyboard == nil)
     {
-        _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 216)];
+        _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, ComposeEmotionKeyboardH)];
     }
     return _emotionKeyboard;
 }

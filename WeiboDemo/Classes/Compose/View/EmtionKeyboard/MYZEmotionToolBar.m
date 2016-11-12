@@ -26,7 +26,6 @@
         
         UIScrollView * btnContentScrollView = [[UIScrollView alloc] init];
         btnContentScrollView.backgroundColor = [UIColor clearColor];
-        btnContentScrollView.bounces = YES;
         btnContentScrollView.alwaysBounceHorizontal = YES;
         [self addSubview:btnContentScrollView];
         self.btnContentScrollView = btnContentScrollView;

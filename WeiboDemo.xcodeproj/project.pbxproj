@@ -22,6 +22,7 @@
 		188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */; };
 		188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */; };
 		188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAEA01DB627F100A8274F /* UIView+MYZ.m */; };
+		18C375CA1DD5B2E900B68E72 /* MYZEmotionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C375C91DD5B2E900B68E72 /* MYZEmotionListCell.m */; };
 		18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */; };
 		18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE611DC05F2800B4D997 /* MYZStatusPicContentView.m */; };
 		18C7CE731DC0A5E900B4D997 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE651DC0A5E900B4D997 /* MJPhoto.m */; };
@@ -108,6 +109,8 @@
 		188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MYZ.m"; sourceTree = "<group>"; };
 		188AAE9F1DB627F100A8274F /* UIView+MYZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MYZ.h"; sourceTree = "<group>"; };
 		188AAEA01DB627F100A8274F /* UIView+MYZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MYZ.m"; sourceTree = "<group>"; };
+		18C375C81DD5B2E900B68E72 /* MYZEmotionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionListCell.h; sourceTree = "<group>"; };
+		18C375C91DD5B2E900B68E72 /* MYZEmotionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionListCell.m; sourceTree = "<group>"; };
 		18C7CE5D1DC05F0500B4D997 /* MYZStatusPicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPicView.h; sourceTree = "<group>"; };
 		18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPicView.m; sourceTree = "<group>"; };
 		18C7CE601DC05F2800B4D997 /* MYZStatusPicContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPicContentView.h; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 				184E0A9F1DC75FF9004246ED /* MYZEmotionListView.m */,
 				184E0AA11DC76011004246ED /* MYZEmotionToolBar.h */,
 				184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */,
+				18C375C81DD5B2E900B68E72 /* MYZEmotionListCell.h */,
+				18C375C91DD5B2E900B68E72 /* MYZEmotionListCell.m */,
 			);
 			path = EmtionKeyboard;
 			sourceTree = "<group>";
@@ -715,6 +720,7 @@
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
 				18C7CE761DC0A5E900B4D997 /* MJPhotoLoadingView.m in Sources */,
+				18C375CA1DD5B2E900B68E72 /* MYZEmotionListCell.m in Sources */,
 				18C7CE731DC0A5E900B4D997 /* MJPhoto.m in Sources */,
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
 				18C7CE771DC0A5E900B4D997 /* MJPhotoProgressView.m in Sources */,

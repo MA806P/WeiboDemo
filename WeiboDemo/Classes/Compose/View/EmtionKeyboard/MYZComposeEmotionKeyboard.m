@@ -11,6 +11,8 @@
 #import "MYZEmotionToolBar.h"
 
 
+CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情的按钮
+
 @interface MYZComposeEmotionKeyboard ()
 
 /** 表情列表视图 */
@@ -47,7 +49,7 @@
     [super layoutSubviews];
     
     CGFloat keyBoardW = self.frame.size.width;
-    CGFloat toolbarH = 37;
+    CGFloat toolbarH = ComposeEmotionToolBarH;
     CGFloat toolbarY = self.frame.size.height - toolbarH;
     
     self.toolBar.frame = CGRectMake(0, toolbarY, keyBoardW, toolbarH);
