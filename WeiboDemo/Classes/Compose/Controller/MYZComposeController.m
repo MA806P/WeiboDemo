@@ -13,6 +13,7 @@
 #import "MYZComposeEmotionKeyboard.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "MYZEmotion.h"
 
 
 NSInteger const ComposePicRowColumnCount = 3; //要发布的图片每行每列展示的个数
@@ -47,6 +48,13 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
     if (_emotionKeyboard == nil)
     {
         _emotionKeyboard = [[MYZComposeEmotionKeyboard alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, ComposeEmotionKeyboardH)];
+        
+//        NSMutableArray * emotionKeyboardDataArray = [NSMutableArray array];
+//        
+//        NSString *plist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/default/info.plist" ofType:nil];
+//        NSArray * defaultEmotions = [MYZEmotion objectArrayWithFile:plist];
+//        [defaultEmotions makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/default"];
+        
     }
     return _emotionKeyboard;
 }

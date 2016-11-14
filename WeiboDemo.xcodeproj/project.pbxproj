@@ -40,6 +40,8 @@
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
 		DA115E501DC6331600C22743 /* EmotionIcons in Resources */ = {isa = PBXBuildFile; fileRef = DA115E4F1DC6331600C22743 /* EmotionIcons */; };
 		DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */; };
+		DA20914B1DDA0650006B92E5 /* MYZEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = DA20914A1DDA0650006B92E5 /* MYZEmotion.m */; };
+		DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
@@ -144,6 +146,10 @@
 		DA115E4F1DC6331600C22743 /* EmotionIcons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EmotionIcons; sourceTree = "<group>"; };
 		DA115E571DC6346400C22743 /* MYZComposeEmotionKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeEmotionKeyboard.h; sourceTree = "<group>"; };
 		DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeEmotionKeyboard.m; sourceTree = "<group>"; };
+		DA2091491DDA0650006B92E5 /* MYZEmotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZEmotion.h; path = WeiboDemo/Classes/Compose/View/MYZEmotion.h; sourceTree = SOURCE_ROOT; };
+		DA20914A1DDA0650006B92E5 /* MYZEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZEmotion.m; path = WeiboDemo/Classes/Compose/View/MYZEmotion.m; sourceTree = SOURCE_ROOT; };
+		DA20914C1DDA0702006B92E5 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusRetweeted.h; sourceTree = "<group>"; };
 		DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusRetweeted.m; sourceTree = "<group>"; };
 		DA5D88381D86F4EE00583136 /* WeiboDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeiboDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -224,6 +230,8 @@
 		18467D321DAE023E00B1D963 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				DA20914C1DDA0702006B92E5 /* NSString+Emoji.h */,
+				DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */,
 				188AAE9D1DB627F100A8274F /* UIImage+MYZ.h */,
 				188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */,
 				188AAE9F1DB627F100A8274F /* UIView+MYZ.h */,
@@ -279,6 +287,8 @@
 		18C7CE7E1DC0ACB400B4D997 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DA2091491DDA0650006B92E5 /* MYZEmotion.h */,
+				DA20914A1DDA0650006B92E5 /* MYZEmotion.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -728,6 +738,7 @@
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */,
 				DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */,
+				DA20914B1DDA0650006B92E5 /* MYZEmotion.m in Sources */,
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
 				18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */,
@@ -756,6 +767,7 @@
 				DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */,
 				DAF843BC1DC0F6CB00F505DC /* MYZComposeTextView.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
+				DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */,
 				18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */,
 				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
 				18C7CE801DC0ACB400B4D997 /* MYZComposeController.m in Sources */,

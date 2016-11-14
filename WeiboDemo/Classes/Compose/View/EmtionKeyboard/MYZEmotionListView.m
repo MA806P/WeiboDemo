@@ -36,6 +36,7 @@ CGFloat EmotionListSectionFooterH = 20;
         
         
         UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, collectionViewH) collectionViewLayout:layout];
+        collectionView.backgroundColor = [UIColor lightGrayColor];
         collectionView.delegate = self;
         collectionView.dataSource = self;
         collectionView.pagingEnabled = YES;
@@ -61,6 +62,15 @@ CGFloat EmotionListSectionFooterH = 20;
     self.pageControlFooter.frame = CGRectMake(0, CGRectGetMaxY(self.collectionView.frame), SCREEN_W, EmotionListSectionFooterH);
 }
 
+#pragma mark - setter
+
+- (void)setEmotionDataArray:(NSArray *)emotionDataArray
+{
+    _emotionDataArray = emotionDataArray;
+    
+    
+}
+
 
 #pragma mark - UICollectionView Data Source, Delegate
 
@@ -83,8 +93,13 @@ CGFloat EmotionListSectionFooterH = 20;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSIndexPath * scrollIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
-    self.pageControlFooter.currentPage = scrollIndexPath.item;
+//    NSIndexPath * scrollIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
+//    self.pageControlFooter.currentPage = scrollIndexPath.item;
+    
+    NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:scrollView.contentOffset];
+    self.pageControlFooter.currentPage = indexPath.item;
+    
+    
 }
 
 

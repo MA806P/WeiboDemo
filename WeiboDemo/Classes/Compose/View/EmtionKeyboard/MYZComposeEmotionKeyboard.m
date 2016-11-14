@@ -56,7 +56,12 @@ CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情
     self.listView.frame = CGRectMake(0, 0, keyBoardW, toolbarY);
 }
 
-
+- (void)setEmotionKeyboardDataArray:(NSArray *)emotionKeyboardDataArray
+{
+    _emotionKeyboardDataArray = emotionKeyboardDataArray;
+    
+    self.listView.emotionDataArray = emotionKeyboardDataArray;
+}
 
 
 @end

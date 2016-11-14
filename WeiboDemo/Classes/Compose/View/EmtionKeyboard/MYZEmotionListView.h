@@ -13,4 +13,7 @@ FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的�
 
 @interface MYZEmotionListView : UIView
 
+/** 表情键盘里的全部数据 */
+@property (nonatomic, copy) NSArray * emotionDataArray;
+
 @end

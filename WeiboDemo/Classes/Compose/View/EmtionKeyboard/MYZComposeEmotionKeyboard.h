@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-
-
 @interface MYZComposeEmotionKeyboard : UIView
+
+/** 表情键盘里的全部数据 */
+@property (nonatomic, copy) NSArray * emotionKeyboardDataArray;
 
 @end
