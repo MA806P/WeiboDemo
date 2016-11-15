@@ -11,6 +11,21 @@
 
 @implementation MYZEmotion
 
+
+- (instancetype)initEmotionWithDictionary:(NSDictionary *)dic
+{
+    if (self = [super init])
+    {
+        self.chs = dic[@"chs"];
+        self.png = dic[@"png"];
+        self.code = dic[@"code"];
+        
+    }
+    return self;
+}
+
+
+
 /**
  *  当从文件中解析出一个对象的时候调用
  *  在这个方法中写清楚：怎么解析文件中的数据

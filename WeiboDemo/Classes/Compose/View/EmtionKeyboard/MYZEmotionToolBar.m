@@ -84,6 +84,23 @@
     btn.selected = YES;
     self.btnSelected = btn;
     
+    if ([self.delegate respondsToSelector:@selector(emotionToolBarButtonClickWithType:)])
+    {
+        [self.delegate emotionToolBarButtonClickWithType:btn.tag];
+    }
+    
+}
+
+#pragma mark - 外部调用的方法
+
+//当滑动到对应的表情时，切换选中的按钮
+- (void)changeSelectButtonWithType:(MYZEmotionToolBarButtonType)btnType
+{
+    UIButton * btn = [self viewWithTag:btnType];
+    
+    self.btnSelected.selected = NO;
+    btn.selected = YES;
+    self.btnSelected = btn;
 }
 
 

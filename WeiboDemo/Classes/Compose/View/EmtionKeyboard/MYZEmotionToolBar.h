@@ -16,7 +16,18 @@ typedef NS_ENUM(NSUInteger, MYZEmotionToolBarButtonType)
     MYZEmotionToolBarButtonTypeLang //浪小花
 };
 
+@protocol MYZEmotionToolBarDelegate <NSObject>
+
+@optional
+- (void)emotionToolBarButtonClickWithType:(MYZEmotionToolBarButtonType)btnType;
+
+@end
+
 
 @interface MYZEmotionToolBar : UIImageView
+
+@property (nonatomic, assign) id <MYZEmotionToolBarDelegate> delegate;
+
+- (void)changeSelectButtonWithType:(MYZEmotionToolBarButtonType)btnType;
 
 @end

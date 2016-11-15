@@ -18,6 +18,8 @@ CGFloat EmotionListSectionFooterH = 20;
 
 @property (nonatomic, weak) UICollectionView * collectionView;
 @property (nonatomic, weak) UIPageControl * pageControlFooter;
+@property (nonatomic, assign) NSInteger scrollSection;
+@property (nonatomic, assign) BOOL clickChangeType;
 
 @end
 
@@ -46,9 +48,11 @@ CGFloat EmotionListSectionFooterH = 20;
         self.collectionView = collectionView;
         
         UIPageControl * pageControlFooter = [[UIPageControl alloc] init];
-        pageControlFooter.numberOfPages = 3;
+        pageControlFooter.hidden = YES;
         [self addSubview:pageControlFooter];
         self.pageControlFooter = pageControlFooter;
+        
+        self.scrollSection = -1;
         
     }
     return self;
@@ -66,9 +70,13 @@ CGFloat EmotionListSectionFooterH = 20;
 
 - (void)setEmotionDataArray:(NSArray *)emotionDataArray
 {
+    //觉得还是在这判断是否有最近使用的表情好点
+    
+    
+    
     _emotionDataArray = emotionDataArray;
     
-    
+    [self.collectionView reloadData];
 }
 
 
@@ -76,12 +84,22 @@ CGFloat EmotionListSectionFooterH = 20;
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 2;
+    //加上常用表情的分组，常用表情是变化的，选择一个表情就增加一个，但是只显示一页
+    return self.emotionDataArray.count + 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 3;
+    NSInteger items;
+    if (section == 0)
+    {
+        items = 1;
+    }
+    else
+    {
+        items = [[self.emotionDataArray objectAtIndex:section-1] count]/20;
+    }
+    return items;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -96,13 +114,60 @@ CGFloat EmotionListSectionFooterH = 20;
 //    NSIndexPath * scrollIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
 //    self.pageControlFooter.currentPage = scrollIndexPath.item;
     
-    NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:scrollView.contentOffset];
-    self.pageControlFooter.currentPage = indexPath.item;
+    CGPoint point = scrollView.contentOffset;
+    point.x += SCREEN_W*0.5;
+    NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:point];
     
+    MYZLog(@"--- %@  %ld-%ld ", NSStringFromCGPoint(point),indexPath.section, indexPath.item);
     
+    if (indexPath.section == 0)
+    {
+        self.pageControlFooter.hidden = YES;
+    }
+    else
+    {
+        self.pageControlFooter.hidden = NO;
+        self.pageControlFooter.numberOfPages = [[self.emotionDataArray objectAtIndex:indexPath.section-1] count]/20;
+        self.pageControlFooter.currentPage = indexPath.item;
+    }
+    
+    if (self.scrollSection != indexPath.section && self.clickChangeType == NO && [self.delegate respondsToSelector:@selector(emotionListScrollToType:)])
+    {
+        [self.delegate emotionListScrollToType:indexPath.section+MYZEmotionToolBarButtonTypeRecent];
+        
+    }
+    self.scrollSection = indexPath.section;
+    self.clickChangeType = NO;
 }
 
 
+#pragma mark - 外部滴啊用
+
+- (void)emotionListViewShowWithType:(MYZEmotionToolBarButtonType)type
+{
+    self.clickChangeType = YES;
+    
+    switch (type) {
+        case MYZEmotionToolBarButtonTypeRecent:
+            //选择常用表情
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            break;
+        case MYZEmotionToolBarButtonTypeDefault:
+            //选择默认表情
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            break;
+        case MYZEmotionToolBarButtonTypeEmoji:
+            //选择emoji表情
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:2] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            break;
+        case MYZEmotionToolBarButtonTypeLang:
+            //选择小浪花
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:3] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            break;
+        default:
+            break;
+    }
+}
 
 
 @end

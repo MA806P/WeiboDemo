@@ -23,4 +23,6 @@
 /** emoji表情的字符 */
 @property (nonatomic, copy) NSString *emoji;
 
+- (instancetype)initEmotionWithDictionary:(NSDictionary *)dic;
+
 @end

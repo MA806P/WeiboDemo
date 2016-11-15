@@ -13,7 +13,7 @@
 
 CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情的按钮
 
-@interface MYZComposeEmotionKeyboard ()
+@interface MYZComposeEmotionKeyboard () <MYZEmotionToolBarDelegate, MYZEmotionListViewDelegate>
 
 /** 表情列表视图 */
 @property (nonatomic, weak) MYZEmotionListView * listView;
@@ -31,11 +31,13 @@ CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情
     {
         //表情列表
         MYZEmotionListView * listView = [[MYZEmotionListView alloc] init];
+        listView.delegate = self;
         [self addSubview:listView];
         self.listView = listView;
         
         //工具条
         MYZEmotionToolBar * toolBar = [[MYZEmotionToolBar alloc] init];
+        toolBar.delegate = self;
         [self addSubview:toolBar];
         self.toolBar = toolBar;
         
@@ -63,5 +65,18 @@ CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情
     self.listView.emotionDataArray = emotionKeyboardDataArray;
 }
 
+#pragma mark - MYZEmotionToolBar Delegate
+
+- (void)emotionToolBarButtonClickWithType:(MYZEmotionToolBarButtonType)btnType
+{
+    [self.listView emotionListViewShowWithType:btnType];
+}
+
+#pragma mark - MYZEmotionListView Delegate
+
+- (void)emotionListScrollToType:(MYZEmotionToolBarButtonType)type
+{
+    [self.toolBar changeSelectButtonWithType:type];
+}
 
 @end
