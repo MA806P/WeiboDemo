@@ -93,6 +93,13 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
     return _emotionKeyboard;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self.textView becomeFirstResponder];
+}
+
 
 - (void)viewDidLoad
 {
@@ -107,7 +114,6 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
     
     //创建键盘上的工具条
     [self setupToolsBar];
-    
     
 }
 
@@ -168,6 +174,7 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    self.changingKeyboard = NO;
     //当textView滚动时收起键盘
     [self.textView resignFirstResponder];
 }

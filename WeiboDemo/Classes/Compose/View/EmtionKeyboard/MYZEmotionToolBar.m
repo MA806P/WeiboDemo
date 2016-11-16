@@ -67,8 +67,6 @@
     UIButton * recentBtn = [self viewWithTag:MYZEmotionToolBarButtonTypeRecent];
     recentBtn.frame = CGRectMake(0, 0, btnW, btnH);
     UIButton * defaultBtn = [self viewWithTag:MYZEmotionToolBarButtonTypeDefault];
-    defaultBtn.selected = YES;
-    self.btnSelected = defaultBtn;
     defaultBtn.frame = CGRectMake(btnW, 0, btnW, btnH);
     UIButton * emojiBtn = [self viewWithTag:MYZEmotionToolBarButtonTypeEmoji];
     emojiBtn.frame = CGRectMake(btnW*2.0, 0, btnW, btnH);
@@ -79,6 +77,9 @@
 - (void)toolBarBtnTouch:(UIButton *)btn
 {
     NSLog(@"--- %ld ", btn.tag);
+    
+    //判断是否点击同一个按钮
+    if (btn.tag == self.btnSelected.tag) { return; }
     
     self.btnSelected.selected = NO;
     btn.selected = YES;

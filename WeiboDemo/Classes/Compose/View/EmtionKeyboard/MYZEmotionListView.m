@@ -8,11 +8,13 @@
 
 #import "MYZEmotionListView.h"
 #import "MYZEmotionListCell.h"
+#import "MYZEmotion.h"
 
 static NSString * const EmotionListCellID = @"EmotionListCellID";
 static NSString * const EmotionListSectionFooter = @"EmotionListSectionFooter";
 
-CGFloat EmotionListSectionFooterH = 20;
+CGFloat const EmotionListSectionFooterH = 30;
+
 
 @interface MYZEmotionListView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -29,7 +31,7 @@ CGFloat EmotionListSectionFooterH = 20;
 {
     if (self = [super initWithFrame:frame])
     {
-        CGFloat collectionViewH = ComposeEmotionKeyboardH - ComposeEmotionToolBarH - EmotionListSectionFooterH;
+        CGFloat collectionViewH = ComposeEmotionKeyboardH - ComposeEmotionToolBarH;// - EmotionListSectionFooterH;
         UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.minimumLineSpacing = 0;
@@ -38,17 +40,22 @@ CGFloat EmotionListSectionFooterH = 20;
         
         
         UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, collectionViewH) collectionViewLayout:layout];
-        collectionView.backgroundColor = [UIColor lightGrayColor];
+        collectionView.backgroundColor = MYZColor(248, 248, 248);
         collectionView.delegate = self;
         collectionView.dataSource = self;
         collectionView.pagingEnabled = YES;
-        collectionView.showsVerticalScrollIndicator = NO;
+        collectionView.showsHorizontalScrollIndicator = NO;
         [collectionView registerClass:[MYZEmotionListCell class] forCellWithReuseIdentifier:EmotionListCellID];
         [self addSubview:collectionView];
         self.collectionView = collectionView;
         
         UIPageControl * pageControlFooter = [[UIPageControl alloc] init];
+        pageControlFooter.pageIndicatorTintColor = [UIColor grayColor];
+        pageControlFooter.currentPageIndicatorTintColor = [UIColor orangeColor];
         pageControlFooter.hidden = YES;
+        //替换pageControl的小点的图片
+        //[pageControlFooter setValue:[UIImage imageNamed:@""] forKeyPath:@"_currentPageImage"];
+        //[pageControlFooter setValue:[UIImage imageNamed:@""] forKeyPath:@"_pageImage"];
         [self addSubview:pageControlFooter];
         self.pageControlFooter = pageControlFooter;
         
@@ -63,20 +70,34 @@ CGFloat EmotionListSectionFooterH = 20;
     [super layoutSubviews];
     
     
-    self.pageControlFooter.frame = CGRectMake(0, CGRectGetMaxY(self.collectionView.frame), SCREEN_W, EmotionListSectionFooterH);
+    self.pageControlFooter.frame = CGRectMake(0, self.frame.size.height - EmotionListSectionFooterH, SCREEN_W, EmotionListSectionFooterH);
 }
 
-#pragma mark - setter
+#pragma mark - setter getter
+
+
 
 - (void)setEmotionDataArray:(NSArray *)emotionDataArray
 {
-    //觉得还是在这判断是否有最近使用的表情好点
-    
-    
-    
     _emotionDataArray = emotionDataArray;
     
     [self.collectionView reloadData];
+}
+
+- (void)addRecentEmotion:(MYZEmotion *)emotion
+{
+    NSMutableArray * recentEmotionArray = [self.emotionDataArray objectAtIndex:0];
+    [recentEmotionArray removeObject:emotion];
+    [recentEmotionArray insertObject:emotion atIndex:0];
+    if (recentEmotionArray.count > 20)
+    {
+        //最近使用的表情 最多只显示二十个
+        [recentEmotionArray removeLastObject];
+    }
+    [NSKeyedArchiver archiveRootObject:recentEmotionArray toFile:MYZEmotionRecentDataPath];
+    
+    //刷新最近使用表情的那个section
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 
 
@@ -84,28 +105,37 @@ CGFloat EmotionListSectionFooterH = 20;
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    //加上常用表情的分组，常用表情是变化的，选择一个表情就增加一个，但是只显示一页
-    return self.emotionDataArray.count + 1;
+    //常用，默认，emoji，小浪花表情
+    return self.emotionDataArray.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSInteger items;
-    if (section == 0)
-    {
-        items = 1;
-    }
-    else
-    {
-        items = [[self.emotionDataArray objectAtIndex:section-1] count]/20;
-    }
-    return items;
+    //每页最多只显示20个表情，常用表情要注意 只有一页 在添加的时候已经判断了 数组超过20就会移除 没有数据也显示空白
+    return section==0?1:ceil([[self.emotionDataArray objectAtIndex:section] count]/20.0);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MYZEmotionListCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:EmotionListCellID forIndexPath:indexPath];
-    
+    if (indexPath.section == 0)
+    {
+        if ([[self.emotionDataArray objectAtIndex:0] count] > 0)
+        {
+            cell.emotionEmptyLabel.hidden = YES;
+            cell.emotionRecentLabel.hidden = NO;
+        }
+        else
+        {
+            cell.emotionEmptyLabel.hidden = NO;
+            cell.emotionRecentLabel.hidden = YES;
+        }
+    }
+    else
+    {
+        cell.emotionEmptyLabel.hidden = YES;
+        cell.emotionRecentLabel.hidden = YES;
+    }
     return cell;
 }
 
@@ -127,7 +157,7 @@ CGFloat EmotionListSectionFooterH = 20;
     else
     {
         self.pageControlFooter.hidden = NO;
-        self.pageControlFooter.numberOfPages = [[self.emotionDataArray objectAtIndex:indexPath.section-1] count]/20;
+        self.pageControlFooter.numberOfPages = ceil([[self.emotionDataArray objectAtIndex:indexPath.section] count]/20.0);
         self.pageControlFooter.currentPage = indexPath.item;
     }
     
@@ -141,7 +171,7 @@ CGFloat EmotionListSectionFooterH = 20;
 }
 
 
-#pragma mark - 外部滴啊用
+#pragma mark - 外部调用
 
 - (void)emotionListViewShowWithType:(MYZEmotionToolBarButtonType)type
 {

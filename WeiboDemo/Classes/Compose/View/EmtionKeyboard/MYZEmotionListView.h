@@ -12,6 +12,9 @@
 FOUNDATION_EXPORT CGFloat const ComposeEmotionKeyboardH; //表情键盘高度
 FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的选择表情的按钮
 
+//最近使用表情的缓存路径
+#define MYZEmotionRecentDataPath [MYZFileRootPath stringByAppendingPathComponent:@"emotionRecent.data"]
+
 @protocol MYZEmotionListViewDelegate <NSObject>
 
 @optional
