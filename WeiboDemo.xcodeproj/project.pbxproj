@@ -42,6 +42,7 @@
 		DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */; };
 		DA20914B1DDA0650006B92E5 /* MYZEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = DA20914A1DDA0650006B92E5 /* MYZEmotion.m */; };
 		DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */; };
+		DA2504471DDCAB16001B4E99 /* MYZEmotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2504461DDCAB16001B4E99 /* MYZEmotionView.m */; };
 		DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */; };
 		DA5D88561D86F4EE00583136 /* WeiboDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88551D86F4EE00583136 /* WeiboDemoTests.m */; };
 		DA5D88611D86F4EE00583136 /* WeiboDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D88601D86F4EE00583136 /* WeiboDemoUITests.m */; };
@@ -150,6 +151,8 @@
 		DA20914A1DDA0650006B92E5 /* MYZEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZEmotion.m; path = WeiboDemo/Classes/Compose/View/MYZEmotion.m; sourceTree = SOURCE_ROOT; };
 		DA20914C1DDA0702006B92E5 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
+		DA2504451DDCAB16001B4E99 /* MYZEmotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionView.h; sourceTree = "<group>"; };
+		DA2504461DDCAB16001B4E99 /* MYZEmotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionView.m; sourceTree = "<group>"; };
 		DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusRetweeted.h; sourceTree = "<group>"; };
 		DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusRetweeted.m; sourceTree = "<group>"; };
 		DA5D88381D86F4EE00583136 /* WeiboDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeiboDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -349,6 +352,8 @@
 				184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */,
 				18C375C81DD5B2E900B68E72 /* MYZEmotionListCell.h */,
 				18C375C91DD5B2E900B68E72 /* MYZEmotionListCell.m */,
+				DA2504451DDCAB16001B4E99 /* MYZEmotionView.h */,
+				DA2504461DDCAB16001B4E99 /* MYZEmotionView.m */,
 			);
 			path = EmtionKeyboard;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 				DA20914B1DDA0650006B92E5 /* MYZEmotion.m in Sources */,
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
 				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
+				DA2504471DDCAB16001B4E99 /* MYZEmotionView.m in Sources */,
 				18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */,
 				DADB20B61DBFA691009D1ACD /* LabelScrollView.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,

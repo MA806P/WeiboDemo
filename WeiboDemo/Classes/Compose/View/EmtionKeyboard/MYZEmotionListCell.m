@@ -8,6 +8,7 @@
 
 #import "MYZEmotionListCell.h"
 #import "MYZEmotion.h"
+#import "MYZEmotionView.h"
 
 @interface MYZEmotionListCell ()
 
@@ -46,6 +47,16 @@
         recentLabel.hidden = YES;
         [self.contentView addSubview:recentLabel];
         self.emotionRecentLabel = recentLabel;
+        
+        
+        //单个表情视图，每页最多显示20个
+        for (int i=0; i<20; i++)
+        {
+            MYZEmotionView * emotionView = [[MYZEmotionView alloc] init];
+            [self.contentView addSubview:emotionView];
+        }
+        
+        //删除按钮
         
     }
     return self;

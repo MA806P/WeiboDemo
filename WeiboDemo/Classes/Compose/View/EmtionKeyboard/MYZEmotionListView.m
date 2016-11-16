@@ -148,7 +148,7 @@ CGFloat const EmotionListSectionFooterH = 30;
     point.x += SCREEN_W*0.5;
     NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:point];
     
-    MYZLog(@"--- %@  %ld-%ld ", NSStringFromCGPoint(point),indexPath.section, indexPath.item);
+    //MYZLog(@"--- %@  %ld-%ld ", NSStringFromCGPoint(point),indexPath.section, indexPath.item);
     
     if (indexPath.section == 0)
     {
