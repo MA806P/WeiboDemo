@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MYZTabBarController.h"
 #import "MYZOAuthController.h"
-#import "MYZAccount.h"
+
 
 @interface AppDelegate ()
 

@@ -10,7 +10,6 @@
 
 #import "MYZHomeController.h"
 #import "MYZOAuthController.h"
-#import "MYZAccount.h"
 #import "MYZUserInfo.h"
 #import "MJRefresh.h"
 

@@ -28,6 +28,7 @@
 #import "WeiboSDK.h"
 #import "MYZTools.h"
 #import "MYZHttpTools.h"
+#import "MYZAccount.h"
 
 #import "NSString+MYZ.h"
 #import "UIView+MYZ.h"

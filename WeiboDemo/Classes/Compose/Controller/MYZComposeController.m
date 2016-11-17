@@ -14,6 +14,8 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "MYZEmotion.h"
+#import "MYZStatusTool.h"
+
 
 
 NSInteger const ComposePicRowColumnCount = 3; //要发布的图片每行每列展示的个数
@@ -137,6 +139,41 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
 
 - (void)sendStatus
 {
+//    NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
+//    [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
+//    [paramDic setValue:self.textView.text forKey:@"status"];
+//    
+//    if (self.picsView.imageArray.count > 0)
+//    {
+//        UIImage * uploadImage = [self.picsView.imageArray firstObject];
+//        NSData * uploadImageData = UIImageJPEGRepresentation(uploadImage, 0.8);
+//        [paramDic setValue:uploadImageData forKey:@"pic"];
+//
+//    }
+//    
+//    
+//    [MYZStatusTool sendStatusUploadWithParam:paramDic success:^(id result) {
+//        MYZLog(@"--- %@ ", result);
+//        [MYZTools showAlertWithText:@"发送成功"];
+//    } failure:^(NSError *error) {
+//        MYZLog(@"--- %@ ", error);
+//    }];
+    
+    //http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg
+    
+    NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
+    [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
+    [paramDic setValue:self.textView.text forKey:@"status"];
+    
+    [paramDic setValue:@"http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg" forKey:@"pic_id"];
+    
+    
+    [MYZStatusTool sendStatusUploadUrlTextWithParam:paramDic success:^(id result) {
+        MYZLog(@"--- %@ ", result);
+        [MYZTools showAlertWithText:@"发送成功"];
+    } failure:^(NSError *error) {
+        MYZLog(@"--- %@ ", error);
+    }];
 }
 
 

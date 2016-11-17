@@ -10,7 +10,6 @@
 #define MYZAccountFilepath [MYZFileRootPath stringByAppendingPathComponent:@"account.data"]
 
 #import "MYZTools.h"
-#import "MYZAccount.h"
 #import "MYZUserInfo.h"
 
 @implementation MYZTools

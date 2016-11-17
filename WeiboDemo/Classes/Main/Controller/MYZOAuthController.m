@@ -8,7 +8,6 @@
 
 #import "MYZOAuthController.h"
 #import "MYZTabBarController.h"
-#import "MYZAccount.h"
 #import "MYZUserInfo.h"
 
 @interface MYZOAuthController ()
