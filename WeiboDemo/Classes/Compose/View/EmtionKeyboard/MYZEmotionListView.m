@@ -16,7 +16,7 @@ static NSString * const EmotionListSectionFooter = @"EmotionListSectionFooter";
 CGFloat const EmotionListSectionFooterH = 30;
 
 
-@interface MYZEmotionListView () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MYZEmotionListView () <UICollectionViewDelegate, UICollectionViewDataSource, MYZEmotionListCellDelegate>
 
 @property (nonatomic, weak) UICollectionView * collectionView;
 @property (nonatomic, weak) UIPageControl * pageControlFooter;
@@ -69,7 +69,6 @@ CGFloat const EmotionListSectionFooterH = 30;
 {
     [super layoutSubviews];
     
-    
     self.pageControlFooter.frame = CGRectMake(0, self.frame.size.height - EmotionListSectionFooterH, SCREEN_W, EmotionListSectionFooterH);
 }
 
@@ -86,7 +85,7 @@ CGFloat const EmotionListSectionFooterH = 30;
 
 - (void)addRecentEmotion:(MYZEmotion *)emotion
 {
-    NSMutableArray * recentEmotionArray = [self.emotionDataArray objectAtIndex:0];
+    NSMutableArray * recentEmotionArray = [[self.emotionDataArray objectAtIndex:0] firstObject];
     [recentEmotionArray removeObject:emotion];
     [recentEmotionArray insertObject:emotion atIndex:0];
     if (recentEmotionArray.count > 20)
@@ -112,7 +111,8 @@ CGFloat const EmotionListSectionFooterH = 30;
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     //每页最多只显示20个表情，常用表情要注意 只有一页 在添加的时候已经判断了 数组超过20就会移除 没有数据也显示空白
-    return section==0?1:ceil([[self.emotionDataArray objectAtIndex:section] count]/20.0);
+    //修改获取到的数组已经分好组了20一组
+    return [[self.emotionDataArray objectAtIndex:section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -120,7 +120,7 @@ CGFloat const EmotionListSectionFooterH = 30;
     MYZEmotionListCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:EmotionListCellID forIndexPath:indexPath];
     if (indexPath.section == 0)
     {
-        if ([[self.emotionDataArray objectAtIndex:0] count] > 0)
+        if ([[[self.emotionDataArray objectAtIndex:0] firstObject] count] > 0)
         {
             cell.emotionEmptyLabel.hidden = YES;
             cell.emotionRecentLabel.hidden = NO;
@@ -136,6 +136,8 @@ CGFloat const EmotionListSectionFooterH = 30;
         cell.emotionEmptyLabel.hidden = YES;
         cell.emotionRecentLabel.hidden = YES;
     }
+    cell.emotionArray = [self.emotionDataArray[indexPath.section] objectAtIndex:indexPath.item];
+    cell.delegate = self;
     return cell;
 }
 
@@ -157,7 +159,7 @@ CGFloat const EmotionListSectionFooterH = 30;
     else
     {
         self.pageControlFooter.hidden = NO;
-        self.pageControlFooter.numberOfPages = ceil([[self.emotionDataArray objectAtIndex:indexPath.section] count]/20.0);
+        self.pageControlFooter.numberOfPages = [[self.emotionDataArray objectAtIndex:indexPath.section] count];
         self.pageControlFooter.currentPage = indexPath.item;
     }
     
@@ -168,6 +170,14 @@ CGFloat const EmotionListSectionFooterH = 30;
     }
     self.scrollSection = indexPath.section;
     self.clickChangeType = NO;
+}
+
+#pragma mark - MYZEmotionListCell Delegate
+
+- (void)emotionListCellTouchWithEmotion:(MYZEmotion *)emotion
+{
+    MYZLog(@" ---  emotionListCellTouchWithEmotion");
+    [self addRecentEmotion:emotion];
 }
 
 

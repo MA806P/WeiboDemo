@@ -15,7 +15,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        
+        self.backgroundColor = MYZRandomColor;
     }
     return self;
 }

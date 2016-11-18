@@ -86,7 +86,7 @@ CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情
     //从外面传来的数据没有最近使用的表情
     if (emotionKeyboardDataArray.count <= 0) { return; }
     NSMutableArray * allEmotionArray = [NSMutableArray array];
-    [allEmotionArray addObject:self.recentEmotionArray]; //最近使用的表情
+    [allEmotionArray addObject:@[self.recentEmotionArray]]; //最近使用的表情
     [allEmotionArray addObjectsFromArray:emotionKeyboardDataArray]; //默认，emoji，小浪花
     _emotionKeyboardDataArray = allEmotionArray;
     

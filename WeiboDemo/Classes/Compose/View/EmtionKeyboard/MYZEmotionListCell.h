@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class MYZEmotion;
+
 FOUNDATION_EXTERN CGFloat const EmotionListSectionFooterH;
+
+@protocol MYZEmotionListCellDelegate <NSObject>
+
+@optional
+- (void)emotionListCellTouchWithEmotion:(MYZEmotion *)emotion;
+
+@end
+
 
 @interface MYZEmotionListCell : UICollectionViewCell
 
@@ -17,5 +27,7 @@ FOUNDATION_EXTERN CGFloat const EmotionListSectionFooterH;
 
 /** 要显示的表情模型数组 */
 @property (nonatomic, copy) NSArray * emotionArray;
+
+@property (nonatomic, assign) id <MYZEmotionListCellDelegate> delegate;
 
 @end
