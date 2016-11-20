@@ -11,11 +11,13 @@
 @class MYZEmotion;
 
 FOUNDATION_EXTERN CGFloat const EmotionListSectionFooterH;
+FOUNDATION_EXTERN NSString * const ComposeEmotionKeyboardDeleteKey;
 
 @protocol MYZEmotionListCellDelegate <NSObject>
 
 @optional
 - (void)emotionListCellTouchWithEmotion:(MYZEmotion *)emotion;
+
 
 @end
 

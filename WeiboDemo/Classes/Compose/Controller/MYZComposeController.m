@@ -24,6 +24,9 @@ CGFloat const ComposePicMarginAmong = 6.0; //展示的图片和图片之间的�
 
 CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
 
+//键盘删除按钮通知标志
+NSString * const ComposeEmotionKeyboardDeleteKey = @"EmotionKeyboardDeleteKey";
+
 @interface MYZComposeController () <UITextViewDelegate, MYZComposeToolsBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 //输入框
@@ -141,6 +144,12 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
         
         _emotionKeyboard.emotionKeyboardDataArray = emotionKeyboardDataArray;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionKeyboardDeleteBtnTouch) name:ComposeEmotionKeyboardDeleteKey object:nil];
+        
+        //__weak typeof(self) weakSelf = self;
+        _emotionKeyboard.emotionKeyboardBlock = ^(MYZEmotion * emotion){
+            MYZLog(@" --- compose %@", emotion);
+        };
     }
     return _emotionKeyboard;
 }
@@ -274,6 +283,15 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
 
 
 
+#pragma mark - 自定义表情键盘点击事件
+
+- (void)composeEmotionKeyboardDeleteBtnTouch
+{
+    MYZLog(@" --- composeEmotionKeyboardDeleteBtnTouch");
+}
+
+
+
 #pragma mark - 键盘上的工具条
 
 - (void)setupToolsBar
@@ -390,6 +408,7 @@ CGFloat const ComposeEmotionKeyboardH = 216.0; //表情键盘高度
     
     
 }
+
 
 
 #pragma mark - 键盘弹出或回收事件处理

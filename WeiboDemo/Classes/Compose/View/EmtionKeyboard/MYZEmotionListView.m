@@ -176,9 +176,20 @@ CGFloat const EmotionListSectionFooterH = 30;
 
 - (void)emotionListCellTouchWithEmotion:(MYZEmotion *)emotion
 {
-    MYZLog(@" ---  emotionListCellTouchWithEmotion");
-    [self addRecentEmotion:emotion];
+    NSIndexPath * touchIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
+    //点击最近使用的表情时不去添加
+    if (touchIndexPath.section > 0)
+    {
+        [self addRecentEmotion:emotion];
+    }
+    
+    if (self.emotionBlock)
+    {
+        self.emotionBlock(emotion);
+    }
 }
+
+
 
 
 #pragma mark - 外部调用

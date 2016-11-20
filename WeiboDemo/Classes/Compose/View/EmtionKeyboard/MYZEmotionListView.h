@@ -15,6 +15,10 @@ FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的�
 //最近使用表情的缓存路径
 #define MYZEmotionRecentDataPath [MYZFileRootPath stringByAppendingPathComponent:@"emotionRecent.data"]
 
+@class MYZEmotion;
+
+typedef void(^EmotionListViewBlock)(MYZEmotion *);
+
 @protocol MYZEmotionListViewDelegate <NSObject>
 
 @optional
@@ -27,6 +31,8 @@ FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的�
 
 /** 表情键盘里的全部数据 */
 @property (nonatomic, copy) NSArray * emotionDataArray;
+
+@property (nonatomic, copy) EmotionListViewBlock emotionBlock;
 
 @property (nonatomic, assign) id <MYZEmotionListViewDelegate> delegate;
 

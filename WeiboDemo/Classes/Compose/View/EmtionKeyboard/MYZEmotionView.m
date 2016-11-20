@@ -15,7 +15,8 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.backgroundColor = MYZRandomColor;
+        //self.backgroundColor = MYZRandomColor;
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }

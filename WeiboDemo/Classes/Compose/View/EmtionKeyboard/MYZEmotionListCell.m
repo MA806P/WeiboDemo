@@ -86,7 +86,7 @@ static NSInteger const EmotionIndexTag = 118;
     self.emotionsContentView.frame = CGRectMake( 0, 0, selfW, contentH);
     CGFloat topMargin = 0;
     CGFloat bottomMargin = 0;
-    CGFloat lrMargin = 0;
+    CGFloat lrMargin = 10;
     
     NSInteger rows = 3;
     NSInteger columns = 7;
@@ -148,7 +148,7 @@ static NSInteger const EmotionIndexTag = 118;
 
 - (void)deleteBtnTouch
 {
-    MYZLog(@"deleteBtnTouch");
+    [[NSNotificationCenter defaultCenter] postNotificationName:ComposeEmotionKeyboardDeleteKey object:nil];
 }
 
 
