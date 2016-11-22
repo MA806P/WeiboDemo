@@ -90,12 +90,6 @@ NSString * const ComposeEmotionKeyboardDeleteKey = @"EmotionKeyboardDeleteKey";
         NSString * emojiPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/emoji/info.plist" ofType:nil];
         NSArray * emojiInfos = [NSArray arrayWithContentsOfFile:emojiPlist];
         NSMutableArray * emojiArray = [NSMutableArray array];
-//        for (NSDictionary * tempDic in emojiInfos)
-//        {
-//            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:tempDic];
-//            [emojiArray addObject:emotion];
-//        }
-//        [emojiArray makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/emoji"];
         
         __block NSMutableArray * emojiSectionArray = [NSMutableArray array];
         [emojiInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -119,12 +113,6 @@ NSString * const ComposeEmotionKeyboardDeleteKey = @"EmotionKeyboardDeleteKey";
         NSString * lxhPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/lxh/info.plist" ofType:nil];
         NSArray * lxhInfos = [NSArray arrayWithContentsOfFile:lxhPlist];
         NSMutableArray * lxhArray = [NSMutableArray array];
-//        for (NSDictionary * tempDic in lxhInfos)
-//        {
-//            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:tempDic];
-//            [lxhArray addObject:emotion];
-//        }
-//        [lxhArray makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/lxh"];
         
         __block NSMutableArray * lxhSectionArray = [NSMutableArray array];
         [lxhInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
