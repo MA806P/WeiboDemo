@@ -52,6 +52,7 @@ static NSInteger const EmotionIndexTag = 118;
         
         //单个表情视图，每页最多显示20个
         UIView * emotionsContentView = [[UIView alloc] init];
+        emotionsContentView.backgroundColor = [UIColor lightGrayColor];
         [self.contentView addSubview:emotionsContentView];
         self.emotionsContentView = emotionsContentView;
         
@@ -69,6 +70,10 @@ static NSInteger const EmotionIndexTag = 118;
         [deleterBtn addTarget:self action:@selector(deleteBtnTouch) forControlEvents:UIControlEventTouchUpInside];
         deleterBtn.tag = EmotionIndexTag + 20;
         [emotionsContentView addSubview:deleterBtn];
+        
+        //添加长按手势，长按弹框显示表情
+        UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(emotionsContentViewLongPressAction:)];
+        [emotionsContentView addGestureRecognizer:longPress];
         
     }
     return self;
@@ -132,7 +137,7 @@ static NSInteger const EmotionIndexTag = 118;
     
 }
 
-
+//表情按钮点击
 - (void)emotionBtnTouch:(UIButton *)btn
 {
     if ([self.delegate respondsToSelector:@selector(emotionListCellTouchWithEmotion:)])
@@ -145,11 +150,43 @@ static NSInteger const EmotionIndexTag = 118;
     }
 }
 
-
+//删除按钮点击
 - (void)deleteBtnTouch
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:ComposeEmotionKeyboardDeleteKey object:nil];
 }
 
+//长按手势处理，长按手势触发之后不松，滑动也会调用此方法
+- (void)emotionsContentViewLongPressAction:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    //触摸点
+    CGPoint pressPoint = [gestureRecognizer locationInView:self.emotionsContentView];
+    MYZLog(@"long press --- %@ ", NSStringFromCGPoint(pressPoint));
+    
+    //寻找触摸点所在的emotionView
+    __block MYZEmotionView * emotionView;
+    [self.emotionsContentView.subviews enumerateObjectsUsingBlock:^(__kindof MYZEmotionView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (CGRectContainsPoint(obj.frame, pressPoint) && [obj isKindOfClass:[MYZEmotionView class]] && obj.hidden == NO)
+        {
+            emotionView = obj;
+            * stop = YES;
+        }
+        
+    }];
+    
+    if (emotionView == nil) { return; }
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        //手松开
+        MYZLog(@"");
+    }
+    else
+    {
+        //手没松，或者在滑动
+    }
+    
+}
 
 @end
