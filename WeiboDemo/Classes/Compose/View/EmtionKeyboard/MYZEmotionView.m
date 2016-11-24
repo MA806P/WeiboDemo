@@ -17,6 +17,7 @@
     {
         //self.backgroundColor = MYZRandomColor;
         self.backgroundColor = [UIColor clearColor];
+        self.adjustsImageWhenHighlighted = NO;
     }
     return self;
 }

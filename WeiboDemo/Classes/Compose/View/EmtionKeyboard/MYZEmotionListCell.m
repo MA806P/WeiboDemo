@@ -9,6 +9,7 @@
 #import "MYZEmotionListCell.h"
 #import "MYZEmotion.h"
 #import "MYZEmotionView.h"
+#import "MYZEmotionPreview.h"
 
 static NSInteger const EmotionIndexTag = 118;
 
@@ -16,6 +17,7 @@ static NSInteger const EmotionIndexTag = 118;
 
 @property (nonatomic, weak) UIView * emotionsContentView;
 
+@property (nonatomic, strong) MYZEmotionPreview * emotionPreview;
 
 @end
 
@@ -114,6 +116,16 @@ static NSInteger const EmotionIndexTag = 118;
     self.emotionRecentLabel.frame = CGRectMake( 0, contentH, selfW, EmotionListSectionFooterH);
 }
 
+- (MYZEmotionPreview *)emotionPreview
+{
+    if (_emotionPreview == nil)
+    {
+        _emotionPreview = [[MYZEmotionPreview alloc] init];
+    }
+    return _emotionPreview;
+}
+
+
 - (void)setEmotionArray:(NSArray *)emotionArray
 {
     _emotionArray = emotionArray;
@@ -175,16 +187,17 @@ static NSInteger const EmotionIndexTag = 118;
         
     }];
     
-    if (emotionView == nil) { return; }
-    
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
         //手松开
-        MYZLog(@"");
+        MYZLog(@" --- ended %@ ", emotionView.emotion);
+        [self.emotionPreview dismiss];
     }
     else
     {
         //手没松，或者在滑动
+        MYZLog(@" --- %@ ", emotionView.emotion);
+        [self.emotionPreview showFromEmotionView:emotionView];
     }
     
 }
