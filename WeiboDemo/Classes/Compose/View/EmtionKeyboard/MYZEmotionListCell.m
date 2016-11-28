@@ -176,18 +176,21 @@ static NSInteger const EmotionIndexTag = 118;
     MYZLog(@"long press --- %@ ", NSStringFromCGPoint(pressPoint));
     
     //寻找触摸点所在的emotionView
-    __block MYZEmotionView * emotionView;
-    [self.emotionsContentView.subviews enumerateObjectsUsingBlock:^(__kindof MYZEmotionView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
+    MYZEmotionView * emotionView;
+    for(MYZEmotionView * obj in self.emotionsContentView.subviews)
+    {
         if (CGRectContainsPoint(obj.frame, pressPoint) && [obj isKindOfClass:[MYZEmotionView class]] && obj.hidden == NO)
         {
             emotionView = obj;
-            * stop = YES;
+            break;
         }
-        
-    }];
+    }
     
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    if (emotionView == nil)
+    {
+        [self.emotionPreview dismiss];
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
         //手松开
         MYZLog(@" --- ended %@ ", emotionView.emotion);

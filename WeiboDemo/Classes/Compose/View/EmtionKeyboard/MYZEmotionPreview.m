@@ -8,6 +8,7 @@
 
 #import "MYZEmotionPreview.h"
 #import "MYZEmotionView.h"
+#import "MYZEmotion.h"
 
 @interface MYZEmotionPreview ()
 
@@ -26,7 +27,7 @@
         UIImageView * bgImageView = [[UIImageView alloc] initWithImage:bgImg];
         [self addSubview:bgImageView];
         
-        MYZEmotionView * emotionView = [[MYZEmotionView alloc] initWithFrame:CGRectMake(16, 15, 32, 32)];
+        MYZEmotionView * emotionView = [[MYZEmotionView alloc] initWithFrame:CGRectMake(14, 10, 36, 36)];
         [self addSubview:emotionView];
         self.emotionView = emotionView;
     }
@@ -36,20 +37,36 @@
 
 - (void)showFromEmotionView:(MYZEmotionView *)emotionView
 {
-    if (emotionView == nil) {
+    if (emotionView == nil || [self.emotionView.emotion isEqual:emotionView.emotion]) {
         return;
     }
     
     self.emotionView.emotion = emotionView.emotion;
     
-    CGFloat centerY = CGRectGetMaxY(emotionView.frame) - self.frame.size.height * 0.5;
+    CGFloat centerY = emotionView.center.y - self.frame.size.height * 0.5;
     CGPoint selfCenter = CGPointMake(emotionView.center.x, centerY);
     
     UIWindow * lastWindow = [[[UIApplication sharedApplication] windows] lastObject];
     
-    self.center = [lastWindow convertPoint:selfCenter fromView:emotionView];
+    self.center = [lastWindow convertPoint:selfCenter fromView:emotionView.superview];
     MYZLog(@" showFromEmotionView - %@ %@ ",NSStringFromCGRect(self.frame) , NSStringFromCGPoint(selfCenter));
     [lastWindow addSubview:self];
+    
+    __block CGRect emotionFrame = self.emotionView.frame;
+    emotionFrame.origin.y += 8;
+    self.emotionView.frame = emotionFrame;
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        emotionFrame.origin.y -= 10;
+        self.emotionView.frame = emotionFrame;
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.1 animations:^{
+            self.emotionView.frame = CGRectMake(14, 10, 36, 36);
+        }];
+    }];
+    
+    
 }
 
 - (void)dismiss
