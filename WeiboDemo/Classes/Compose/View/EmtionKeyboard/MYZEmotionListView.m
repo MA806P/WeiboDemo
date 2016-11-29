@@ -183,10 +183,8 @@ CGFloat const EmotionListSectionFooterH = 30;
         [self addRecentEmotion:emotion];
     }
     
-    if (self.emotionBlock)
-    {
-        self.emotionBlock(emotion);
-    }
+    //给控制器发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:ComposeEmotionSelectedKey object:emotion];
 }
 
 

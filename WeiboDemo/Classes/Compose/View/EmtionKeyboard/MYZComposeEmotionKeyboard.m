@@ -37,13 +37,13 @@ CGFloat const ComposeEmotionToolBarH = 37.0; //表情键盘底部的选择表情
         //表情列表
         MYZEmotionListView * listView = [[MYZEmotionListView alloc] init];
         listView.delegate = self;
-        __weak typeof(self) weakSelf = self;
-        listView.emotionBlock = ^(MYZEmotion * emotion){
-            if (weakSelf.emotionKeyboardBlock)
-            {
-                weakSelf.emotionKeyboardBlock(emotion);
-            }
-        };
+//        __weak typeof(self) weakSelf = self;
+//        listView.emotionBlock = ^(MYZEmotion * emotion){
+//            if (weakSelf.emotionKeyboardBlock)
+//            {
+//                weakSelf.emotionKeyboardBlock(emotion);
+//            }
+//        };
         [self addSubview:listView];
         self.listView = listView;
         

@@ -916,7 +916,7 @@
 				DEVELOPMENT_TEAM = 3ZPEAN2426;
 				GCC_PREFIX_HEADER = WeiboDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = WeiboDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.myz.weibo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -935,7 +935,7 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = WeiboDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = WeiboDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.myz.weibo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

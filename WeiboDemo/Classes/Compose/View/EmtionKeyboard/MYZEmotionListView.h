@@ -11,13 +11,14 @@
 
 FOUNDATION_EXPORT CGFloat const ComposeEmotionKeyboardH; //表情键盘高度
 FOUNDATION_EXPORT CGFloat const ComposeEmotionToolBarH; //表情键盘底部的选择表情的按钮
+NSString * const ComposeEmotionSelectedKey; //表情键盘选择表情通知标志
 
 //最近使用表情的缓存路径
 #define MYZEmotionRecentDataPath [MYZFileRootPath stringByAppendingPathComponent:@"emotionRecent.data"]
 
 @class MYZEmotion;
 
-typedef void(^EmotionListViewBlock)(MYZEmotion *);
+//typedef void(^EmotionListViewBlock)(MYZEmotion *);
 
 @protocol MYZEmotionListViewDelegate <NSObject>
 
@@ -32,7 +33,7 @@ typedef void(^EmotionListViewBlock)(MYZEmotion *);
 /** 表情键盘里的全部数据 */
 @property (nonatomic, copy) NSArray * emotionDataArray;
 
-@property (nonatomic, copy) EmotionListViewBlock emotionBlock;
+//@property (nonatomic, copy) EmotionListViewBlock emotionBlock;
 
 @property (nonatomic, assign) id <MYZEmotionListViewDelegate> delegate;
 

@@ -49,7 +49,7 @@
     UIWindow * lastWindow = [[[UIApplication sharedApplication] windows] lastObject];
     
     self.center = [lastWindow convertPoint:selfCenter fromView:emotionView.superview];
-    MYZLog(@" showFromEmotionView - %@ %@ ",NSStringFromCGRect(self.frame) , NSStringFromCGPoint(selfCenter));
+    //MYZLog(@" showFromEmotionView - %@ %@ ",NSStringFromCGRect(self.frame) , NSStringFromCGPoint(selfCenter));
     [lastWindow addSubview:self];
     
     __block CGRect emotionFrame = self.emotionView.frame;

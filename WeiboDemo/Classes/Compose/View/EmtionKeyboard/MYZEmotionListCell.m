@@ -31,8 +31,6 @@ static NSInteger const EmotionIndexTag = 118;
         self.contentView.backgroundColor = [UIColor clearColor];//MYZRandomColor;
         self.backgroundColor = [UIColor clearColor];
         
-        
-        
         UILabel * emptyLabel = [[UILabel alloc] init];
         emptyLabel.textColor = [UIColor lightGrayColor];
         emptyLabel.font = [UIFont systemFontOfSize:15];
@@ -54,7 +52,6 @@ static NSInteger const EmotionIndexTag = 118;
         
         //单个表情视图，每页最多显示20个
         UIView * emotionsContentView = [[UIView alloc] init];
-        emotionsContentView.backgroundColor = [UIColor lightGrayColor];
         [self.contentView addSubview:emotionsContentView];
         self.emotionsContentView = emotionsContentView;
         
@@ -149,16 +146,22 @@ static NSInteger const EmotionIndexTag = 118;
     
 }
 
-//表情按钮点击
-- (void)emotionBtnTouch:(UIButton *)btn
+//表情选择处理事件
+- (void)selectedEmotion:(MYZEmotion *)emotion
 {
     if ([self.delegate respondsToSelector:@selector(emotionListCellTouchWithEmotion:)])
     {
-        NSInteger emotionIndex = btn.tag - EmotionIndexTag;
-        if (emotionIndex < self.emotionArray.count)
-        {
-            [self.delegate emotionListCellTouchWithEmotion:[self.emotionArray objectAtIndex:emotionIndex]];
-        }
+        [self.delegate emotionListCellTouchWithEmotion:emotion];
+    }
+}
+
+//表情按钮点击
+- (void)emotionBtnTouch:(UIButton *)btn
+{
+    NSInteger emotionIndex = btn.tag - EmotionIndexTag;
+    if (emotionIndex < self.emotionArray.count)
+    {
+        [self selectedEmotion:[self.emotionArray objectAtIndex:emotionIndex]];
     }
 }
 
@@ -173,7 +176,7 @@ static NSInteger const EmotionIndexTag = 118;
 {
     //触摸点
     CGPoint pressPoint = [gestureRecognizer locationInView:self.emotionsContentView];
-    MYZLog(@"long press --- %@ ", NSStringFromCGPoint(pressPoint));
+    //MYZLog(@"long press --- %@ ", NSStringFromCGPoint(pressPoint));
     
     //寻找触摸点所在的emotionView
     MYZEmotionView * emotionView;
@@ -193,13 +196,16 @@ static NSInteger const EmotionIndexTag = 118;
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
         //手松开
-        MYZLog(@" --- ended %@ ", emotionView.emotion);
+        //MYZLog(@" --- ended %@ ", emotionView.emotion);
         [self.emotionPreview dismiss];
+        
+        //选择表情处理
+        [self selectedEmotion:emotionView.emotion];
     }
     else
     {
         //手没松，或者在滑动
-        MYZLog(@" --- %@ ", emotionView.emotion);
+        //MYZLog(@" --- %@ ", emotionView.emotion);
         [self.emotionPreview showFromEmotionView:emotionView];
     }
     
