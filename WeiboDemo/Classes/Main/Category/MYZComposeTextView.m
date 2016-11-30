@@ -7,6 +7,7 @@
 //
 
 #import "MYZComposeTextView.h"
+#import "MYZEmotion.h"
 
 @interface MYZComposeTextView ()
 
@@ -80,6 +81,22 @@
     
     CGSize placeholderSize = [self.placeholder myz_stringSizeWithMaxSize:CGSizeMake(labelMaxW, MAXFLOAT) andFont:self.placeholderLabel.font];
     self.placeholderLabel.frame = CGRectMake(labelX, labelY, placeholderSize.width, placeholderSize.height);
+    
+}
+
+
+#pragma mark - 表情输入处理
+
+- (void)appendEmotion:(MYZEmotion *)emotion
+{
+    if(emotion.emoji) //emoji表情实际就是一个字符串，自显示
+    {
+        [self insertText:emotion.emoji];
+    }
+    else //图片表情
+    {
+        
+    }
     
 }
 

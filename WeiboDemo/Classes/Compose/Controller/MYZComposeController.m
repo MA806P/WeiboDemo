@@ -137,10 +137,6 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionKeyboardDeleteBtnTouch) name:ComposeEmotionKeyboardDeleteKey object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionViewTouch:) name:ComposeEmotionSelectedKey object:nil];
-//        //__weak typeof(self) weakSelf = self;
-//        _emotionKeyboard.emotionKeyboardBlock = ^(MYZEmotion * emotion){
-//            MYZLog(@" --- compose %@", emotion);
-//        };
     }
     return _emotionKeyboard;
 }
@@ -264,7 +260,7 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 }
 
 
-#pragma mark  UITextView delegate
+#pragma mark - UITextView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -276,7 +272,7 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 - (void)textViewDidChange:(UITextView *)textView
 {
     //根据textView是否输入来判断是否显示发送按钮
-    self.navigationItem.rightBarButtonItem.enabled = (textView.text.length != 0);
+    self.navigationItem.rightBarButtonItem.enabled = self.textView.hasText;
 }
 
 
@@ -285,12 +281,19 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 
 - (void)composeEmotionKeyboardDeleteBtnTouch
 {
-    MYZLog(@" --- composeEmotionKeyboardDeleteBtnTouch");
+    //MYZLog(@" --- composeEmotionKeyboardDeleteBtnTouch");
+    //UITextView自带的方法，光标停到哪里，就删除前一个
+    [self.textView deleteBackward];
 }
 
-- (void)composeEmotionViewTouch:(MYZEmotion *)emotion
+//接收到通知点击了表情
+- (void)composeEmotionViewTouch:(NSNotification *)notification
 {
-    MYZLog(@" --- composeEmotionViewTouch: %@ ", emotion);
+    MYZLog(@" --- composeEmotionViewTouch: %@ ", notification);
+    
+    //输入表情
+    [self.textView appendEmotion:(MYZEmotion *)notification.object];
+    
 }
 
 

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MYZEmotion;
+
 @interface MYZComposeTextView : UITextView
 
 @property(nonatomic, copy) NSString * placeholder;
+
+- (void)appendEmotion:(MYZEmotion *)emotion;
 
 @end

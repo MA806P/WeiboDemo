@@ -71,6 +71,7 @@
 
 - (void)dismiss
 {
+    self.emotionView.emotion = nil;
     [self removeFromSuperview];
 }
 
