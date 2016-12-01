@@ -189,7 +189,7 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     
     NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
     [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
-    [paramDic setValue:self.textView.text forKey:@"status"];
+    [paramDic setValue:self.textView.realText forKey:@"status"];
     
     if (self.picsView.imageArray.count > 0)
     {
@@ -293,6 +293,9 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     
     //输入表情
     [self.textView appendEmotion:(MYZEmotion *)notification.object];
+    
+    //检查输入情况
+    [self textViewDidChange:self.textView];
     
 }
 

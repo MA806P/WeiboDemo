@@ -16,4 +16,6 @@
 
 - (void)appendEmotion:(MYZEmotion *)emotion;
 
+- (NSString *)realText;
+
 @end

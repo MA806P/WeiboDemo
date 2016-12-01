@@ -8,6 +8,7 @@
 
 #import "MYZComposeTextView.h"
 #import "MYZEmotion.h"
+#import "MYZEmotionAttachment.h"
 
 @interface MYZComposeTextView ()
 
@@ -50,12 +51,19 @@
 
 - (void)textViewTextDidChange
 {
-    self.placeholderLabel.hidden = (self.text.length != 0);
+    self.placeholderLabel.hidden = self.hasText;//(self.text.length != 0);
 }
 
 - (void)setText:(NSString *)text
 {
     [super setText:text];
+    
+    [self textViewTextDidChange];
+}
+
+- (void)setAttributedText:(NSAttributedString *)attributedText
+{
+    [super setAttributedText:attributedText];
     
     [self textViewTextDidChange];
 }
@@ -95,10 +103,57 @@
     }
     else //图片表情
     {
+        NSMutableAttributedString * attributedText = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
         
+        MYZEmotionAttachment * attachment = [[MYZEmotionAttachment alloc] init];
+        attachment.emotion = emotion;
+        attachment.bounds = CGRectMake(0, -3, self.font.lineHeight, self.font.lineHeight);
+        NSAttributedString * attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        //找到光标所在的位置
+        NSInteger insertIndex = self.selectedRange.location;
+        
+        //输入表情图片
+        [attributedText insertAttributedString:attachmentString atIndex:insertIndex];
+        
+        //设置字体，不然输入表情图片后后面的字体会变小
+        [attributedText addAttribute:NSFontAttributeName value:self.font range:NSMakeRange(0, attributedText.length)];
+        
+        //重新赋值光标会跑到最后面
+        self.attributedText = attributedText;
+        
+        //设置光标的位置在原来的位置
+        self.selectedRange = NSMakeRange(insertIndex + 1, 0);
     }
     
 }
+
+//获取输入的文字内容包括表情，带图片的表情用中括号+文字表示
+- (NSString *)realText
+{
+    NSMutableString * text = [NSMutableString string];
+    
+    [self.attributedText enumerateAttributesInRange:NSMakeRange(0, self.attributedText.length) options:0 usingBlock:^(NSDictionary<NSString *,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        
+        MYZEmotionAttachment * attchment = attrs[@"NSAttachment"];
+        if (attchment)
+        {
+            //带有富文本的
+            [text appendString:attchment.emotion.chs];
+        }
+        else
+        {
+            //普通字符串
+            NSString * subText = [[self.attributedText attributedSubstringFromRange:range] string];
+            [text appendString:subText];
+        }
+        
+    }];
+    
+    return text;
+}
+
+
 
 
 @end
