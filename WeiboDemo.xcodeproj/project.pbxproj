@@ -27,14 +27,6 @@
 		18C375CA1DD5B2E900B68E72 /* MYZEmotionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C375C91DD5B2E900B68E72 /* MYZEmotionListCell.m */; };
 		18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */; };
 		18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE611DC05F2800B4D997 /* MYZStatusPicContentView.m */; };
-		18C7CE731DC0A5E900B4D997 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE651DC0A5E900B4D997 /* MJPhoto.m */; };
-		18C7CE741DC0A5E900B4D997 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C7CE661DC0A5E900B4D997 /* MJPhotoBrowser.bundle */; };
-		18C7CE751DC0A5E900B4D997 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE681DC0A5E900B4D997 /* MJPhotoBrowser.m */; };
-		18C7CE761DC0A5E900B4D997 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE6A1DC0A5E900B4D997 /* MJPhotoLoadingView.m */; };
-		18C7CE771DC0A5E900B4D997 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE6C1DC0A5E900B4D997 /* MJPhotoProgressView.m */; };
-		18C7CE781DC0A5E900B4D997 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE6E1DC0A5E900B4D997 /* MJPhotoToolbar.m */; };
-		18C7CE791DC0A5E900B4D997 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE701DC0A5E900B4D997 /* MJPhotoView.m */; };
-		18C7CE7A1DC0A5E900B4D997 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE721DC0A5E900B4D997 /* SDWebImageManager+MJ.m */; };
 		18C7CE801DC0ACB400B4D997 /* MYZComposeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE7D1DC0ACB400B4D997 /* MYZComposeController.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */; };
@@ -59,6 +51,17 @@
 		DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F21DB3693C00DD29AF /* MYZHomeController.m */; };
 		DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521F71DB369A700DD29AF /* MYZStatus.m */; };
 		DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */; };
+		DAD250C41DF5ADD4002EFCB4 /* MYZStatusTextItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250C31DF5ADD4002EFCB4 /* MYZStatusTextItem.m */; };
+		DAD250D91DF5AFEB002EFCB4 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250C81DF5AFEB002EFCB4 /* MJPhoto.m */; };
+		DAD250DA1DF5AFEB002EFCB4 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DAD250C91DF5AFEB002EFCB4 /* MJPhotoBrowser.bundle */; };
+		DAD250DB1DF5AFEB002EFCB4 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250CB1DF5AFEB002EFCB4 /* MJPhotoBrowser.m */; };
+		DAD250DC1DF5AFEB002EFCB4 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250CD1DF5AFEB002EFCB4 /* MJPhotoLoadingView.m */; };
+		DAD250DD1DF5AFEB002EFCB4 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250CF1DF5AFEB002EFCB4 /* MJPhotoProgressView.m */; };
+		DAD250DE1DF5AFEB002EFCB4 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250D11DF5AFEB002EFCB4 /* MJPhotoToolbar.m */; };
+		DAD250DF1DF5AFEB002EFCB4 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250D31DF5AFEB002EFCB4 /* MJPhotoView.m */; };
+		DAD250E01DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250D51DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m */; };
+		DAD250E11DF5AFEB002EFCB4 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250D81DF5AFEB002EFCB4 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DAD250E41DF5B68A002EFCB4 /* MYZEmotionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250E31DF5B68A002EFCB4 /* MYZEmotionTool.m */; };
 		DADB20B61DBFA691009D1ACD /* LabelScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DADB20B51DBFA691009D1ACD /* LabelScrollView.m */; };
 		DAEAC0881DDDF10400CDF5A2 /* MYZStatusTool.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC0871DDDF10400CDF5A2 /* MYZStatusTool.m */; };
 		DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8061DBC599600DD7ADE /* MYZStatusTopView.m */; };
@@ -126,21 +129,6 @@
 		18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPicView.m; sourceTree = "<group>"; };
 		18C7CE601DC05F2800B4D997 /* MYZStatusPicContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPicContentView.h; sourceTree = "<group>"; };
 		18C7CE611DC05F2800B4D997 /* MYZStatusPicContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPicContentView.m; sourceTree = "<group>"; };
-		18C7CE641DC0A5E900B4D997 /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
-		18C7CE651DC0A5E900B4D997 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
-		18C7CE661DC0A5E900B4D997 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
-		18C7CE671DC0A5E900B4D997 /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
-		18C7CE681DC0A5E900B4D997 /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
-		18C7CE691DC0A5E900B4D997 /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
-		18C7CE6A1DC0A5E900B4D997 /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
-		18C7CE6B1DC0A5E900B4D997 /* MJPhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoProgressView.h; sourceTree = "<group>"; };
-		18C7CE6C1DC0A5E900B4D997 /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
-		18C7CE6D1DC0A5E900B4D997 /* MJPhotoToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoToolbar.h; sourceTree = "<group>"; };
-		18C7CE6E1DC0A5E900B4D997 /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
-		18C7CE6F1DC0A5E900B4D997 /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
-		18C7CE701DC0A5E900B4D997 /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
-		18C7CE711DC0A5E900B4D997 /* SDWebImageManager+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+MJ.h"; sourceTree = "<group>"; };
-		18C7CE721DC0A5E900B4D997 /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
 		18C7CE7C1DC0ACB400B4D997 /* MYZComposeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeController.h; sourceTree = "<group>"; };
 		18C7CE7D1DC0ACB400B4D997 /* MYZComposeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeController.m; sourceTree = "<group>"; };
 		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
@@ -192,6 +180,27 @@
 		DAA521F71DB369A700DD29AF /* MYZStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatus.m; sourceTree = "<group>"; };
 		DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusPic.h; sourceTree = "<group>"; };
 		DAA521FA1DB377CD00DD29AF /* MYZStatusPic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusPic.m; sourceTree = "<group>"; };
+		DAD250C21DF5ADD4002EFCB4 /* MYZStatusTextItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTextItem.h; sourceTree = "<group>"; };
+		DAD250C31DF5ADD4002EFCB4 /* MYZStatusTextItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusTextItem.m; sourceTree = "<group>"; };
+		DAD250C71DF5AFEB002EFCB4 /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
+		DAD250C81DF5AFEB002EFCB4 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
+		DAD250C91DF5AFEB002EFCB4 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
+		DAD250CA1DF5AFEB002EFCB4 /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
+		DAD250CB1DF5AFEB002EFCB4 /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
+		DAD250CC1DF5AFEB002EFCB4 /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
+		DAD250CD1DF5AFEB002EFCB4 /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
+		DAD250CE1DF5AFEB002EFCB4 /* MJPhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoProgressView.h; sourceTree = "<group>"; };
+		DAD250CF1DF5AFEB002EFCB4 /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
+		DAD250D01DF5AFEB002EFCB4 /* MJPhotoToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoToolbar.h; sourceTree = "<group>"; };
+		DAD250D11DF5AFEB002EFCB4 /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
+		DAD250D21DF5AFEB002EFCB4 /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
+		DAD250D31DF5AFEB002EFCB4 /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		DAD250D41DF5AFEB002EFCB4 /* SDWebImageManager+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+MJ.h"; sourceTree = "<group>"; };
+		DAD250D51DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
+		DAD250D71DF5AFEB002EFCB4 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		DAD250D81DF5AFEB002EFCB4 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		DAD250E21DF5B68A002EFCB4 /* MYZEmotionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionTool.h; sourceTree = "<group>"; };
+		DAD250E31DF5B68A002EFCB4 /* MYZEmotionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionTool.m; sourceTree = "<group>"; };
 		DADB20B41DBFA691009D1ACD /* LabelScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelScrollView.h; sourceTree = "<group>"; };
 		DADB20B51DBFA691009D1ACD /* LabelScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelScrollView.m; sourceTree = "<group>"; };
 		DAEAC0861DDDF10400CDF5A2 /* MYZStatusTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTool.h; sourceTree = "<group>"; };
@@ -266,30 +275,10 @@
 				18467D371DAE026C00B1D963 /* MYZTools.m */,
 				DAEAC0861DDDF10400CDF5A2 /* MYZStatusTool.h */,
 				DAEAC0871DDDF10400CDF5A2 /* MYZStatusTool.m */,
+				DAD250E21DF5B68A002EFCB4 /* MYZEmotionTool.h */,
+				DAD250E31DF5B68A002EFCB4 /* MYZEmotionTool.m */,
 			);
 			path = Tool;
-			sourceTree = "<group>";
-		};
-		18C7CE631DC0A5E900B4D997 /* MJPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				18C7CE641DC0A5E900B4D997 /* MJPhoto.h */,
-				18C7CE651DC0A5E900B4D997 /* MJPhoto.m */,
-				18C7CE661DC0A5E900B4D997 /* MJPhotoBrowser.bundle */,
-				18C7CE671DC0A5E900B4D997 /* MJPhotoBrowser.h */,
-				18C7CE681DC0A5E900B4D997 /* MJPhotoBrowser.m */,
-				18C7CE691DC0A5E900B4D997 /* MJPhotoLoadingView.h */,
-				18C7CE6A1DC0A5E900B4D997 /* MJPhotoLoadingView.m */,
-				18C7CE6B1DC0A5E900B4D997 /* MJPhotoProgressView.h */,
-				18C7CE6C1DC0A5E900B4D997 /* MJPhotoProgressView.m */,
-				18C7CE6D1DC0A5E900B4D997 /* MJPhotoToolbar.h */,
-				18C7CE6E1DC0A5E900B4D997 /* MJPhotoToolbar.m */,
-				18C7CE6F1DC0A5E900B4D997 /* MJPhotoView.h */,
-				18C7CE701DC0A5E900B4D997 /* MJPhotoView.m */,
-				18C7CE711DC0A5E900B4D997 /* SDWebImageManager+MJ.h */,
-				18C7CE721DC0A5E900B4D997 /* SDWebImageManager+MJ.m */,
-			);
-			path = MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		18C7CE7B1DC0ACB400B4D997 /* Controller */ = {
@@ -318,7 +307,6 @@
 		18E5A17A1DB9A6A600375480 /* Temp */ = {
 			isa = PBXGroup;
 			children = (
-				18C7CE631DC0A5E900B4D997 /* MJPhotoBrowser */,
 				DADB20B41DBFA691009D1ACD /* LabelScrollView.h */,
 				DADB20B51DBFA691009D1ACD /* LabelScrollView.m */,
 				18E5A17B1DB9A6FE00375480 /* MYZMenuPageController.h */,
@@ -474,6 +462,7 @@
 		DA73CA7C1D97CC1100CF5839 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DAD250C51DF5AFEB002EFCB4 /* Lib */,
 				18467D331DAE026C00B1D963 /* Tool */,
 				18467D321DAE023E00B1D963 /* Category */,
 				18467D281DAE023600B1D963 /* Model */,
@@ -540,6 +529,8 @@
 				18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */,
 				18432AD31DB4C83600E21F6E /* MYZStatusFrameMiddle.h */,
 				18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */,
+				DAD250C21DF5ADD4002EFCB4 /* MYZStatusTextItem.h */,
+				DAD250C31DF5ADD4002EFCB4 /* MYZStatusTextItem.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -561,6 +552,46 @@
 				18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		DAD250C51DF5AFEB002EFCB4 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				DAD250C61DF5AFEB002EFCB4 /* MJPhotoBrowser */,
+				DAD250D61DF5AFEB002EFCB4 /* RegexKitLite */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		DAD250C61DF5AFEB002EFCB4 /* MJPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				DAD250C71DF5AFEB002EFCB4 /* MJPhoto.h */,
+				DAD250C81DF5AFEB002EFCB4 /* MJPhoto.m */,
+				DAD250C91DF5AFEB002EFCB4 /* MJPhotoBrowser.bundle */,
+				DAD250CA1DF5AFEB002EFCB4 /* MJPhotoBrowser.h */,
+				DAD250CB1DF5AFEB002EFCB4 /* MJPhotoBrowser.m */,
+				DAD250CC1DF5AFEB002EFCB4 /* MJPhotoLoadingView.h */,
+				DAD250CD1DF5AFEB002EFCB4 /* MJPhotoLoadingView.m */,
+				DAD250CE1DF5AFEB002EFCB4 /* MJPhotoProgressView.h */,
+				DAD250CF1DF5AFEB002EFCB4 /* MJPhotoProgressView.m */,
+				DAD250D01DF5AFEB002EFCB4 /* MJPhotoToolbar.h */,
+				DAD250D11DF5AFEB002EFCB4 /* MJPhotoToolbar.m */,
+				DAD250D21DF5AFEB002EFCB4 /* MJPhotoView.h */,
+				DAD250D31DF5AFEB002EFCB4 /* MJPhotoView.m */,
+				DAD250D41DF5AFEB002EFCB4 /* SDWebImageManager+MJ.h */,
+				DAD250D51DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m */,
+			);
+			path = MJPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		DAD250D61DF5AFEB002EFCB4 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				DAD250D71DF5AFEB002EFCB4 /* RegexKitLite.h */,
+				DAD250D81DF5AFEB002EFCB4 /* RegexKitLite.m */,
+			);
+			path = RegexKitLite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -674,8 +705,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD250DA1DF5AFEB002EFCB4 /* MJPhotoBrowser.bundle in Resources */,
 				DA115E501DC6331600C22743 /* EmotionIcons in Resources */,
-				18C7CE741DC0A5E900B4D997 /* MJPhotoBrowser.bundle in Resources */,
 				DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,43 +785,45 @@
 				DA5241041DB5105C003AF28A /* MYZStatusRetweeted.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
-				18C7CE761DC0A5E900B4D997 /* MJPhotoLoadingView.m in Sources */,
 				18C375CA1DD5B2E900B68E72 /* MYZEmotionListCell.m in Sources */,
-				18C7CE731DC0A5E900B4D997 /* MJPhoto.m in Sources */,
+				DAD250C41DF5ADD4002EFCB4 /* MYZStatusTextItem.m in Sources */,
 				18467D381DAE026C00B1D963 /* MYZHttpTools.m in Sources */,
-				18C7CE771DC0A5E900B4D997 /* MJPhotoProgressView.m in Sources */,
-				18C7CE751DC0A5E900B4D997 /* MJPhotoBrowser.m in Sources */,
+				DAD250E41DF5B68A002EFCB4 /* MYZEmotionTool.m in Sources */,
 				DA73CA8E1D97CF2A00CF5839 /* MYZTabBarController.m in Sources */,
 				18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */,
 				DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */,
+				DAD250DC1DF5AFEB002EFCB4 /* MJPhotoLoadingView.m in Sources */,
 				18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */,
+				DAD250E01DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m in Sources */,
 				DA0B04E61DF0694D00752E0D /* MYZEmotionAttachment.m in Sources */,
 				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
+				DAD250DE1DF5AFEB002EFCB4 /* MJPhotoToolbar.m in Sources */,
 				DA2504471DDCAB16001B4E99 /* MYZEmotionView.m in Sources */,
+				DAD250E11DF5AFEB002EFCB4 /* RegexKitLite.m in Sources */,
 				18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */,
+				DAD250DB1DF5AFEB002EFCB4 /* MJPhotoBrowser.m in Sources */,
 				DADB20B61DBFA691009D1ACD /* LabelScrollView.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DAEAC0881DDDF10400CDF5A2 /* MYZStatusTool.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
+				DAD250DD1DF5AFEB002EFCB4 /* MJPhotoProgressView.m in Sources */,
 				1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */,
 				188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */,
 				DA0B04E31DF0691700752E0D /* MYZComposeTextView.m in Sources */,
 				18256E641DF5536A00F487EB /* MYZStatusOriginal.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				DA0B04E01DF0690300752E0D /* MYZEmotion.m in Sources */,
-				18C7CE7A1DC0A5E900B4D997 /* SDWebImageManager+MJ.m in Sources */,
 				DAA521FB1DB377CD00DD29AF /* MYZStatusPic.m in Sources */,
 				188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */,
-				18C7CE791DC0A5E900B4D997 /* MJPhotoView.m in Sources */,
 				DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */,
 				184E0AA01DC75FF9004246ED /* MYZEmotionListView.m in Sources */,
 				18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */,
 				18467D311DAE023600B1D963 /* MYZUserInfo.m in Sources */,
 				18995CD11DE6B33300A04C7C /* MYZEmotionPreview.m in Sources */,
-				18C7CE781DC0A5E900B4D997 /* MJPhotoToolbar.m in Sources */,
 				184E0AA31DC76011004246ED /* MYZEmotionToolBar.m in Sources */,
 				18467D2F1DAE023600B1D963 /* MYZAccount.m in Sources */,
+				DAD250DF1DF5AFEB002EFCB4 /* MJPhotoView.m in Sources */,
 				18467D391DAE026C00B1D963 /* MYZTools.m in Sources */,
 				18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
@@ -799,6 +832,7 @@
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
 				DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */,
 				18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */,
+				DAD250D91DF5AFEB002EFCB4 /* MJPhoto.m in Sources */,
 				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
 				18C7CE801DC0ACB400B4D997 /* MYZComposeController.m in Sources */,
 			);

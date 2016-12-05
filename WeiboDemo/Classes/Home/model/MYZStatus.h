@@ -33,8 +33,11 @@ RLM_ARRAY_TYPE(MYZStatusPic)
 
 /** 微博配图 */
 @property RLMArray<MYZStatusPic> *pic_urls;
+
 /** 微博信息内容 */
 @property NSString *text;
+/** 微博处理后的内容，富文本*/
+@property NSAttributedString *attributedText;
 
 /** 微博作者的用户信息字段 */
 @property MYZUserInfo *user;
