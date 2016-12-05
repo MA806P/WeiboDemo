@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZStatus;
+@class MYZStatusOriginal;
 
 
 FOUNDATION_EXPORT CGFloat const StatusMarginLR; //微博cell左右间距
@@ -53,6 +53,6 @@ FOUNDATION_EXPORT CGFloat const StatusMarginPics; //配图之间的间隙
 @property (nonatomic, assign) CGRect frame;
 
 /** 微博数据 */
-@property (nonatomic, strong) MYZStatus * status;
+@property (nonatomic, strong) MYZStatusOriginal * status;
 
 @end

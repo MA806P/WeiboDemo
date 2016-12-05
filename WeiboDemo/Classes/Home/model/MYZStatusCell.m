@@ -8,7 +8,7 @@
 
 #import "MYZStatusCell.h"
 
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 
 #import "MYZStatusFrame.h"
 #import "MYZStatusFrameTop.h"
@@ -78,7 +78,7 @@
 {
     _statusFrame = statusFrame;
     
-    MYZStatus * status = statusFrame.status;
+    MYZStatusOriginal * status = statusFrame.status;
     MYZStatusFrameTop * frameTop = statusFrame.frameTop;
     MYZStatusFrameMiddle * frameMiddle = statusFrame.frameMiddle;
     

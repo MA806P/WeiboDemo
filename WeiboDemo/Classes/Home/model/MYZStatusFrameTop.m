@@ -7,14 +7,14 @@
 //
 
 #import "MYZStatusFrameTop.h"
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 
 
 @implementation MYZStatusFrameTop
 
 
 
-- (void)setStatus:(MYZStatus *)status
+- (void)setStatus:(MYZStatusOriginal *)status
 {
     _status = status;
     

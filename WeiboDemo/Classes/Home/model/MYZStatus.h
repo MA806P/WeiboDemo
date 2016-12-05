@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZStatusRetweeted;
 
 RLM_ARRAY_TYPE(MYZStatusPic)
 
@@ -37,8 +36,6 @@ RLM_ARRAY_TYPE(MYZStatusPic)
 /** 微博信息内容 */
 @property NSString *text;
 
-/** 被转发的原微博信息字段，当该微博为转发微博时返回 */
-@property MYZStatusRetweeted *retweeted_status;
 /** 微博作者的用户信息字段 */
 @property MYZUserInfo *user;
 

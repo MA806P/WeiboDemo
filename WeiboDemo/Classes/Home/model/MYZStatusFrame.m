@@ -7,7 +7,7 @@
 //
 
 #import "MYZStatusFrame.h"
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusFrameMiddle.h"
 
@@ -35,7 +35,7 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 
 @implementation MYZStatusFrame
 
-+ (id)statusFrameWithStatus:(MYZStatus *)status
++ (id)statusFrameWithStatus:(MYZStatusOriginal *)status
 {
     MYZStatusFrame * statusFrame = [[self alloc] init];
     statusFrame.status = status;
@@ -43,7 +43,7 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 }
 
 
-- (void)setStatus:(MYZStatus *)status
+- (void)setStatus:(MYZStatusOriginal *)status
 {
     _status = status;
     

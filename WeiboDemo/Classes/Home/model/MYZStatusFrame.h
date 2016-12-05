@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZStatus, MYZStatusFrameTop, MYZStatusFrameMiddle;
+@class MYZStatusOriginal, MYZStatusFrameTop, MYZStatusFrameMiddle;
 
 @interface MYZStatusFrame : NSObject
 
 /** 微博状态的原始数据 */
-@property (nonatomic, strong) MYZStatus * status;
+@property (nonatomic, strong) MYZStatusOriginal * status;
 
 
 /** 微博状态cell的高度 */
@@ -31,6 +31,6 @@
 /** cell下部分评论等frame */
 @property (nonatomic, assign) CGRect frameBottom;
 
-+ (id)statusFrameWithStatus:(MYZStatus *)status;
++ (id)statusFrameWithStatus:(MYZStatusOriginal *)status;
 
 @end

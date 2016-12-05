@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */; };
 		1805ADC81DC1F7D500F27388 /* MYZComposePicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */; };
+		18256E641DF5536A00F487EB /* MYZStatusOriginal.m in Sources */ = {isa = PBXBuildFile; fileRef = 18256E631DF5536A00F487EB /* MYZStatusOriginal.m */; };
 		18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */; };
 		18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */; };
 		18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */; };
@@ -88,6 +89,8 @@
 		1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeToolsBar.m; sourceTree = "<group>"; };
 		1805ADC61DC1F7D500F27388 /* MYZComposePicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposePicsView.h; sourceTree = "<group>"; };
 		1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposePicsView.m; sourceTree = "<group>"; };
+		18256E621DF5536A00F487EB /* MYZStatusOriginal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusOriginal.h; sourceTree = "<group>"; };
+		18256E631DF5536A00F487EB /* MYZStatusOriginal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusOriginal.m; sourceTree = "<group>"; };
 		18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrame.h; sourceTree = "<group>"; };
 		18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrame.m; sourceTree = "<group>"; };
 		18432AD01DB4C80400E21F6E /* MYZStatusFrameTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrameTop.h; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 			children = (
 				DAA521F61DB369A700DD29AF /* MYZStatus.h */,
 				DAA521F71DB369A700DD29AF /* MYZStatus.m */,
+				18256E621DF5536A00F487EB /* MYZStatusOriginal.h */,
+				18256E631DF5536A00F487EB /* MYZStatusOriginal.m */,
 				DA5241021DB5105C003AF28A /* MYZStatusRetweeted.h */,
 				DA5241031DB5105C003AF28A /* MYZStatusRetweeted.m */,
 				DAA521F91DB377CD00DD29AF /* MYZStatusPic.h */,
@@ -771,6 +776,7 @@
 				1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */,
 				188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */,
 				DA0B04E31DF0691700752E0D /* MYZComposeTextView.m in Sources */,
+				18256E641DF5536A00F487EB /* MYZStatusOriginal.m in Sources */,
 				DAA521F81DB369A700DD29AF /* MYZStatus.m in Sources */,
 				DA0B04E01DF0690300752E0D /* MYZEmotion.m in Sources */,
 				18C7CE7A1DC0A5E900B4D997 /* SDWebImageManager+MJ.m in Sources */,

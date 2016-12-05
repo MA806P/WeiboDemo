@@ -7,7 +7,7 @@
 //
 
 #import "MYZStatusBottomView.h"
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 
 @interface MYZStatusBottomView ()
 
@@ -108,7 +108,7 @@
 
 #pragma mark - setter
 
-- (void)setStatus:(MYZStatus *)status
+- (void)setStatus:(MYZStatusOriginal *)status
 {
     _status = status;
     

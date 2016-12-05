@@ -23,6 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    MYZLog(@" +++ %@ ", MYZCacheFilePath);
+    
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kAppKey];
     
@@ -40,7 +42,6 @@
         self.oauth = [[MYZOAuthController alloc] init];
         self.window.rootViewController = self.oauth;
     }
-    
     
     return YES;
 }

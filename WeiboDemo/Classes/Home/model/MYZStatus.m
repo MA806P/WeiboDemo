@@ -8,7 +8,6 @@
 
 #import "MYZStatus.h"
 #import "MYZUserInfo.h"
-#import "MYZStatusRetweeted.h"
 
 @implementation MYZStatus
 
@@ -18,18 +17,11 @@
     if (self = [super initWithValue:value])
     {
         NSDictionary * userDic = value[@"user"];
-        NSDictionary * retweetedStatusDic = value[@"retweeted_status"];
         
         if (userDic)
         {
             self.user = [[MYZUserInfo alloc] initWithValue:userDic];
         }
-        
-        if (retweetedStatusDic)
-        {
-            self.retweeted_status = [[MYZStatusRetweeted alloc] initWithValue:retweetedStatusDic];
-        }
-        
         
         //来源, 这个不像时间是不变的所以直接存储就行了
         //不用重写getter方法不用每次都调用
@@ -45,8 +37,6 @@
             self.source = @"";
         }
         
-        
-        
     }
     return self;
 }
@@ -56,7 +46,8 @@
 //    return @{@"MYZStatusRetweeted":@"retweeted_status", @"MYZUserInfo":@"user"};
 //}
 
-+ (NSString *)primaryKey {
++ (NSString *)primaryKey
+{
     return @"mid";
 }
 

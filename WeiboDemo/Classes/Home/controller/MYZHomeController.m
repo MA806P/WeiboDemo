@@ -13,7 +13,7 @@
 #import "MYZUserInfo.h"
 #import "MJRefresh.h"
 
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 #import "MYZStatusFrame.h"
 #import "MYZStatusCell.h"
 
@@ -93,7 +93,7 @@ NSString * const StatusCellID = @"StatusCellID";
     {
         [dataArray enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            MYZStatus * status = [[MYZStatus alloc] initWithValue:obj];
+            MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:obj];
             RLMRealm * realm = [RLMRealm defaultRealm];
             [realm beginWriteTransaction];
             [realm addOrUpdateObject:status];
@@ -103,13 +103,13 @@ NSString * const StatusCellID = @"StatusCellID";
     }
     
     //查询所有微博状态的结果, mid从大到小排序
-    RLMResults * statusResults = [[MYZStatus allObjects] sortedResultsUsingProperty:@"mid" ascending:NO];
+    RLMResults * statusResults = [[MYZStatusOriginal allObjects] sortedResultsUsingProperty:@"mid" ascending:NO];
     [self.statusDataArray removeAllObjects];
     
     //得到微博数据模型, 转化模型计算各控件frame
     for (NSInteger i=0; i<statusResults.count; i++)
     {
-        MYZStatus * status = [statusResults objectAtIndex:i];
+        MYZStatusOriginal * status = [statusResults objectAtIndex:i];
         MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
         [self.statusDataArray addObject:statusFrame];
     }
@@ -132,7 +132,7 @@ NSString * const StatusCellID = @"StatusCellID";
      feature	    false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      trim_user	    false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
      */
-    MYZStatus * statusMax = [[self.statusDataArray firstObject] status];
+    MYZStatusOriginal * statusMax = [[self.statusDataArray firstObject] status];
     NSString * sinceIdStr = statusMax == nil ? @"0" : statusMax.mid;
     MYZLog(@"--- since_id = %@", sinceIdStr);
     
@@ -163,11 +163,7 @@ NSString * const StatusCellID = @"StatusCellID";
         
         if (statusDicts.count > 0) {  [MYZTools showAlertWithText:[NSString stringWithFormat:@" 更新 %ld 条微博 ", statusDicts.count]]; }
         
-        MYZLog(@"--- success ");
-        
-        
     } failure:^(NSError *error) {
-        MYZLog(@"--- %@", error);
         [self.tableView.mj_header endRefreshing];
     }];
     
@@ -178,7 +174,7 @@ NSString * const StatusCellID = @"StatusCellID";
 {
     //max_id false	int64 若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
     
-    MYZStatus * statusMax = [[self.statusDataArray lastObject] status];
+    MYZStatusOriginal * statusMax = [[self.statusDataArray lastObject] status];
     //减1防止返回等于max_id的微博
     NSNumber * maxIdStr = statusMax == nil ? @(0) : @([statusMax.mid longLongValue] -1);
     MYZLog(@"--- max_id = %@", maxIdStr);
@@ -194,10 +190,7 @@ NSString * const StatusCellID = @"StatusCellID";
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
         
-        MYZLog(@"--- success ");
-        
     } failure:^(NSError *error) {
-        MYZLog(@"--- %@", error);
         [self.tableView.mj_header endRefreshing];
     }];
     

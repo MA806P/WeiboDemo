@@ -8,7 +8,7 @@
 
 #import "MYZStatusTopView.h"
 #import "MYZUserInfo.h"
-#import "MYZStatus.h"
+#import "MYZStatusOriginal.h"
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusPicContentView.h"
 
@@ -96,7 +96,7 @@
 {
     _statusFrameTop = statusFrameTop;
     
-    MYZStatus * status = statusFrameTop.status;
+    MYZStatusOriginal * status = statusFrameTop.status;
     MYZUserInfo * user = status.user;
     
     
