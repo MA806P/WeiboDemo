@@ -11,6 +11,12 @@
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusFrameMiddle.h"
 
+#import "RegexKitLite.h"
+#import "MYZStatusTextItem.h"
+#import "MYZEmotion.h"
+#import "MYZEmotionTool.h"
+#import "MYZEmotionAttachment.h"
+
 CGFloat const StatusBottomH = 37.0; //底部转发评论点赞栏 高度
 
 CGFloat const StatusMarginLR = 13.0; //微博cell左右间距
@@ -46,6 +52,8 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 - (void)setStatus:(MYZStatusOriginal *)status
 {
     _status = status;
+    //处理微博内容，富文本
+    status.attributedText = [self regexResultsWithText:status.text];
     
     //计算上部frame
     [self calcuateFrameTop];
@@ -88,4 +96,114 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
     self.cellHeight = statusW;
     self.frame = CGRectMake(0, 0, SCREEN_W, statusW);
 }
+
+
+
+//处理微博内容，处理字符串，显示不同的格式，@、##、连接、、
+- (NSAttributedString *)regexResultsWithText:(NSString *)text
+{
+    //使用过正则表达式进行匹配信息
+    //匹配后被截为各个小段，放到数组中保存
+    NSMutableArray * textItems = [NSMutableArray array];
+    
+    /**
+     *  为啥要先放在数组中保存一下，还排序呢？
+     *  不能直接替换掉表情的，直接替换后面的就会错位，对不准，只能是按顺序来进行拼接
+     */
+
+    
+    // 匹配表情
+    NSString *emotionRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+    [text enumerateStringsMatchedByRegex:emotionRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        
+        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
+        textItem.type = StatusTextItemTypeEmotion;
+        textItem.range = *capturedRanges;
+        textItem.text = *capturedStrings;
+        [textItems addObject:textItem];
+    }];
+    
+    // 匹配#话题#
+    NSString *topicRegex = @"#[a-zA-Z0-9\\u4e00-\\u9fa5]+#";
+    [text enumerateStringsMatchedByRegex:topicRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
+        textItem.type = StatusTextItemTypeTopic;
+        textItem.range = *capturedRanges;
+        textItem.text = *capturedStrings;
+        [textItems addObject:textItem];
+    }];
+    
+    // 匹配@...
+    NSString *userRegex = @"@[a-zA-Z0-9\\u4e00-\\u9fa5\\-]+ ?";
+    [text enumerateStringsMatchedByRegex:userRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
+        textItem.type = StatusTextItemTypeUser;
+        textItem.range = *capturedRanges;
+        textItem.text = *capturedStrings;
+        [textItems addObject:textItem];
+    }];
+    
+    // 匹配超链接
+    NSString *urlRegex = @"http(s)?://([a-zA-Z|\\d]+\\.)+[a-zA-Z|\\d]+(/[a-zA-Z|\\d|\\-|\\+|_./?%&=]*)?";
+    [text enumerateStringsMatchedByRegex:urlRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
+        textItem.type = StatusTextItemTypeUrl;
+        textItem.range = *capturedRanges;
+        textItem.text = *capturedStrings;
+        [textItems addObject:textItem];
+    }];
+    
+    
+    
+    //被截成的小段进行排序
+    [textItems sortUsingComparator:^NSComparisonResult(MYZStatusTextItem * obj1, MYZStatusTextItem * obj2) {
+        NSUInteger loc1 = obj1.range.location;
+        NSUInteger loc2 = obj2.range.location;
+        return [@(loc2) compare:@(loc1)];
+    }];
+    
+    
+    NSMutableAttributedString * attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+    UIFont * statusTextFont = [UIFont systemFontOfSize:StatusFontTextSize];
+    CGFloat fontlineH = statusTextFont.lineHeight;
+    
+    //遍历各个小段, 拼接attributedString
+    for (MYZStatusTextItem * textItme in textItems)
+    {
+        switch (textItme.type) {
+            case StatusTextItemTypeEmotion:
+            {
+                MYZEmotion * emotion = [MYZEmotionTool emotionWithDesc:textItme.text];
+                if(emotion)
+                {
+                    MYZEmotionAttachment * attachment = [[MYZEmotionAttachment alloc] init];
+                    attachment.emotion = emotion;
+                    attachment.bounds = CGRectMake(0, -3, fontlineH, fontlineH);
+                    [attributedText replaceCharactersInRange:textItme.range withAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
+                }
+                break;
+            }
+            case StatusTextItemTypeUser:
+            {
+                
+                break;
+            }
+            case StatusTextItemTypeTopic:
+                
+                break;
+            case StatusTextItemTypeUrl:
+                
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return attributedText;
+}
+
+
+
+
 @end

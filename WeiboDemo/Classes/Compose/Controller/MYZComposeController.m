@@ -14,6 +14,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "MYZEmotion.h"
+#import "MYZEmotionTool.h"
 #import "MYZStatusTool.h"
 
 
@@ -59,51 +60,35 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
         NSMutableArray * emotionKeyboardDataArray = [NSMutableArray array];
         
         //2016.11.18 修改在获取表情的时候就去分组20个一组，数组里面放数组，这样在下面的视图中就不用去算了
+        //2016.12.06 修改提取出获取表情的原始方法放到tool中，返回的数组是全部的表情，数组里保存的是emotion模型
         //默认表情
-        NSString * defaultPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/default/info.plist" ofType:nil];
-        NSArray * defaultEmotionInfos = [NSArray arrayWithContentsOfFile:defaultPlist];
+        NSArray * defaultEmotions = [MYZEmotionTool defaultEmotions];
         NSMutableArray * defaultEmotionArray = [NSMutableArray array];
-//        for (NSDictionary * tempDic in defaultEmotionInfos)
-//        {
-//            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:tempDic];
-//            [defaultEmotionArray addObject:emotion];
-//        }
-//        [defaultEmotionArray makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/default"];
-        
         __block NSMutableArray * defaultSectionArray = [NSMutableArray array];
-        [defaultEmotionInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
+        [defaultEmotions enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (idx % 20 == 0 && idx != 0)
             {
                 [defaultEmotionArray addObject:defaultSectionArray];
                 defaultSectionArray = [NSMutableArray array];
             }
-            
-            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:obj];
-            emotion.directory = @"EmotionIcons/default";
-            [defaultSectionArray addObject:emotion];
-            
+            [defaultSectionArray addObject:obj];
         }];
         [defaultEmotionArray addObject:defaultSectionArray];
         [emotionKeyboardDataArray addObject:defaultEmotionArray];
         
         
         //emoji表情
-        NSString * emojiPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/emoji/info.plist" ofType:nil];
-        NSArray * emojiInfos = [NSArray arrayWithContentsOfFile:emojiPlist];
+        NSArray * emojiEmotions = [MYZEmotionTool emojiEmotions];
         NSMutableArray * emojiArray = [NSMutableArray array];
-        
         __block NSMutableArray * emojiSectionArray = [NSMutableArray array];
-        [emojiInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [emojiEmotions enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             if (idx % 20 == 0 && idx != 0)
             {
                 [emojiArray addObject:emojiSectionArray];
                 emojiSectionArray = [NSMutableArray array];
             }
-            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:obj];
-            emotion.directory = @"EmotionIcons/emoji";
-            [emojiSectionArray addObject:emotion];
+            [emojiSectionArray addObject:obj];
             
         }];
         [emojiArray addObject:emojiSectionArray];
@@ -112,30 +97,25 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
         
         
         //小浪花表情
-        NSString * lxhPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/lxh/info.plist" ofType:nil];
-        NSArray * lxhInfos = [NSArray arrayWithContentsOfFile:lxhPlist];
+        NSArray * lxhEmotions = [MYZEmotionTool lxhEmotions];
         NSMutableArray * lxhArray = [NSMutableArray array];
-        
         __block NSMutableArray * lxhSectionArray = [NSMutableArray array];
-        [lxhInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [lxhEmotions enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             if (idx % 20 == 0 && idx != 0)
             {
                 [lxhArray addObject:lxhSectionArray];
                 lxhSectionArray = [NSMutableArray array];
             }
-            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:obj];
-            emotion.directory = @"EmotionIcons/lxh";
-            [lxhSectionArray addObject:emotion];
-            
+            [lxhSectionArray addObject:obj];
         }];
         [lxhArray addObject:lxhSectionArray];
         [emotionKeyboardDataArray addObject:lxhArray];
         
         _emotionKeyboard.emotionKeyboardDataArray = emotionKeyboardDataArray;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionKeyboardDeleteBtnTouch) name:ComposeEmotionKeyboardDeleteKey object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionKeyboardDeleteBtnTouch) name:ComposeEmotionKeyboardDeleteKey object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(composeEmotionViewTouch:) name:ComposeEmotionSelectedKey object:nil];
     }
     return _emotionKeyboard;

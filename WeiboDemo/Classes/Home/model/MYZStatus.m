@@ -8,8 +8,6 @@
 
 #import "MYZStatus.h"
 #import "MYZUserInfo.h"
-#import "RegexKitLite.h"
-#import "MYZStatusTextItem.h"
 
 @implementation MYZStatus
 
@@ -38,10 +36,6 @@
         {
             self.source = @"";
         }
-        
-        //处理微博正文，富文本
-        NSString * text = value[@"text"];
-        self.attributedText = [self regexResultsWithText:text];
         
     }
     return self;
@@ -124,63 +118,6 @@
 }
 
 
-//处理微博内容，处理字符串，显示不同的格式，@、##、连接、、
-- (NSAttributedString *)regexResultsWithText:(NSString *)text
-{
-    NSMutableAttributedString * attributedText = [[NSMutableAttributedString alloc] init];
-    
-    //使用过正则表达式进行匹配信息
-    //匹配后被截为各个小段，放到数组中保存
-    NSMutableArray * textItems = [NSMutableArray array];
-    
-    // 匹配表情
-    NSString *emotionRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    [text enumerateStringsMatchedByRegex:emotionRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
-        textItem.range = *capturedRanges;
-        
-        [textItems addObject:textItem];
-    }];
-    
-    // 匹配#话题#
-    NSString *topicRegex = @"#[a-zA-Z0-9\\u4e00-\\u9fa5]+#";
-    [text enumerateStringsMatchedByRegex:topicRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
-        textItem.range = *capturedRanges;
-        
-        [textItems addObject:textItem];
-    }];
-    
-    // 匹配@...
-    NSString *userRegex = @"@[a-zA-Z0-9\\u4e00-\\u9fa5\\-]+ ?";
-    [text enumerateStringsMatchedByRegex:userRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
-        textItem.range = *capturedRanges;
-        
-        [textItems addObject:textItem];
-    }];
-    
-    // 匹配超链接
-    NSString *urlRegex = @"http(s)?://([a-zA-Z|\\d]+\\.)+[a-zA-Z|\\d]+(/[a-zA-Z|\\d|\\-|\\+|_./?%&=]*)?";
-    [text enumerateStringsMatchedByRegex:urlRegex usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        MYZStatusTextItem * textItem = [[MYZStatusTextItem alloc] init];
-        textItem.range = *capturedRanges;
-        
-        [textItems addObject:textItem];
-    }];
-    
-    
-    //被截成的小段进行排序
-    [textItems sortUsingComparator:^NSComparisonResult(MYZStatusTextItem * obj1, MYZStatusTextItem * obj2) {
-        NSUInteger loc1 = obj1.range.location;
-        NSUInteger loc2 = obj2.range.location;
-        return [@(loc1) compare:@(loc2)];
-    }];
-    
-    //遍历各个小段
-    
-    return attributedText;
-}
 
 
 @end

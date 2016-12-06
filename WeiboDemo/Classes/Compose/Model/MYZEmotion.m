@@ -17,6 +17,7 @@
     if (self = [super init])
     {
         self.chs = dic[@"chs"];
+        self.cht = dic[@"cht"];
         self.png = dic[@"png"];
         self.code = dic[@"code"];
         

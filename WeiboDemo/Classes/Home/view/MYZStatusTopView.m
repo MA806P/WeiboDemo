@@ -155,7 +155,8 @@
     self.fromLabel.x = CGRectGetMaxX(self.timeLabel.frame) + StatusMarginTimeFrom;
     
     self.selfTextLabel.frame = statusFrameTop.frameText;
-    self.selfTextLabel.text = status.text;
+    //self.selfTextLabel.text = status.text;
+    self.selfTextLabel.attributedText = status.attributedText;
     
     //MYZLog(@" --- %ld  %@", status.pic_urls.count, NSStringFromCGRect(statusFrameTop.framePicsContent));
     self.picsContentView.frame = statusFrameTop.framePicsContent;

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 RLM_ARRAY_TYPE(MYZStatusPic)
 
 @interface MYZStatus : RLMObject

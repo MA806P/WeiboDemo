@@ -21,89 +21,91 @@ static NSArray *_lxhEmotions;
 /** 最近表情 */
 static NSMutableArray *_recentEmotions;
 
-//+ (NSArray *)defaultEmotions
-//{
-//    if (!_defaultEmotions) {
-//        NSString *plist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/default/info.plist" ofType:nil];
-//        _defaultEmotions = [MYZEmotion objectArrayWithFile:plist];
-//        [_defaultEmotions makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/default"];
-//    }
-//    return _defaultEmotions;
-//}
-//
-//+ (NSArray *)emojiEmotions
-//{
-//    if (!_emojiEmotions) {
-//        NSString *plist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/emoji/info.plist" ofType:nil];
-//        _emojiEmotions = [HMEmotion objectArrayWithFile:plist];
-//        [_emojiEmotions makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/emoji"];
-//    }
-//    return _emojiEmotions;
-//}
-//
-//+ (NSArray *)lxhEmotions
-//{
-//    if (!_lxhEmotions) {
-//        NSString *plist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/lxh/info.plist" ofType:nil];
-//        _lxhEmotions = [HMEmotion objectArrayWithFile:plist];
-//        [_lxhEmotions makeObjectsPerformSelector:@selector(setDirectory:) withObject:@"EmotionIcons/lxh"];
-//    }
-//    return _lxhEmotions;
-//}
-//
-//+ (NSArray *)recentEmotions
-//{
-//    if (!_recentEmotions) {
-//        // 去沙盒中加载最近使用的表情数据
-//        _recentEmotions = [NSKeyedUnarchiver unarchiveObjectWithFile:HMRecentFilepath];
-//        if (!_recentEmotions) { // 沙盒中没有任何数据
-//            _recentEmotions = [NSMutableArray array];
-//        }
-//    }
-//    return _recentEmotions;
-//}
-//
-//// Emotion -- 戴口罩 -- Emoji的plist里面加载的表情
-//+ (void)addRecentEmotion:(HMEmotion *)emotion
-//{
-//    // 加载最近的表情数据
-//    [self recentEmotions];
-//    
-//    // 删除之前的表情
-//    [_recentEmotions removeObject:emotion];
-//    
-//    // 添加最新的表情
-//    [_recentEmotions insertObject:emotion atIndex:0];
-//    
-//    // 存储到沙盒中
-//    [NSKeyedArchiver archiveRootObject:_recentEmotions toFile:HMRecentFilepath];
-//}
-//
-//+ (HMEmotion *)emotionWithDesc:(NSString *)desc
-//{
-//    if (!desc) return nil;
-//    
-//    __block HMEmotion *foundEmotion = nil;
-//    
-//    // 从默认表情中找
-//    [[self defaultEmotions] enumerateObjectsUsingBlock:^(HMEmotion *emotion, NSUInteger idx, BOOL *stop) {
-//        if ([desc isEqualToString:emotion.chs] || [desc isEqualToString:emotion.cht]) {
-//            foundEmotion = emotion;
-//            *stop = YES;
-//        }
-//    }];
-//    if (foundEmotion) return foundEmotion;
-//    
-//    // 从浪小花表情中查找
-//    [[self lxhEmotions] enumerateObjectsUsingBlock:^(HMEmotion *emotion, NSUInteger idx, BOOL *stop) {
-//        if ([desc isEqualToString:emotion.chs] || [desc isEqualToString:emotion.cht]) {
-//            foundEmotion = emotion;
-//            *stop = YES;
-//        }
-//    }];
-//    
-//    return foundEmotion;
-//}
++ (NSArray *)defaultEmotions
+{
+    if (!_defaultEmotions)
+    {
+        //默认表情
+        NSString * defaultPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/default/info.plist" ofType:nil];
+        NSArray * defaultEmotionInfos = [NSArray arrayWithContentsOfFile:defaultPlist];
+        NSMutableArray * defaultEmotionArray = [NSMutableArray array];
+        for (NSDictionary * tempDic in defaultEmotionInfos)
+        {
+            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:tempDic];
+            emotion.directory = @"EmotionIcons/default";
+            [defaultEmotionArray addObject:emotion];
+        }
+        _defaultEmotions = [NSArray arrayWithArray:defaultEmotionArray];
+        
+    }
+    return _defaultEmotions;
+}
+
++ (NSArray *)emojiEmotions
+{
+    if (!_emojiEmotions)
+    {
+        //emoji表情
+        NSString * emojiPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/emoji/info.plist" ofType:nil];
+        NSArray * emojiInfos = [NSArray arrayWithContentsOfFile:emojiPlist];
+        NSMutableArray * emojiArray = [NSMutableArray array];
+        
+        [emojiInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:obj];
+            emotion.directory = @"EmotionIcons/emoji";
+            [emojiArray addObject:emotion];
+        }];
+        _emojiEmotions = [NSArray arrayWithArray:emojiArray];
+    }
+    return _emojiEmotions;
+}
+
++ (NSArray *)lxhEmotions
+{
+    if (!_lxhEmotions)
+    {
+        //小浪花表情
+        NSString * lxhPlist = [[NSBundle mainBundle] pathForResource:@"EmotionIcons/lxh/info.plist" ofType:nil];
+        NSArray * lxhInfos = [NSArray arrayWithContentsOfFile:lxhPlist];
+        NSMutableArray * lxhArray = [NSMutableArray array];
+        
+        [lxhInfos enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            MYZEmotion * emotion = [[MYZEmotion alloc] initEmotionWithDictionary:obj];
+            emotion.directory = @"EmotionIcons/lxh";
+            [lxhArray addObject:emotion];
+        }];
+        _lxhEmotions = [NSArray arrayWithArray:lxhArray];
+    }
+    return _lxhEmotions;
+}
+
+
++ (MYZEmotion *)emotionWithDesc:(NSString *)desc
+{
+    if (!desc) return nil;
+    
+    __block MYZEmotion *foundEmotion = nil;
+    
+    // 从默认表情中找
+    [[self defaultEmotions] enumerateObjectsUsingBlock:^(MYZEmotion *emotion, NSUInteger idx, BOOL *stop) {
+        if ([desc isEqualToString:emotion.chs] || [desc isEqualToString:emotion.cht]) {
+            foundEmotion = emotion;
+            *stop = YES;
+        }
+    }];
+    if (foundEmotion) return foundEmotion;
+    
+    // 从浪小花表情中查找
+    [[self lxhEmotions] enumerateObjectsUsingBlock:^(MYZEmotion *emotion, NSUInteger idx, BOOL *stop) {
+        if ([desc isEqualToString:emotion.chs] || [desc isEqualToString:emotion.cht]) {
+            foundEmotion = emotion;
+            *stop = YES;
+        }
+    }];
+    
+    return foundEmotion;
+}
 
 
 @end

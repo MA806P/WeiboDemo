@@ -29,6 +29,7 @@
 		18C7CE621DC05F2800B4D997 /* MYZStatusPicContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE611DC05F2800B4D997 /* MYZStatusPicContentView.m */; };
 		18C7CE801DC0ACB400B4D997 /* MYZComposeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CE7D1DC0ACB400B4D997 /* MYZComposeController.m */; };
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
+		18E476DD1DF65AE70026EEA1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E476DB1DF652840026EEA1 /* libicucore.tbd */; };
 		18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */; };
 		18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17F1DB9A72900375480 /* MYZMenuView.m */; };
 		89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */; };
@@ -133,6 +134,7 @@
 		18C7CE7D1DC0ACB400B4D997 /* MYZComposeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeController.m; sourceTree = "<group>"; };
 		18CBE96C1DACB6510068832E /* MYZOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZOAuthController.h; sourceTree = "<group>"; };
 		18CBE96D1DACB6510068832E /* MYZOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZOAuthController.m; sourceTree = "<group>"; };
+		18E476DB1DF652840026EEA1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		18E5A17B1DB9A6FE00375480 /* MYZMenuPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMenuPageController.h; sourceTree = "<group>"; };
 		18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMenuPageController.m; sourceTree = "<group>"; };
 		18E5A17E1DB9A72900375480 /* MYZMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMenuView.h; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E476DD1DF65AE70026EEA1 /* libicucore.tbd in Frameworks */,
 				89D4DECB42455CEA228A2CF5 /* libPods-WeiboDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +323,7 @@
 		979F5D576E1E8CD6B202B04E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18E476DB1DF652840026EEA1 /* libicucore.tbd */,
 				B26F9F0404FECB89105474B9 /* libPods-WeiboDemo.a */,
 			);
 			name = Frameworks;
