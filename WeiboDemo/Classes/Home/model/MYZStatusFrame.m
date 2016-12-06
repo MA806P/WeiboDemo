@@ -8,6 +8,7 @@
 
 #import "MYZStatusFrame.h"
 #import "MYZStatusOriginal.h"
+#import "MYZStatusRetweeted.h"
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusFrameMiddle.h"
 
@@ -38,6 +39,8 @@ CGFloat const StatusMarginBetweenCell = 6.0; //两微博之间的间隙,上方�
 //CGFloat StatusPicsWH; //微博配图的长宽，相等，根据屏幕的宽计算除3，一排三张
 CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 
+#define StatusTextHighlightColor MYZColor(88, 61, 253)
+
 
 @implementation MYZStatusFrame
 
@@ -52,8 +55,13 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 - (void)setStatus:(MYZStatusOriginal *)status
 {
     _status = status;
-    //处理微博内容，富文本
+    //处理微博内容，富文本。原创内容和转发的内容分开
     status.attributedText = [self regexResultsWithText:status.text];
+    MYZStatusRetweeted * re = status.retweeted_status;
+    if (re)
+    {
+        re.attributedText = [self regexResultsWithText:re.text];
+    }
     
     //计算上部frame
     [self calcuateFrameTop];
@@ -102,6 +110,8 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 //处理微博内容，处理字符串，显示不同的格式，@、##、连接、、
 - (NSAttributedString *)regexResultsWithText:(NSString *)text
 {
+    if (text == nil) { return nil; }
+    
     //使用过正则表达式进行匹配信息
     //匹配后被截为各个小段，放到数组中保存
     NSMutableArray * textItems = [NSMutableArray array];
@@ -168,33 +178,28 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
     CGFloat fontlineH = statusTextFont.lineHeight;
     
     //遍历各个小段, 拼接attributedString
-    for (MYZStatusTextItem * textItme in textItems)
+    for (MYZStatusTextItem * textItem in textItems)
     {
-        switch (textItme.type) {
+        switch (textItem.type) {
             case StatusTextItemTypeEmotion:
             {
-                MYZEmotion * emotion = [MYZEmotionTool emotionWithDesc:textItme.text];
+                MYZEmotion * emotion = [MYZEmotionTool emotionWithDesc:textItem.text];
                 if(emotion)
                 {
                     MYZEmotionAttachment * attachment = [[MYZEmotionAttachment alloc] init];
                     attachment.emotion = emotion;
                     attachment.bounds = CGRectMake(0, -3, fontlineH, fontlineH);
-                    [attributedText replaceCharactersInRange:textItme.range withAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
+                    [attributedText replaceCharactersInRange:textItem.range withAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
                 }
                 break;
             }
             case StatusTextItemTypeUser:
+            case StatusTextItemTypeTopic:
+            case StatusTextItemTypeUrl:
             {
-                
+                [attributedText addAttribute:NSForegroundColorAttributeName value:StatusTextHighlightColor range:textItem.range];
                 break;
             }
-            case StatusTextItemTypeTopic:
-                
-                break;
-            case StatusTextItemTypeUrl:
-                
-                break;
-                
             default:
                 break;
         }

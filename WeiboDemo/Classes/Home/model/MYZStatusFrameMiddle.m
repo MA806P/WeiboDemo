@@ -28,7 +28,7 @@
     }
     
     //转发微博的用户名
-    NSString * textStr = [NSString stringWithFormat:@"@%@: %@",statusRetweeted.user.name, statusRetweeted.text];
+    NSString * textStr = statusRetweeted.text;//[NSString stringWithFormat:@"@%@: %@",statusRetweeted.user.name, statusRetweeted.text];
     
     CGFloat textX = StatusMarginLR;
     CGFloat textY = StatusMarginReTextT;

@@ -10,15 +10,4 @@
 
 @implementation MYZStatusRetweeted
 
-+ (NSString *)primaryKey
-{
-    return @"mid";
-}
-
-+ (NSArray<NSString *> *)ignoredProperties
-{
-    return @[@"createdStr"];
-}
-
-
 @end

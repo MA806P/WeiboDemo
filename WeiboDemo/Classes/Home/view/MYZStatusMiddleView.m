@@ -55,13 +55,12 @@
     _statusFrameMiddle = statusFrameMiddle;
     
     MYZStatusRetweeted * statusRetweeted = statusFrameMiddle.statusRetweeted;
-    MYZUserInfo * user = statusRetweeted.user;
     
     self.reTextLabel.frame = statusFrameMiddle.frameReText;
-    self.reTextLabel.text = [NSString stringWithFormat:@"@%@: %@",user.name, statusRetweeted.text];
+    //MYZUserInfo * user = statusRetweeted.user;
+    //self.reTextLabel.text = [NSString stringWithFormat:@"@%@: %@",user.name, statusRetweeted.text];
+    self.reTextLabel.attributedText = statusRetweeted.attributedText;
     
-    
-    //MYZLog(@"retweeted --- %ld  %@", statusRetweeted.pic_urls.count, NSStringFromCGRect(statusFrameMiddle.frameRePicContent));
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
     self.picsContentView.picArray = statusRetweeted.pic_urls;
 }
