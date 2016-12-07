@@ -21,9 +21,9 @@
         {
             MYZStatusRetweeted * re = [[MYZStatusRetweeted alloc] initWithValue:retweetedStatusDic];
             
-            NSString * reText = retweetedStatusDic[@"text"];
-            re.text = [NSString stringWithFormat:@"@%@: %@",re.user.name,reText];
-            
+//            NSString * reText = retweetedStatusDic[@"text"];
+//            re.text = [NSString stringWithFormat:@"@%@ : %@",re.user.name,reText];
+
             self.retweeted_status = re;
         }
         

@@ -7,7 +7,21 @@
 //
 
 #import "MYZStatusRetweeted.h"
+#import "MYZUserInfo.h"
 
 @implementation MYZStatusRetweeted
+
+- (instancetype)initWithValue:(id)value
+{
+    if (self = [super initWithValue:value])
+    {
+        
+        NSString * reText = value[@"text"];
+        self.text = [NSString stringWithFormat:@"@%@ : %@",self.user.name,reText];
+        
+    }
+    return self;
+}
+
 
 @end
