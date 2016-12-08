@@ -15,10 +15,8 @@
 {
     if (self = [super initWithValue:value])
     {
-        
         NSString * reText = value[@"text"];
         self.text = [NSString stringWithFormat:@"@%@ : %@",self.user.name,reText];
-        
     }
     return self;
 }

@@ -53,7 +53,7 @@
 
 + (NSArray<NSString *> *)ignoredProperties
 {
-    return @[@"createdStr", @"attributedText"];
+    return @[@"createdStr"];
 }
 
 

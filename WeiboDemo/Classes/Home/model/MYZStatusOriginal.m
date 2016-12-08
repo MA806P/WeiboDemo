@@ -20,13 +20,18 @@
         if (retweetedStatusDic)
         {
             MYZStatusRetweeted * re = [[MYZStatusRetweeted alloc] initWithValue:retweetedStatusDic];
-            re.attributedText = [[NSAttributedString alloc] initWithString:re.text];
             self.retweeted_status = re;
         }
         
     }
     return self;
 }
+
++ (NSArray<NSString *> *)ignoredProperties
+{
+    return @[@"createdStr", @"attributedText", @"reAttributedText"];
+}
+
 
 
 

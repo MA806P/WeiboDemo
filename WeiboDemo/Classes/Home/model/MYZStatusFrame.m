@@ -56,12 +56,16 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 {
     _status = status;
     //处理微博内容，富文本。原创内容和转发的内容分开
-    status.attributedText = [self regexResultsWithText:status.text];
-//    MYZStatusRetweeted * re = status.retweeted_status;
-//    if (re)
-//    {
-//        re.attributedText = [self regexResultsWithText:re.text];
-//    }
+    _status.attributedText = [self regexResultsWithText:status.text];
+    
+    if (_status.retweeted_status)
+    {
+        //_status.retweeted_status.attributedText = [self regexResultsWithText:_status.retweeted_status.text];
+        //MYZLog(@" --- %@ %@", _status.retweeted_status.text, _status.retweeted_status.attributedText);
+        
+        _status.reAttributedText = [self regexResultsWithText:status.retweeted_status.text];
+    }
+    
     
     //计算上部frame
     [self calcuateFrameTop];
