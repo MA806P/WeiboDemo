@@ -190,7 +190,7 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     }];
     
     //在后台发送
-    [MYZTools showAlertWithText:@"已发送"];
+    [MYZTools showAlertWithText:@"发送中..."];
     [self cancelBack];
     
 //    //http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg

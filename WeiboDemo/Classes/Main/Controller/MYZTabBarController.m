@@ -59,8 +59,6 @@
 //点击加号按钮
 - (void)tabBarPlusButtonTouch
 {
-    NSLog(@"tabbar plus button touch");
-    
     MYZComposeController * compose = [[MYZComposeController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:compose];
     [self presentViewController:nav animated:YES completion:nil];

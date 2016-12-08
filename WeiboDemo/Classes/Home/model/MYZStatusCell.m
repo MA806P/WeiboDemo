@@ -84,15 +84,15 @@
     MYZStatusFrameMiddle * frameMiddle = statusFrame.frameMiddle;
     
     
-//上部视图
+//上部视图，原创微博头像名称内容
     self.topView.frame = frameTop.frame;
     self.topView.statusFrameTop = frameTop;
     
-//中部视图
+//中部视图，转发微博内容
     self.middleView.frame = frameMiddle.frame;
     self.middleView.statusFrameMiddle = frameMiddle;
     
-//下部视图
+//下部视图，转发 评论 点赞
     self.bottomView.frame = statusFrame.frameBottom;
     self.bottomView.status = status;
 }

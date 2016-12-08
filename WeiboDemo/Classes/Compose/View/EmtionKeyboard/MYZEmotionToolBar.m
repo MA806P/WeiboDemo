@@ -76,8 +76,6 @@
 
 - (void)toolBarBtnTouch:(UIButton *)btn
 {
-    NSLog(@"--- %ld ", btn.tag);
-    
     //判断是否点击同一个按钮
     if (btn.tag == self.btnSelected.tag) { return; }
     

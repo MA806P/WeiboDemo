@@ -57,9 +57,10 @@
     MYZStatusRetweeted * statusRetweeted = statusFrameMiddle.statusRetweeted;
     
     self.reTextLabel.frame = statusFrameMiddle.frameReText;
-    //MYZUserInfo * user = statusRetweeted.user;
-    //self.reTextLabel.text = [NSString stringWithFormat:@"@%@: %@",user.name, statusRetweeted.text];
-    self.reTextLabel.attributedText = statusRetweeted.attributedText;
+    
+    //MYZLog(@"-- %@ %@", statusRetweeted.text, statusRetweeted.attributedText);
+    self.reTextLabel.text = statusRetweeted.text;
+//    self.reTextLabel.attributedText = statusRetweeted.attributedText;
     
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
     self.picsContentView.picArray = statusRetweeted.pic_urls;

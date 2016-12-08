@@ -97,7 +97,6 @@
     {
         [resultStr appendFormat:@"%02x",result[i]];
     }
-    //NSLog(@" %@ ", resultStr);
     
     return resultStr;
 }
@@ -150,7 +149,6 @@
             NSString * fullSubpath = [self stringByAppendingPathComponent:subpath];
             unsigned long long subFileSize = [fileManager fileExistsAtPath:fullSubpath]?[[fileManager attributesOfItemAtPath:fullSubpath error:nil] fileSize]:0;
             sumSize += subFileSize;
-            //NSLog(@"%@ %lld %lld", subpath, subFileSize, sumSize);
         }
     }
     else
@@ -166,7 +164,6 @@
 //        NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 //        
 //        NSArray * subPaths = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
-//        //NSLog(@"files :%@",subPaths);
 //        for (NSString * subPath in subPaths)
 //        {
 //            NSString * fullSubpath = [cachPath stringByAppendingPathComponent:subPath];
