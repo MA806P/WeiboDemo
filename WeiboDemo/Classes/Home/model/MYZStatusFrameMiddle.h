@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MYZStatusRetweeted;
+@class MYZStatusOriginal;
 
 FOUNDATION_EXPORT CGFloat const StatusMarginLR; //微博cell左右间距
 FOUNDATION_EXPORT CGFloat const StatusMarginReTextT; //转发微博的正文和上部间距
@@ -22,7 +22,7 @@ FOUNDATION_EXPORT CGFloat const StatusMarginPics; //配图之间的间隙
 @interface MYZStatusFrameMiddle : NSObject
 
 /** 微博状态的转发的微博数据 */
-@property (nonatomic, strong) MYZStatusRetweeted * statusRetweeted;
+@property (nonatomic, strong) MYZStatusOriginal * status;
 
 
 /** 转发微博的文字标签frame */

@@ -8,12 +8,12 @@
 
 #import "MYZStatus.h"
 
-@class MYZStatusRetweeted;
+@class MYZStatusRetweet;
 
 @interface MYZStatusOriginal : MYZStatus
 
 /** 被转发的原微博信息字段，当该微博为转发微博时返回 */
-@property MYZStatusRetweeted *retweeted_status;
+@property MYZStatusRetweet *retweeted_status;
 
 /** 原创微博处理后的内容，富文本*/
 @property (nonatomic, strong) NSAttributedString *attributedText;

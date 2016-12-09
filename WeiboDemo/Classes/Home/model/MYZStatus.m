@@ -43,7 +43,7 @@
 
 
 //+ (NSDictionary *)linkingObjectsProperties {
-//    return @{@"MYZStatusRetweeted":@"retweeted_status", @"MYZUserInfo":@"user"};
+//    return @{@"MYZStatusRetweet":@"retweeted_status", @"MYZUserInfo":@"user"};
 //}
 
 + (NSString *)primaryKey

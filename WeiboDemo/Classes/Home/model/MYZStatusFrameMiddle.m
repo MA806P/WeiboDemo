@@ -7,17 +7,20 @@
 //
 
 #import "MYZStatusFrameMiddle.h"
-#import "MYZStatusRetweeted.h"
+#import "MYZStatusOriginal.h"
+#import "MYZStatusRetweet.h"
 #import "MYZUserInfo.h"
 
 
 @implementation MYZStatusFrameMiddle
 
 
--(void)setStatusRetweeted:(MYZStatusRetweeted *)statusRetweeted
+-(void)setStatus:(MYZStatusOriginal *)status
 {
-    _statusRetweeted = statusRetweeted;
+    _status = status;
     
+    //转发的微博模型
+    MYZStatusRetweet * statusRetweeted = status.retweeted_status;
     
     //判断是否有转发微博
     if (statusRetweeted == nil)
@@ -27,13 +30,13 @@
         return;
     }
     
-    //转发微博的用户名
-    NSString * textStr = statusRetweeted.text;//[NSString stringWithFormat:@"@%@: %@",statusRetweeted.user.name, statusRetweeted.text];
+    //转发微博的用户名，处理过后的 带有@的转发的博主名字
+    NSString * textStr = statusRetweeted.text;
     
     CGFloat textX = StatusMarginLR;
     CGFloat textY = StatusMarginReTextT;
     CGFloat textW = SCREEN_W - textX * 2.0;
-    CGFloat textH = [textStr myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height;
+    CGFloat textH = [textStr myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height + 2;
     
     self.frameReText = CGRectMake(textX, textY, textW, textH);
     

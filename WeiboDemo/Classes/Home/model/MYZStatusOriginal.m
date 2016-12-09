@@ -7,7 +7,7 @@
 //
 
 #import "MYZStatusOriginal.h"
-#import "MYZStatusRetweeted.h"
+#import "MYZStatusRetweet.h"
 #import "MYZUserInfo.h"
 
 @implementation MYZStatusOriginal
@@ -19,7 +19,7 @@
         NSDictionary * retweetedStatusDic = value[@"retweeted_status"];
         if (retweetedStatusDic)
         {
-            MYZStatusRetweeted * re = [[MYZStatusRetweeted alloc] initWithValue:retweetedStatusDic];
+            MYZStatusRetweet * re = [[MYZStatusRetweet alloc] initWithValue:retweetedStatusDic];
             self.retweeted_status = re;
         }
         

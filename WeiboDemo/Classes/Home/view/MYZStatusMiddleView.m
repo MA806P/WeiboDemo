@@ -8,7 +8,8 @@
 
 #import "MYZStatusMiddleView.h"
 #import "MYZUserInfo.h"
-#import "MYZStatusRetweeted.h"
+#import "MYZStatusOriginal.h"
+#import "MYZStatusRetweet.h"
 #import "MYZStatusFrameMiddle.h"
 #import "MYZStatusPicContentView.h"
 
@@ -54,13 +55,13 @@
 {
     _statusFrameMiddle = statusFrameMiddle;
     
-    MYZStatusRetweeted * statusRetweeted = statusFrameMiddle.statusRetweeted;
+    MYZStatusOriginal * status = statusFrameMiddle.status;
+    MYZStatusRetweet * statusRetweeted = status.retweeted_status;
     
     self.reTextLabel.frame = statusFrameMiddle.frameReText;
     
-    //MYZLog(@"-- %@ %@", statusRetweeted.text, statusRetweeted.attributedText);
-    self.reTextLabel.text = statusRetweeted.text;
-//    self.reTextLabel.attributedText = statusRetweeted.attributedText;
+    //self.reTextLabel.text = statusRetweeted.text;
+    self.reTextLabel.attributedText = status.reAttributedText;
     
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
     self.picsContentView.picArray = statusRetweeted.pic_urls;

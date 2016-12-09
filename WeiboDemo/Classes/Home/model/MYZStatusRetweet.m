@@ -1,15 +1,15 @@
 //
-//  MYZStatusRetweeted.m
+//  MYZStatusRetweet.m
 //  WeiboDemo
 //
-//  Created by MA806P on 2016/10/17.
+//  Created by 159CaiMini02 on 16/12/9.
 //  Copyright © 2016年 MA806P. All rights reserved.
 //
 
-#import "MYZStatusRetweeted.h"
+#import "MYZStatusRetweet.h"
 #import "MYZUserInfo.h"
 
-@implementation MYZStatusRetweeted
+@implementation MYZStatusRetweet
 
 - (instancetype)initWithValue:(id)value
 {
