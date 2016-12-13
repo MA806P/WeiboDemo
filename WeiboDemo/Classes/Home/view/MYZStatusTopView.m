@@ -11,6 +11,7 @@
 #import "MYZStatusOriginal.h"
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusPicContentView.h"
+#import "MYZStatusTextLabel.h"
 
 @interface MYZStatusTopView ()
 
@@ -20,7 +21,7 @@
 @property (nonatomic, weak) UILabel * nameLabel; //昵称
 @property (nonatomic, weak) UILabel * timeLabel; //时间
 @property (nonatomic, weak) UILabel * fromLabel; //来源
-@property (nonatomic, weak) UILabel * selfTextLabel; //原创微博正文
+@property (nonatomic, weak) MYZStatusTextLabel * selfTextLabel; //原创微博正文
 @property (nonatomic, weak) MYZStatusPicContentView * picsContentView; //原创微博配图
 
 @end
@@ -78,9 +79,7 @@
     self.fromLabel = fromLabel;
     
     //原创微博正文
-    UILabel * selfTextLabel = [[UILabel alloc] init];
-    selfTextLabel.font = [UIFont systemFontOfSize:StatusFontTextSize];
-    selfTextLabel.numberOfLines = 0;
+    MYZStatusTextLabel * selfTextLabel = [[MYZStatusTextLabel alloc] init];
     [self addSubview:selfTextLabel];
     self.selfTextLabel = selfTextLabel;
     
@@ -156,7 +155,8 @@
     
     self.selfTextLabel.frame = statusFrameTop.frameText;
     //self.selfTextLabel.text = status.text;
-    self.selfTextLabel.attributedText = status.attributedText;
+    //self.selfTextLabel.attributedText = status.attributedText;
+    self.selfTextLabel.attributedString = status.attributedText;
     
     //MYZLog(@" --- %ld  %@", status.pic_urls.count, NSStringFromCGRect(statusFrameTop.framePicsContent));
     self.picsContentView.frame = statusFrameTop.framePicsContent;

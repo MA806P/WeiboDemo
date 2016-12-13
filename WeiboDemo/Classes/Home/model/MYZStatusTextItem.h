@@ -24,6 +24,9 @@ typedef NS_ENUM(NSUInteger, StatusTextItemType)
 
 @property (nonatomic, assign) StatusTextItemType type;
 
+/** 在StatusTextLabel中所在的位置可能有换行 */
+@property (nonatomic, copy) NSArray * rects;
+
 //@property (nonatomic, strong) NSAttributedString * attributedText;
 
 @end

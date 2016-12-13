@@ -40,6 +40,7 @@ CGFloat const StatusMarginBetweenCell = 6.0; //两微博之间的间隙,上方�
 CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
 
 #define StatusTextHighlightColor MYZColor(68, 125, 172)
+NSString * const LinkTextKey = @"LinkTextKey";//富文本可点击连接的标志
 
 
 @implementation MYZStatusFrame
@@ -198,6 +199,7 @@ CGFloat const StatusMarginPics = 6.0; //配图之间的间隙
             case StatusTextItemTypeUrl:
             {
                 [attributedText addAttribute:NSForegroundColorAttributeName value:StatusTextHighlightColor range:textItem.range];
+                [attributedText addAttribute:LinkTextKey value:textItem.text range:textItem.range]; //设置标志位置，后面点击连接会用到
                 break;
             }
             default:

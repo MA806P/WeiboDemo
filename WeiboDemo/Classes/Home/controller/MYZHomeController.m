@@ -16,8 +16,10 @@
 #import "MYZStatusOriginal.h"
 #import "MYZStatusFrame.h"
 #import "MYZStatusCell.h"
+#import "MYZStatusTextItem.h"
 
-NSString * const StatusCellID = @"StatusCellID";
+static NSString * const StatusCellID = @"StatusCellID";
+NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
 
 @interface MYZHomeController ()
 
@@ -80,8 +82,8 @@ NSString * const StatusCellID = @"StatusCellID";
     }];
     //self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(homeGetOldStatuses)];
     
-    
-    
+    //点击微博正文连接，接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLinkTouch:) name:StatusTextLinkNoticKey object:nil];
     
 }
 
@@ -221,7 +223,14 @@ NSString * const StatusCellID = @"StatusCellID";
 }
 
 
+#pragma mark - 点击事件
 
+- (void)statusTextLinkTouch:(NSNotification *)notic
+{
+    MYZStatusTextItem * linkTextItem = notic.object;
+    
+    NSLog(@" -- %@ ", linkTextItem.text);
+}
 
 
 

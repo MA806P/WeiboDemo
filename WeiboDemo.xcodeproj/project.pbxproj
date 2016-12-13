@@ -19,6 +19,7 @@
 		18467D391DAE026C00B1D963 /* MYZTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 18467D371DAE026C00B1D963 /* MYZTools.m */; };
 		184E0AA01DC75FF9004246ED /* MYZEmotionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E0A9F1DC75FF9004246ED /* MYZEmotionListView.m */; };
 		184E0AA31DC76011004246ED /* MYZEmotionToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */; };
+		186FF4941DFFC66F00CA590A /* MYZStatusTextLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186FF4931DFFC66F00CA590A /* MYZStatusTextLabel.m */; };
 		18711B5E1DB71DCE007A0A1D /* MYZStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18711B5D1DB71DCE007A0A1D /* MYZStatusCell.m */; };
 		188AAE9C1DB627DC00A8274F /* NSString+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9B1DB627DC00A8274F /* NSString+MYZ.m */; };
 		188AAEA11DB627F100A8274F /* UIImage+MYZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AAE9E1DB627F100A8274F /* UIImage+MYZ.m */; };
@@ -114,6 +115,8 @@
 		184E0AA11DC76011004246ED /* MYZEmotionToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionToolBar.h; sourceTree = "<group>"; };
 		184E0AA21DC76011004246ED /* MYZEmotionToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionToolBar.m; sourceTree = "<group>"; };
 		1858B8771DAB6722004E81A7 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		186FF4921DFFC66F00CA590A /* MYZStatusTextLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTextLabel.h; sourceTree = "<group>"; };
+		186FF4931DFFC66F00CA590A /* MYZStatusTextLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusTextLabel.m; sourceTree = "<group>"; };
 		18711B5C1DB71DCE007A0A1D /* MYZStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZStatusCell.h; path = WeiboDemo/Classes/Home/model/MYZStatusCell.h; sourceTree = SOURCE_ROOT; };
 		18711B5D1DB71DCE007A0A1D /* MYZStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZStatusCell.m; path = WeiboDemo/Classes/Home/model/MYZStatusCell.m; sourceTree = SOURCE_ROOT; };
 		188AAE9A1DB627DC00A8274F /* NSString+MYZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MYZ.h"; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 				18C7CE611DC05F2800B4D997 /* MYZStatusPicContentView.m */,
 				18C7CE5D1DC05F0500B4D997 /* MYZStatusPicView.h */,
 				18C7CE5E1DC05F0500B4D997 /* MYZStatusPicView.m */,
+				186FF4921DFFC66F00CA590A /* MYZStatusTextLabel.h */,
+				186FF4931DFFC66F00CA590A /* MYZStatusTextLabel.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -832,6 +837,7 @@
 				18C7CE5F1DC05F0500B4D997 /* MYZStatusPicView.m in Sources */,
 				DA65B9F31D9AC29100251B38 /* MYZProfileController.m in Sources */,
 				1805ADC81DC1F7D500F27388 /* MYZComposePicsView.m in Sources */,
+				186FF4941DFFC66F00CA590A /* MYZStatusTextLabel.m in Sources */,
 				DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */,
 				DA65B9FB1D9AC2F800251B38 /* main.m in Sources */,
 				DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */,

@@ -12,7 +12,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@" -- %@ %@ ", NSStringFromRange(self.range), self.text];
+    return [NSString stringWithFormat:@" -- %@ %@ %@", NSStringFromRange(self.range), self.text, self.rects];
 }
 
 @end
