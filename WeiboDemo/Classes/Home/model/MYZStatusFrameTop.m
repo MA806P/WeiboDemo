@@ -52,7 +52,8 @@
     CGFloat textX = self.frameIcon.origin.x;
     CGFloat textY = CGRectGetMaxY(self.frameIcon) + StatusMarginIconText;
     CGFloat textW = SCREEN_W - StatusMarginLR * 2;
-    CGFloat textH = [self.status.text myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height + 2.0;
+    CGFloat textH = [self.status.attributedText boundingRectWithSize:CGSizeMake(textW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
+    
     self.frameText = CGRectMake(textX, textY, textW, textH);
     
     

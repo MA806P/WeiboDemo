@@ -30,13 +30,13 @@
         return;
     }
     
-    //转发微博的用户名，处理过后的 带有@的转发的博主名字
-    NSString * textStr = statusRetweeted.text;
+    //转发微博的内容，带有@用户名的转发的内容
     
     CGFloat textX = StatusMarginLR;
     CGFloat textY = StatusMarginReTextT;
     CGFloat textW = SCREEN_W - textX * 2.0;
-    CGFloat textH = [textStr myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height + 2;
+    //CGFloat textH = [statusRetweeted.text myz_stringSizeWithMaxSize:CGSizeMake(textW, MAXFLOAT) andFont:[UIFont systemFontOfSize:StatusFontTextSize]].height + 2;
+    CGFloat textH = [self.status.reAttributedText boundingRectWithSize:CGSizeMake(textW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
     
     self.frameReText = CGRectMake(textX, textY, textW, textH);
     

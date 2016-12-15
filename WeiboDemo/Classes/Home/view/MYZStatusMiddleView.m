@@ -12,10 +12,11 @@
 #import "MYZStatusRetweet.h"
 #import "MYZStatusFrameMiddle.h"
 #import "MYZStatusPicContentView.h"
+#import "MYZStatusTextLabel.h"
 
 @interface MYZStatusMiddleView ()
 
-@property (nonatomic, weak) UILabel * reTextLabel;
+@property (nonatomic, weak) MYZStatusTextLabel * reTextLabel;
 
 @property (nonatomic, weak) MYZStatusPicContentView * picsContentView;
 
@@ -38,10 +39,12 @@
 
 - (void)createSubviews
 {
-    UILabel * reTextLabel = [[UILabel alloc] init];
-    reTextLabel.backgroundColor = [UIColor clearColor];
-    reTextLabel.font = [UIFont systemFontOfSize:StatusFontTextSize];
-    reTextLabel.numberOfLines = 0;
+//    UILabel * reTextLabel = [[UILabel alloc] init];
+//    reTextLabel.backgroundColor = [UIColor clearColor];
+//    reTextLabel.font = [UIFont systemFontOfSize:StatusFontTextSize];
+//    reTextLabel.numberOfLines = 0;
+    
+    MYZStatusTextLabel * reTextLabel = [[MYZStatusTextLabel alloc] init];
     [self addSubview:reTextLabel];
     self.reTextLabel = reTextLabel;
     
@@ -61,7 +64,8 @@
     self.reTextLabel.frame = statusFrameMiddle.frameReText;
     
     //self.reTextLabel.text = statusRetweeted.text;
-    self.reTextLabel.attributedText = status.reAttributedText;
+    //self.reTextLabel.attributedText = status.reAttributedText;
+    self.reTextLabel.attributedString = status.reAttributedText;
     
     self.picsContentView.frame = statusFrameMiddle.frameRePicContent;
     self.picsContentView.picArray = statusRetweeted.pic_urls;

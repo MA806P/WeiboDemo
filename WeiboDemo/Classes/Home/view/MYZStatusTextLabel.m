@@ -72,8 +72,12 @@ static NSInteger const StatusTextLabelLinkBgTag = 123456;
         textView.backgroundColor = [UIColor clearColor];
         //textView.editable = NO;
         textView.userInteractionEnabled = NO;
-        textView.textContainerInset = UIEdgeInsetsMake(-5, -5, 0, -5);
-        textView.font = [UIFont systemFontOfSize:StatusFontTextSize];
+        textView.textContainerInset = UIEdgeInsetsMake(0, -3, 0, -3);
+//        textView.textContainerInset = UIEdgeInsetsZero;
+//        textView.contentInset = UIEdgeInsetsZero;
+//        textView.layoutMargins = UIEdgeInsetsZero;
+//        textView.textContainer.lineFragmentPadding = 3;
+//        textView.font = [UIFont systemFontOfSize:StatusFontTextSize];
         [self addSubview:textView];
         self.textView = textView;
     }
@@ -157,7 +161,7 @@ static NSInteger const StatusTextLabelLinkBgTag = 123456;
     {
         UIView * higlightedView = [[UIView alloc] initWithFrame:selectionRect.rect];
         higlightedView.backgroundColor = MYZColor(203, 240, 252);
-        higlightedView.layer.cornerRadius = 5;
+        higlightedView.layer.cornerRadius = 3;
         higlightedView.tag = StatusTextLabelLinkBgTag;
         [self insertSubview:higlightedView atIndex:0];
     }
