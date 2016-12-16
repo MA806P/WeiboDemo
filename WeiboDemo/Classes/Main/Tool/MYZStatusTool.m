@@ -104,6 +104,31 @@
     }
 }
 
++ (void)getStatusDetailWithParam:(NSDictionary *)param success:(void (^)(id))success failure:(void (^)(NSError *))failure
+{
+//    [MYZHttpTools get:@"https://api.weibo.com/2/statuses/show.json" parameters:param progress:^(NSProgress *progress) {
+//        
+//    } success:^(id response) {
+//        success(response);
+//    } failure:^(NSError *error) {
+//        failure(error);
+//    }];
+    
+    
+    AFHTTPSessionManager * httpMannager = [AFHTTPSessionManager manager];
+    httpMannager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    httpMannager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    httpMannager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/plain",@"text/json",@"application/json",@"text/javascript",@"text/html",nil];
+    
+    [httpMannager GET:@"https://api.weibo.com/2/statuses/show.json" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+    
+}
+
 
 
 @end

@@ -18,6 +18,9 @@
 #import "MYZStatusCell.h"
 #import "MYZStatusTextItem.h"
 
+#import "MYZWebViewController.h"
+#import "MYZStatusViewController.h"
+
 static NSString * const StatusCellID = @"StatusCellID";
 NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
 
@@ -229,7 +232,30 @@ NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
 {
     MYZStatusTextItem * linkTextItem = notic.object;
     
-    NSLog(@" -- %@ ", linkTextItem.text);
+    MYZLog(@" -- %@ ", linkTextItem.text);
+    if (linkTextItem.type == StatusTextItemTypeUrl)
+    {
+        NSString * linkString = linkTextItem.text;
+        if ([linkString hasPrefix:@"http://m.weibo.cn"])
+        {
+            //点击微博全文，进入微博详细页
+            NSArray * subStringArray = [linkString componentsSeparatedByString:@"/"];
+            if (subStringArray.count < 4) { return; }
+            NSString * statusId = [subStringArray lastObject];
+            NSString * userId = [subStringArray objectAtIndex:subStringArray.count - 2];
+            MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+            statusVC.statusId = statusId;
+            statusVC.userId = userId;
+            [self.navigationController pushViewController:statusVC animated:YES];
+        }
+        else
+        {
+            //点击微博中链接，跳转网页
+            MYZWebViewController * webViewController = [[MYZWebViewController alloc] init];
+            webViewController.urlString = linkString;
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+    }
 }
 
 
