@@ -88,6 +88,14 @@ NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
     //点击微博正文连接，接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLinkTouch:) name:StatusTextLinkNoticKey object:nil];
     
+    //获取账户微博分组数据。请求不到数据
+    [MYZHttpTools get:@"https://api.weibo.com/2/friendships/groups.json" parameters:@{@"access_token":self.account.access_token} progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        MYZLog(@"--- %@ ",response);
+    } failure:^(NSError *error) {
+        MYZLog(@"--- %@ ", error);
+    }];
+    
 }
 
 #pragma mark - 数据处理
