@@ -10,6 +10,9 @@
 
 FOUNDATION_EXPORT CGFloat const StatusMarginLR; //微博cell左右间距
 FOUNDATION_EXPORT CGFloat const StatusBottomH; //底部转发评论点赞栏 高度
+FOUNDATION_EXPORT NSString * const StatusRepostNoticKey;//转发点击发送通知的key
+FOUNDATION_EXPORT NSString * const StatusCommentNoticKey;//评论点击发送通知的key
+FOUNDATION_EXPORT NSString * const StatusLikeNoticKey;//赞点击发送通知的key
 
 @class MYZStatusOriginal;
 

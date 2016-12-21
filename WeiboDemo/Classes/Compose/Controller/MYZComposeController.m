@@ -16,8 +16,9 @@
 #import "MYZEmotion.h"
 #import "MYZEmotionTool.h"
 #import "MYZStatusTool.h"
-
-
+#import "MYZStatusOriginal.h"
+#import "MYZStatusRetweet.h"
+#import "MYZUserInfo.h"
 
 NSInteger const ComposePicRowColumnCount = 3; //要发布的图片每行每列展示的个数
 CGFloat const ComposePicMarginLR = 10.0; //要展示的图片大视图左右间距
@@ -46,6 +47,9 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 
 //表情键盘
 @property (nonatomic, strong) MYZComposeEmotionKeyboard * emotionKeyboard;
+
+//转发微博时是否评论选择
+@property (nonatomic, weak)  UISwitch * alsoCommentSwitch;
 
 @end
 
@@ -151,6 +155,28 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 }
 
 
+- (void)setStatus:(MYZStatusOriginal *)status
+{
+    NSMutableString * retweetedText = [NSMutableString stringWithFormat:@"@%@:%@\n",status.user.name,status.text];
+    if (status.retweeted_status)
+    {
+        [retweetedText appendFormat:@"@%@:%@",status.retweeted_status.user.name, status.retweeted_status.text];
+    }
+    
+    
+    UILabel * retweetedLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 110, self.view.frame.size.width -  10.0, 40)];
+    retweetedLabel.text = retweetedText;
+    [self.view addSubview:retweetedLabel];
+    
+    UILabel * alsoCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(retweetedLabel.frame), 80, 21)];
+    alsoCommentLabel.text = @"同时评论";
+    [self.view addSubview:alsoCommentLabel];
+    
+    UISwitch * alsoCommentSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetMaxX(alsoCommentLabel.frame), CGRectGetMaxY(retweetedLabel.frame), 0, 0)];
+    [self.view addSubview:alsoCommentSwitch];
+    self.alsoCommentSwitch = alsoCommentSwitch;
+}
+
 
 #pragma mark - 导航栏 视图 点击事件处理
 
@@ -165,48 +191,82 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 
 - (void)sendStatus
 {
-    //[SVProgressHUD show];
+    
     
     NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
     [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
-    [paramDic setValue:self.textView.realText forKey:@"status"];
     
-    if (self.picsView.imageArray.count > 0)
+    
+    if (self.composeType == ComposeTypeRepost) //转发微博
     {
-        UIImage * uploadImage = [self.picsView.imageArray firstObject];
-        NSData * uploadImageData = UIImageJPEGRepresentation(uploadImage, 0.8);
-        [paramDic setValue:uploadImageData forKey:@"pic"];
-
-    }
-    
-    
-    [MYZStatusTool sendStatusWithParam:paramDic success:^(id result) {
-        //[SVProgressHUD dismiss];
-        [MYZTools showAlertWithText:@"发送成功"];
+        /**
+         *  access_token    false	string	采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+         *  id              true	int64	要转发的微博ID。
+         *  status	        true	string	添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”。
+         *  is_comment      false	int	是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
+         */
+        [paramDic setValue:self.textView.realText forKey:@"status"];
+        [paramDic setValue:self.alsoCommentSwitch.isOn?@(3):@(0) forKey:@"is_comment"];
         
-    } failure:^(NSError *error) {
-        //[SVProgressHUD dismiss];
-        [MYZTools showAlertWithText:@"发送失败，稍后重试"];
-    }];
+        [MYZStatusTool sendStatusRepostWithParam:paramDic success:^(id result) {
+            [MYZTools showAlertWithText:@"转发成功"];
+        } failure:^(NSError *error) {
+            MYZLog(@" -- %@", error);
+            [MYZTools showAlertWithText:@"转发失败，稍后重试"];
+        }];
+        
+        //在后台发送
+        [MYZTools showAlertWithText:@"发送中..."];
+        [self cancelBack];
+        
+    }
+    else if (self.composeType == ComposeTypeComment) //评论微博
+    {
+        
+    }
+    else //自创微博
+    {
     
-    //在后台发送
-    [MYZTools showAlertWithText:@"发送中..."];
-    [self cancelBack];
-    
-//    //http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg
-//    NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
-//    [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
-//    [paramDic setValue:self.textView.text forKey:@"status"];
-//    
-//    [paramDic setValue:@"http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg" forKey:@"pic_id"];
-//    
-//    
-//    [MYZStatusTool sendStatusUploadUrlTextWithParam:paramDic success:^(id result) {
-//        MYZLog(@"--- %@ ", result);
-//        [MYZTools showAlertWithText:@"发送成功"];
-//    } failure:^(NSError *error) {
-//        MYZLog(@"--- %@ ", error);
-//    }];
+        [paramDic setValue:self.textView.realText forKey:@"status"];
+        
+        if (self.picsView.imageArray.count > 0)
+        {
+            UIImage * uploadImage = [self.picsView.imageArray firstObject];
+            NSData * uploadImageData = UIImageJPEGRepresentation(uploadImage, 0.8);
+            [paramDic setValue:uploadImageData forKey:@"pic"];
+            
+        }
+        
+        
+        [MYZStatusTool sendStatusWithParam:paramDic success:^(id result) {
+            //[SVProgressHUD dismiss];
+            [MYZTools showAlertWithText:@"发送成功"];
+            
+        } failure:^(NSError *error) {
+            //[SVProgressHUD dismiss];
+            [MYZTools showAlertWithText:@"发送失败，稍后重试"];
+        }];
+        
+        //在后台发送
+        [MYZTools showAlertWithText:@"发送中..."];
+        [self cancelBack];
+        
+        //    //http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg
+        //    NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
+        //    [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
+        //    [paramDic setValue:self.textView.text forKey:@"status"];
+        //
+        //    [paramDic setValue:@"http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg,http://ww1.sinaimg.cn/large/00696P6Fjw1f9vhzfzt11j31kw11yqqb.jpg" forKey:@"pic_id"];
+        //
+        //
+        //    [MYZStatusTool sendStatusUploadUrlTextWithParam:paramDic success:^(id result) {
+        //        MYZLog(@"--- %@ ", result);
+        //        [MYZTools showAlertWithText:@"发送成功"];
+        //    } failure:^(NSError *error) {
+        //        MYZLog(@"--- %@ ", error);
+        //    }];
+        
+    }
 }
 
 

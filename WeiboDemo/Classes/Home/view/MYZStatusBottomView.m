@@ -90,19 +90,25 @@
 
 #pragma mark - 按钮点击
 
+//转发
 - (void)repostsBtnTouch
 {
     MYZLog(@"repostsBtnTouch");
+    [[NSNotificationCenter defaultCenter] postNotificationName:StatusRepostNoticKey object:self.status];
 }
 
+//评论
 - (void)commentsBtnTouch
 {
     MYZLog(@"commentsBtnTouch");
+    [[NSNotificationCenter defaultCenter] postNotificationName:StatusCommentNoticKey object:self.status.mid];
 }
 
+//点赞
 - (void)attitudesBtnTouch
 {
     MYZLog(@"attitudesBtnTouch");
+    [[NSNotificationCenter defaultCenter] postNotificationName:StatusLikeNoticKey object:self.status.mid];
 }
 
 

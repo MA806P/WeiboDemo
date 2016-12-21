@@ -20,9 +20,14 @@
 
 #import "MYZWebViewController.h"
 #import "MYZStatusViewController.h"
+#import "MYZComposeController.h"
 
 static NSString * const StatusCellID = @"StatusCellID";
 NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
+
+NSString * const StatusRepostNoticKey = @"StatusRepostNoticKey";//转发点击发送通知的key
+NSString * const StatusCommentNoticKey = @"StatusCommentNoticKey";//评论点击发送通知的key
+NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通知的key
 
 @interface MYZHomeController ()
 
@@ -87,6 +92,10 @@ NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
     
     //点击微博正文连接，接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLinkTouch:) name:StatusTextLinkNoticKey object:nil];
+    //点击转发 评论 赞，接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusRepostTouch:) name:StatusRepostNoticKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusCommentTouch:) name:StatusCommentNoticKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLikeTouch:) name:StatusLikeNoticKey object:nil];
     
     //获取账户微博分组数据。请求不到数据
     [MYZHttpTools get:@"https://api.weibo.com/2/friendships/groups.json" parameters:@{@"access_token":self.account.access_token} progress:^(NSProgress *progress) {
@@ -234,8 +243,9 @@ NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
 }
 
 
-#pragma mark - 点击事件
+#pragma mark - 点击事件, 正文连接 评论 转发 点赞
 
+//点击微博正文能点的地方
 - (void)statusTextLinkTouch:(NSNotification *)notic
 {
     MYZStatusTextItem * linkTextItem = notic.object;
@@ -266,7 +276,27 @@ NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
     }
 }
 
-
+- (void)statusRepostTouch:(NSNotification *)notic
+{
+    MYZStatusOriginal * status = notic.object;
+    if (status) {
+        MYZComposeController * compose = [[MYZComposeController alloc] init];
+        compose.composeType = ComposeTypeRepost;
+        compose.status = status;
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:compose];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+}
+- (void)statusCommentTouch:(NSNotification *)notic
+{
+    NSString * statusMid = notic.object;
+    MYZLog(@" --- %@", statusMid);
+}
+- (void)statusTextLikeTouch:(NSNotification *)notic
+{
+    NSString * statusMid = notic.object;
+    MYZLog(@" --- %@", statusMid);
+}
 
 
 @end
