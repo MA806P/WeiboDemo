@@ -278,7 +278,8 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
 
 - (void)statusRepostTouch:(NSNotification *)notic
 {
-    MYZStatusOriginal * status = notic.object;
+    
+    MYZStatusOriginal * status = [notic.userInfo objectForKey:@"status"];
     if (status) {
         MYZComposeController * compose = [[MYZComposeController alloc] init];
         compose.composeType = ComposeTypeRepost;

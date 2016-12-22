@@ -94,7 +94,7 @@
 - (void)repostsBtnTouch
 {
     MYZLog(@"repostsBtnTouch");
-    [[NSNotificationCenter defaultCenter] postNotificationName:StatusRepostNoticKey object:self.status];
+    [[NSNotificationCenter defaultCenter] postNotificationName:StatusRepostNoticKey object:nil userInfo:@{@"status":self.status}];
 }
 
 //评论

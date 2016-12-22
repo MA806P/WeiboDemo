@@ -157,6 +157,7 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 
 - (void)setStatus:(MYZStatusOriginal *)status
 {
+    _status = status;
     NSMutableString * retweetedText = [NSMutableString stringWithFormat:@"@%@:%@\n",status.user.name,status.text];
     if (status.retweeted_status)
     {
@@ -205,8 +206,11 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
          *  status	        true	string	添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”。
          *  is_comment      false	int	是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
          */
+        [paramDic setValue:self.status.mid forKey:@"id"];
         [paramDic setValue:self.textView.realText forKey:@"status"];
         [paramDic setValue:self.alsoCommentSwitch.isOn?@(3):@(0) forKey:@"is_comment"];
+        
+        MYZLog(@" ++++++ %@  %@ ", paramDic, self.status.mid);
         
         [MYZStatusTool sendStatusRepostWithParam:paramDic success:^(id result) {
             [MYZTools showAlertWithText:@"转发成功"];
