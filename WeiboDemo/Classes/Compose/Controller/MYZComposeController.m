@@ -154,38 +154,13 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
-- (void)setStatus:(MYZStatusOriginal *)status
-{
-    _status = status;
-    NSMutableString * retweetedText = [NSMutableString stringWithFormat:@"@%@:%@\n",status.user.name,status.text];
-    if (status.retweeted_status)
-    {
-        [retweetedText appendFormat:@"@%@:%@",status.retweeted_status.user.name, status.retweeted_status.text];
-    }
-    
-    
-    UILabel * retweetedLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 110, self.view.frame.size.width -  10.0, 40)];
-    retweetedLabel.text = retweetedText;
-    [self.view addSubview:retweetedLabel];
-    
-    UILabel * alsoCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(retweetedLabel.frame), 80, 21)];
-    alsoCommentLabel.text = @"同时评论";
-    [self.view addSubview:alsoCommentLabel];
-    
-    UISwitch * alsoCommentSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetMaxX(alsoCommentLabel.frame), CGRectGetMaxY(retweetedLabel.frame), 0, 0)];
-    [self.view addSubview:alsoCommentSwitch];
-    self.alsoCommentSwitch = alsoCommentSwitch;
-}
-
-
 #pragma mark - 导航栏 视图 点击事件处理
 
 - (void)setupNavigationBar
 {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelBack)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStylePlain target:self action:@selector(sendStatus)];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = self.composeType==ComposeTypeRepost;
     self.navigationItem.title = @"名称";
 }
 
@@ -206,11 +181,15 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
          *  status	        true	string	添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”。
          *  is_comment      false	int	是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
          */
+        NSString * statusText = self.textView.realText.length > 0 ? self.textView.realText : @"转发微博";
+        if (statusText.length > 140)
+        {
+            [MYZTools showAlertWithText:@"不能超过140字"];
+            return;
+        }
         [paramDic setValue:self.status.mid forKey:@"id"];
-        [paramDic setValue:self.textView.realText forKey:@"status"];
+        [paramDic setValue:statusText forKey:@"status"];
         [paramDic setValue:self.alsoCommentSwitch.isOn?@(3):@(0) forKey:@"is_comment"];
-        
-        MYZLog(@" ++++++ %@  %@ ", paramDic, self.status.mid);
         
         [MYZStatusTool sendStatusRepostWithParam:paramDic success:^(id result) {
             [MYZTools showAlertWithText:@"转发成功"];
@@ -292,7 +271,6 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     
     MYZComposeTextView * textView = [[MYZComposeTextView alloc] initWithFrame:CGRectMake(textViewX, textViewY, textViewW, textViewH)];
     textView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
-    textView.placeholder = @"分享新鲜事...";
     textView.delegate = self;
     [self.view addSubview:textView];
     self.textView = textView;
@@ -301,6 +279,54 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     MYZComposePicsView * picsView = [[MYZComposePicsView alloc] initWithFrame:CGRectMake(0, 110, textViewW, textViewW)];
     [textView addSubview:picsView];
     self.picsView = picsView;
+    
+    //转发微博显示的视图
+    if (self.composeType == ComposeTypeRepost && self.status != nil)
+    {
+        NSMutableString * retweetedText = [NSMutableString string];
+        if (self.status.retweeted_status)
+        {
+            [retweetedText appendFormat:@"%@", self.status.retweeted_status.text];
+            textView.text = [NSString stringWithFormat:@"//@%@:%@",self.status.user.name,self.status.text];
+            textView.selectedRange = NSMakeRange(0, 0);
+        }
+        else
+        {
+            [retweetedText appendFormat:@"@%@:%@",self.status.user.name,self.status.text];
+            textView.placeholder = @"说说分享心得...";
+        }
+        
+        CGFloat retweetedTextH = [textView.text boundingRectWithSize:textView.frame.size options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : textView.font} context:nil].size.height;
+        CGFloat retweetedViewX = retweetedTextH > 100 ? retweetedTextH + 90 : 160;
+        
+        UIView * retweetedView = [[UIView alloc] initWithFrame:CGRectMake(0, retweetedViewX, SCREEN_W, 70)];
+        retweetedView.backgroundColor = MYZColor(247, 247, 247);
+        UILabel * retweetedLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, SCREEN_W -  10.0, 40)];
+        retweetedLabel.numberOfLines = 0;
+        retweetedLabel.font = [UIFont systemFontOfSize:14];
+        retweetedLabel.text = retweetedText;
+        [retweetedView addSubview:retweetedLabel];
+        
+        UILabel * alsoCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(retweetedLabel.frame), 60, 20)];
+        alsoCommentLabel.font = [UIFont systemFontOfSize:12];
+        alsoCommentLabel.text = @"同时评论";
+        [retweetedView addSubview:alsoCommentLabel];
+        
+        UISwitch * alsoCommentSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetMaxX(alsoCommentLabel.frame), CGRectGetMaxY(retweetedLabel.frame), 0, 0)];
+        [retweetedView addSubview:alsoCommentSwitch];
+        self.alsoCommentSwitch = alsoCommentSwitch;
+        
+        [self.view addSubview:retweetedView];
+        
+    }
+    else
+    {
+        textView.placeholder = @"分享新鲜事...";
+    }
+    
+    
+    
+    
 }
 
 
