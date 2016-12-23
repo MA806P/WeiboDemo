@@ -44,7 +44,15 @@
 //    reTextLabel.font = [UIFont systemFontOfSize:StatusFontTextSize];
 //    reTextLabel.numberOfLines = 0;
     
+    __weak typeof(self) weakSelf = self;
     MYZStatusTextLabel * reTextLabel = [[MYZStatusTextLabel alloc] init];
+    reTextLabel.statusTextLabelBlock = ^(MYZStatusTextItem * textItem){
+        __strong typeof(weakSelf) srongSelf = weakSelf;
+        if (srongSelf && srongSelf.statusMiddleViewBlock)
+        {
+            srongSelf.statusMiddleViewBlock(textItem);
+        }
+    };
     [self addSubview:reTextLabel];
     self.reTextLabel = reTextLabel;
     

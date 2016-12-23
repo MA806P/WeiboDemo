@@ -17,19 +17,14 @@
 #import "MYZStatusFrame.h"
 #import "MYZStatusCell.h"
 #import "MYZStatusTextItem.h"
-
 #import "MYZWebViewController.h"
 #import "MYZStatusViewController.h"
 #import "MYZComposeController.h"
 
+
 static NSString * const StatusCellID = @"StatusCellID";
-NSString * const StatusTextLinkNoticKey = @"StatusTextLinkNoticKey";
 
-NSString * const StatusRepostNoticKey = @"StatusRepostNoticKey";//转发点击发送通知的key
-NSString * const StatusCommentNoticKey = @"StatusCommentNoticKey";//评论点击发送通知的key
-NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通知的key
-
-@interface MYZHomeController ()
+@interface MYZHomeController () <MYZStatusCellDelegate>
 
 @property (nonatomic, strong) MYZAccount * account;
 @property (nonatomic, strong) MYZUserInfo * userInfo;
@@ -55,10 +50,6 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = MYZColor(242, 242, 242);
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //self.tableView.allowsSelection = NO;
-    
     
     //判断是否授权
     self.account = [MYZTools account];
@@ -71,6 +62,9 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
     }
     
     //tableView 设置
+    self.tableView.backgroundColor = MYZColor(242, 242, 242);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.allowsSelection = NO;
     [self.tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:StatusCellID];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -90,20 +84,15 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
     }];
     //self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(homeGetOldStatuses)];
     
-    //点击微博正文连接，接收通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLinkTouch:) name:StatusTextLinkNoticKey object:nil];
-    //点击转发 评论 赞，接收通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusRepostTouch:) name:StatusRepostNoticKey object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusCommentTouch:) name:StatusCommentNoticKey object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusTextLikeTouch:) name:StatusLikeNoticKey object:nil];
     
-    //获取账户微博分组数据。请求不到数据
-    [MYZHttpTools get:@"https://api.weibo.com/2/friendships/groups.json" parameters:@{@"access_token":self.account.access_token} progress:^(NSProgress *progress) {
-    } success:^(id response) {
-        MYZLog(@"--- %@ ",response);
-    } failure:^(NSError *error) {
-        MYZLog(@"--- %@ ", error);
-    }];
+    
+//    //获取账户微博分组数据。请求不到数据
+//    [MYZHttpTools get:@"https://api.weibo.com/2/friendships/groups.json" parameters:@{@"access_token":self.account.access_token} progress:^(NSProgress *progress) {
+//    } success:^(id response) {
+//        MYZLog(@"--- %@ ",response);
+//    } failure:^(NSError *error) {
+//        MYZLog(@"--- %@ ", error);
+//    }];
     
 }
 
@@ -233,6 +222,7 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
     MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
     MYZStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:StatusCellID forIndexPath:indexPath];
     cell.statusFrame = statusFrame;
+    cell.delegate = self;
     return cell;
 }
 
@@ -242,29 +232,33 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
     return statusFrame.cellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    
+    MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+    statusVC.statusFrame = statusFrame;
+    [self.navigationController pushViewController:statusVC animated:YES];
+}
+
 
 #pragma mark - 点击事件, 正文连接 评论 转发 点赞
 
 //点击微博正文能点的地方
-- (void)statusTextLinkTouch:(NSNotification *)notic
+- (void)statusTouchTextLinkWithTextItem:(MYZStatusTextItem *)linkTextItem statusFrame:(MYZStatusFrame *)statusFrame
 {
-    MYZStatusTextItem * linkTextItem = notic.object;
-    
     MYZLog(@" -- %@ ", linkTextItem.text);
     if (linkTextItem.type == StatusTextItemTypeUrl)
     {
         NSString * linkString = linkTextItem.text;
         if ([linkString hasPrefix:@"http://m.weibo.cn"])
         {
-            //点击微博全文，进入微博详细页
-            NSArray * subStringArray = [linkString componentsSeparatedByString:@"/"];
-            if (subStringArray.count < 4) { return; }
-            NSString * statusId = [subStringArray lastObject];
-            NSString * userId = [subStringArray objectAtIndex:subStringArray.count - 2];
-            MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
-            statusVC.statusId = statusId;
-            statusVC.userId = userId;
-            [self.navigationController pushViewController:statusVC animated:YES];
+            if (statusFrame)
+            {
+                MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+                statusVC.statusFrame = statusFrame;
+                [self.navigationController pushViewController:statusVC animated:YES];
+            }
         }
         else
         {
@@ -276,11 +270,12 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
     }
 }
 
-- (void)statusRepostTouch:(NSNotification *)notic
+//点击转发微博
+- (void)statusTouchRepostWithStatus:(MYZStatusFrame *)statusFrame
 {
-    
-    MYZStatusOriginal * status = [notic.userInfo objectForKey:@"status"];
-    if (status) {
+    MYZStatusOriginal * status = statusFrame.status;
+    if (status)
+    {
         MYZComposeController * compose = [[MYZComposeController alloc] init];
         compose.composeType = ComposeTypeRepost;
         compose.status = status;
@@ -288,15 +283,20 @@ NSString * const StatusLikeNoticKey = @"StatusLikeNoticKey";//赞点击发送通
         [self presentViewController:nav animated:YES completion:nil];
     }
 }
-- (void)statusCommentTouch:(NSNotification *)notic
+
+//点击评论
+- (void)statusTouchCommentWithStatus:(MYZStatusFrame *)statusFrame
 {
-    NSString * statusMid = notic.object;
-    MYZLog(@" --- %@", statusMid);
+    MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+    statusVC.statusFrame = statusFrame;
+    statusVC.type = StatusViewControllerTypeComment;
+    [self.navigationController pushViewController:statusVC animated:YES];
 }
-- (void)statusTextLikeTouch:(NSNotification *)notic
+
+//点赞
+- (void)statusTouchLikeWithStatus:(MYZStatusFrame *)statusFrame
 {
-    NSString * statusMid = notic.object;
-    MYZLog(@" --- %@", statusMid);
+    
 }
 
 

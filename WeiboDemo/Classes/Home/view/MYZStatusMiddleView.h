@@ -10,7 +10,7 @@
 
 FOUNDATION_EXPORT CGFloat const StatusFontTextSize; //微博正文字体大小
 
-@class MYZStatusFrameMiddle;
+@class MYZStatusFrameMiddle, MYZStatusTextItem;
 
 @interface MYZStatusMiddleView : UIImageView
 
@@ -20,5 +20,8 @@ FOUNDATION_EXPORT CGFloat const StatusFontTextSize; //微博正文字体大小
 
 /** 微博cell点击状态，根据值来调整背景图 */
 @property (nonatomic, assign) MYZStatusCellType cellType;
+
+/** 点击文本中的超链接回调 */
+@property (nonatomic, copy) void(^statusMiddleViewBlock)(MYZStatusTextItem * item);
 
 @end

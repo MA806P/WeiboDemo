@@ -13,6 +13,18 @@
 
 + (void)get:(NSString *)urlStr parameters:(NSDictionary *)parameter progress:(void (^)(NSProgress *progress))progress success:(void (^)(id response))success failure:(void (^)(NSError *error))failure
 {
+    //链接拼接
+    NSMutableString * urlParamString = [NSMutableString stringWithFormat:@"%@?",urlStr];
+    [parameter enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [urlParamString appendFormat:@"%@=%@&",key,obj];
+    }];
+    if ([urlParamString hasSuffix:@"&"]||[urlParamString hasSuffix:@"?"])
+    {
+        [urlParamString deleteCharactersInRange:NSMakeRange(urlParamString.length-1, 1)];
+    }
+    MYZLog(@"get +++ %@", urlParamString);
+
+    
     AFHTTPSessionManager * httpMannager = [AFHTTPSessionManager manager];
     
     [httpMannager GET:urlStr parameters:parameter progress:^(NSProgress * _Nonnull downloadProgress) {

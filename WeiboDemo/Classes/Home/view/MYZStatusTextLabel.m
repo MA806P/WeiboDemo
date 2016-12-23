@@ -116,9 +116,10 @@ static NSInteger const StatusTextLabelLinkBgTag = 123456;
     CGPoint touchPoint = [touch locationInView:self];
     
     MYZStatusTextItem * linkTextItem = [self touchLinkWithPoint:touchPoint];
-    if (linkTextItem)
+    if (linkTextItem && self.statusTextLabelBlock)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:StatusTextLinkNoticKey object:linkTextItem];
+        //点击了链接回调
+        self.statusTextLabelBlock(linkTextItem);
     }
     [self removeLinkHiglightedView];
 }

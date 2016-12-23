@@ -79,7 +79,15 @@
     self.fromLabel = fromLabel;
     
     //原创微博正文
+    __weak typeof(self) weakSelf = self;
     MYZStatusTextLabel * selfTextLabel = [[MYZStatusTextLabel alloc] init];
+    selfTextLabel.statusTextLabelBlock = ^(MYZStatusTextItem * textItem){
+        __strong typeof(weakSelf) srongSelf = weakSelf;
+        if (srongSelf && srongSelf.statusTopViewBlock)
+        {
+            srongSelf.statusTopViewBlock(textItem);
+        }
+    };
     [self addSubview:selfTextLabel];
     self.selfTextLabel = selfTextLabel;
     

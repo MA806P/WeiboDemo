@@ -8,14 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+@class MYZStatusFrame, MYZStatusOriginal, MYZStatusTextItem;
+
+@protocol MYZStatusCellDelegate <NSObject>
+
+@optional
+- (void)statusTouchTextLinkWithTextItem:(MYZStatusTextItem *)linkTextItem statusFrame:(MYZStatusFrame *)statusFrame;
+
+- (void)statusTouchRepostWithStatus:(MYZStatusFrame *)statusFrame;
+- (void)statusTouchCommentWithStatus:(MYZStatusFrame *)statusFrame;
+- (void)statusTouchLikeWithStatus:(MYZStatusFrame *)statusFrame;
 
 
-@class MYZStatusFrame;
+@end
+
+
 
 @interface MYZStatusCell : UITableViewCell
 
 /** 微博数据,包括微博内容和各个空间的frame */
 @property (nonatomic, strong) MYZStatusFrame * statusFrame;
 
+/** Status cell delegate */
+@property (nonatomic, strong) id <MYZStatusCellDelegate> delegate;
 
 @end

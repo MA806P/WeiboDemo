@@ -15,7 +15,7 @@ FOUNDATION_EXPORT CGFloat const StatusMarginTimeFrom; //时间和来源左右间
 
 
 
-@class MYZStatusFrameTop;
+@class MYZStatusFrameTop, MYZStatusTextItem;
 
 @interface MYZStatusTopView : UIImageView
 
@@ -24,5 +24,8 @@ FOUNDATION_EXPORT CGFloat const StatusMarginTimeFrom; //时间和来源左右间
 
 /** 微博cell点击状态，根据值来调整背景图 */
 @property (nonatomic, assign) MYZStatusCellType cellType;
+
+/** 点击文本中的超链接回调 */
+@property (nonatomic, copy) void(^statusTopViewBlock)(MYZStatusTextItem * item);
 
 @end

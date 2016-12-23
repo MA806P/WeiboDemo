@@ -93,22 +93,28 @@
 //转发
 - (void)repostsBtnTouch
 {
-    MYZLog(@"repostsBtnTouch");
-    [[NSNotificationCenter defaultCenter] postNotificationName:StatusRepostNoticKey object:nil userInfo:@{@"status":self.status}];
+    if ([self.delegate respondsToSelector:@selector(statusBottomViewTouchRepost)])
+    {
+        [self.delegate statusBottomViewTouchRepost];
+    }
 }
 
 //评论
 - (void)commentsBtnTouch
 {
-    MYZLog(@"commentsBtnTouch");
-    [[NSNotificationCenter defaultCenter] postNotificationName:StatusCommentNoticKey object:self.status.mid];
+    if ([self.delegate respondsToSelector:@selector(statusBottomViewTouchComment)])
+    {
+        [self.delegate statusBottomViewTouchComment];
+    }
 }
 
 //点赞
 - (void)attitudesBtnTouch
 {
-    MYZLog(@"attitudesBtnTouch");
-    [[NSNotificationCenter defaultCenter] postNotificationName:StatusLikeNoticKey object:self.status.mid];
+    if ([self.delegate respondsToSelector:@selector(statusBottomViewTouchLike)])
+    {
+        [self.delegate statusBottomViewTouchLike];
+    }
 }
 
 

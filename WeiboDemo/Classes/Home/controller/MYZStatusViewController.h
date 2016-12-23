@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MYZStatusViewController : UIViewController
+@class MYZStatusFrame;
 
-/** 微博的用户id */
-@property (nonatomic, copy) NSString * userId;
+FOUNDATION_EXPORT CGFloat const StatusBottomH; //底部转发评论点赞栏 高度
 
-/** 微博的id */
-@property (nonatomic, copy) NSString * statusId;
+typedef NS_ENUM(NSUInteger, StatusViewControllerType)
+{
+    StatusViewControllerTypeDeltail, //显示微博详情
+    StatusViewControllerTypeComment //显示评论列表
+};
+
+@interface MYZStatusViewController : UITableViewController
+
+/** 显示类型 */
+@property (nonatomic, assign) StatusViewControllerType type;
+
+/** 传递过来的微博信息 */
+@property (nonatomic, strong) MYZStatusFrame * statusFrame;
 
 @end

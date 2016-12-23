@@ -33,6 +33,7 @@
 		18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE96D1DACB6510068832E /* MYZOAuthController.m */; };
 		18CD2B191E038313005B1881 /* MYZWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2B181E038313005B1881 /* MYZWebViewController.m */; };
 		18CD2B1C1E03B443005B1881 /* MYZStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2B1B1E03B443005B1881 /* MYZStatusViewController.m */; };
+		18D786811E0CFAD400F0EF8B /* MYZStatusComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D786801E0CFAD400F0EF8B /* MYZStatusComment.m */; };
 		18E476DD1DF65AE70026EEA1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E476DB1DF652840026EEA1 /* libicucore.tbd */; };
 		18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */; };
 		18E5A1801DB9A72900375480 /* MYZMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E5A17F1DB9A72900375480 /* MYZMenuView.m */; };
@@ -145,6 +146,8 @@
 		18CD2B181E038313005B1881 /* MYZWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZWebViewController.m; sourceTree = "<group>"; };
 		18CD2B1A1E03B443005B1881 /* MYZStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusViewController.h; sourceTree = "<group>"; };
 		18CD2B1B1E03B443005B1881 /* MYZStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusViewController.m; sourceTree = "<group>"; };
+		18D7867F1E0CFAD400F0EF8B /* MYZStatusComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusComment.h; sourceTree = "<group>"; };
+		18D786801E0CFAD400F0EF8B /* MYZStatusComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusComment.m; sourceTree = "<group>"; };
 		18E476DB1DF652840026EEA1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		18E5A17B1DB9A6FE00375480 /* MYZMenuPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMenuPageController.h; sourceTree = "<group>"; };
 		18E5A17C1DB9A6FE00375480 /* MYZMenuPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMenuPageController.m; sourceTree = "<group>"; };
@@ -564,6 +567,8 @@
 				18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */,
 				DAD250C21DF5ADD4002EFCB4 /* MYZStatusTextItem.h */,
 				DAD250C31DF5ADD4002EFCB4 /* MYZStatusTextItem.m */,
+				18D7867F1E0CFAD400F0EF8B /* MYZStatusComment.h */,
+				18D786801E0CFAD400F0EF8B /* MYZStatusComment.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
+				18D786811E0CFAD400F0EF8B /* MYZStatusComment.m in Sources */,
 				188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,

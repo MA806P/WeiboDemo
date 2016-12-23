@@ -7,23 +7,18 @@
 //
 
 #import "MYZStatusCell.h"
-
 #import "MYZStatusOriginal.h"
-
 #import "MYZStatusFrame.h"
 #import "MYZStatusFrameTop.h"
 #import "MYZStatusFrameMiddle.h"
-
 #import "MYZStatusTopView.h"
 #import "MYZStatusMiddleView.h"
 #import "MYZStatusBottomView.h"
-
 #import "MYZStatusRetweet.h"
 
 
 
-
-@interface MYZStatusCell ()
+@interface MYZStatusCell () <StatusBottomViewDelegate>
 
 @property (nonatomic, weak) MYZStatusTopView * topView; //上部视图,包括头像原创微博正文
 
@@ -47,6 +42,8 @@
         
         //子控件初始化
         [self initSubViews];
+        
+        
     }
     return self;
 }
@@ -55,8 +52,17 @@
 - (void)initSubViews
 {
     
+    __weak typeof(self) weakSelf = self;
+    
 //上部视图,包括头像原创微博正文
     MYZStatusTopView * topView = [[MYZStatusTopView alloc] init];
+    topView.statusTopViewBlock = ^(MYZStatusTextItem * textItem){
+        __strong typeof(weakSelf) srongSelf = weakSelf;
+        if (srongSelf)
+        {
+            [srongSelf statusTextLinkTouch:textItem];
+        }
+    };
     [self.contentView addSubview:topView];
     self.topView = topView;
     
@@ -64,12 +70,21 @@
     
 //中部视图,转发的微博正文
     MYZStatusMiddleView * middleView = [[MYZStatusMiddleView alloc] init];
+    middleView.statusMiddleViewBlock = ^(MYZStatusTextItem * textItem){
+        __strong typeof(weakSelf) srongSelf = weakSelf;
+        if (srongSelf)
+        {
+            [srongSelf statusTextLinkTouch:textItem];
+        }
+    };
+
     [self.contentView addSubview:middleView];
     self.middleView = middleView;
     
     
 //下部视图,评论转发点赞
     MYZStatusBottomView * bottomView = [[MYZStatusBottomView alloc] init];
+    bottomView.delegate = self;
     [self.contentView addSubview:bottomView];
     self.bottomView = bottomView;
 }
@@ -119,6 +134,42 @@
 }
 
 
+#pragma mark - 点击事件, 正文连接 评论 转发 点赞
+//点击微博正文能点的地方
+- (void)statusTextLinkTouch:(MYZStatusTextItem *) linkTextItem
+{
+    if ([self.delegate respondsToSelector:@selector(statusTouchTextLinkWithTextItem:statusFrame:)])
+    {
+        //点击微博中链接
+        [self.delegate statusTouchTextLinkWithTextItem:linkTextItem statusFrame:self.statusFrame];
+    }
+}
 
+//转发
+- (void)statusBottomViewTouchRepost
+{
+    if ([self.delegate respondsToSelector:@selector(statusTouchRepostWithStatus:)])
+    {
+        [self.delegate statusTouchRepostWithStatus:self.statusFrame];
+    }
+}
+
+//评论
+- (void)statusBottomViewTouchComment
+{
+    if ([self.delegate respondsToSelector:@selector(statusTouchCommentWithStatus:)])
+    {
+        [self.delegate statusTouchCommentWithStatus:self.statusFrame];
+    }
+}
+
+//点赞
+- (void)statusBottomViewTouchLike
+{
+    if ([self.delegate respondsToSelector:@selector(statusTouchLikeWithStatus:)])
+    {
+        [self.delegate statusTouchLikeWithStatus:self.statusFrame];
+    }
+}
 
 @end
