@@ -13,11 +13,14 @@
 #import "MYZStatusCell.h"
 #import "MYZStatusComment.h"
 #import "MYZUserInfo.h"
+#import "MYZStatusTextItem.h"
+#import "MYZWebViewController.h"
+#import "MYZComposeController.h"
 
 static NSString * const StatusDetailCellID = @"StatusDetailCellID";
 static NSString * const StatusCommentCellID = @"StatusCommentCellID";
 
-@interface MYZStatusViewController ()
+@interface MYZStatusViewController () <MYZStatusCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray * commentArray;
 
@@ -42,10 +45,9 @@ static NSString * const StatusCommentCellID = @"StatusCommentCellID";
     
     //tableView 设置
     self.tableView.backgroundColor = MYZColor(242, 242, 242);
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //self.tableView.allowsSelection = NO;
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.allowsSelection = NO;
     [self.tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:StatusDetailCellID];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
     /**
@@ -86,7 +88,7 @@ static NSString * const StatusCommentCellID = @"StatusCommentCellID";
 
         }
     } failure:^(NSError *error) {
-        MYZLog(@" +++ %@ ", error);
+        MYZLog(@" --- %@ ", error);
     }];
     
 }
@@ -114,6 +116,7 @@ static NSString * const StatusCommentCellID = @"StatusCommentCellID";
     {
         MYZStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:StatusDetailCellID forIndexPath:indexPath];
         cell.statusFrame = self.statusFrame;
+        cell.delegate = self;
         return cell;
     }
     else
@@ -140,10 +143,67 @@ static NSString * const StatusCommentCellID = @"StatusCommentCellID";
     {
         return self.statusFrame.cellHeight;
     }
+    else if (indexPath.section == 1)
+    {
+        MYZStatusComment * comment = self.commentArray[indexPath.row];
+        CGFloat cellH = [comment.text myz_stringSizeWithMaxSize:CGSizeMake(SCREEN_W - 20, 300) andFont:[UIFont systemFontOfSize:11]].height + 22;
+        return cellH > 44 ? cellH : 44;
+    }
     return 44;
 }
 
 
+#pragma mark - 点击事件, 正文连接 评论 转发 点赞
+
+//点击微博正文能点的地方
+- (void)statusTouchTextLinkWithTextItem:(MYZStatusTextItem *)linkTextItem statusFrame:(MYZStatusFrame *)statusFrame
+{
+    if (linkTextItem.type == StatusTextItemTypeUrl)
+    {
+        NSString * linkString = linkTextItem.text;
+        if ([linkString hasPrefix:@"http"])
+        {
+            //点击微博中链接，跳转网页
+            MYZWebViewController * webViewController = [[MYZWebViewController alloc] init];
+            webViewController.urlString = linkString;
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+    }
+}
+
+//点击转发微博
+- (void)statusTouchRepostWithStatus:(MYZStatusFrame *)statusFrame
+{
+    MYZStatusOriginal * status = statusFrame.status;
+    if (status)
+    {
+        MYZComposeController * compose = [[MYZComposeController alloc] init];
+        compose.composeType = ComposeTypeRepost;
+        compose.status = status;
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:compose];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+}
+
+//点击评论
+- (void)statusTouchCommentWithStatus:(MYZStatusFrame *)statusFrame
+{
+    MYZStatusOriginal * status = statusFrame.status;
+    if (status)
+    {
+        MYZComposeController * compose = [[MYZComposeController alloc] init];
+        compose.composeType = ComposeTypeComment;
+        compose.status = status;
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:compose];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+}
+
+//点赞
+- (void)statusTouchLikeWithStatus:(MYZStatusFrame *)statusFrame
+{
+    
+}
 
 
 

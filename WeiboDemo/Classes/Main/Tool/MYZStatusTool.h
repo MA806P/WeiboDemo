@@ -60,5 +60,10 @@
 + (void)getStatusDetailWithParam:(NSDictionary *)param success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 
+/**
+ *  评论一条微博
+ */
++ (void)sendCommentWithParam:(NSDictionary *)param success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 
 @end

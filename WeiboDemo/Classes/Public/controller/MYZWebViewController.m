@@ -31,6 +31,7 @@
     webView.navigationDelegate = self;
     [self.view addSubview:webView];
     
+    [SVProgressHUD show];
 }
 
 
@@ -42,12 +43,20 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     MYZLog(@" -- didFinishNavigation");
+    [SVProgressHUD dismiss];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
     MYZLog(@"-- %@", error);
+    [MYZTools showAlertWithText:@"加载失败，稍后重试"];
+    [SVProgressHUD dismiss];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
 
 @end

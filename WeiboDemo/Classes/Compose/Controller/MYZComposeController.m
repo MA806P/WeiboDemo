@@ -167,8 +167,6 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
 
 - (void)sendStatus
 {
-    
-    
     NSMutableDictionary * paramDic = [NSMutableDictionary dictionary];
     [paramDic setValue:[[MYZTools account] access_token] forKey:@"access_token"];
     
@@ -205,7 +203,27 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
     }
     else if (self.composeType == ComposeTypeComment) //评论微博
     {
+        /**
+         *  access_token    false	string	采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+         *  comment	true	string	评论内容，必须做URLencode，内容不超过140个汉字。
+         *  id	true	int64	需要评论的微博ID。
+         *  comment_ori	false	int	当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
+         */
         
+        [paramDic setValue:self.status.mid forKey:@"id"];
+        [paramDic setValue:self.textView.realText forKey:@"comment"];
+        [paramDic setValue:self.alsoCommentSwitch.isOn?@(1):@(0) forKey:@"comment_ori"];
+        
+        [MYZStatusTool sendCommentWithParam:paramDic success:^(id result) {
+            [MYZTools showAlertWithText:@"评论成功"];
+        } failure:^(NSError *error) {
+            MYZLog(@" -- %@", error);
+            [MYZTools showAlertWithText:@"评论失败，稍后重试"];
+        }];
+        
+        //在后台发送
+        [MYZTools showAlertWithText:@"评论中..."];
+        [self cancelBack];
     }
     else //自创微博
     {
@@ -318,6 +336,22 @@ NSString * const ComposeEmotionSelectedKey = @"EmotionSelectedKey";
         
         [self.view addSubview:retweetedView];
         
+    }
+    //评论
+    else if (self.composeType == ComposeTypeComment && self.status != nil)
+    {
+        textView.placeholder = @"写评论...";
+        
+        UIView * retweetedView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_W, 40)];
+        retweetedView.backgroundColor = MYZColor(247, 247, 247);
+        UILabel * alsoCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+        alsoCommentLabel.font = [UIFont systemFontOfSize:12];
+        alsoCommentLabel.text = @"是否评论给原微博";
+        [retweetedView addSubview:alsoCommentLabel];
+        UISwitch * alsoCommentSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetMaxX(alsoCommentLabel.frame), 5, 0, 0)];
+        [retweetedView addSubview:alsoCommentSwitch];
+        self.alsoCommentSwitch = alsoCommentSwitch;
+        [self.view addSubview:retweetedView];
     }
     else
     {

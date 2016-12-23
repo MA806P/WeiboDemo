@@ -126,7 +126,17 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(error);
     }];
-    
+}
+
+
++ (void)sendCommentWithParam:(NSDictionary *)param success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [MYZHttpTools post:@"https://api.weibo.com/2/comments/create.json" parameters:param progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        success(response);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
 }
 
 
