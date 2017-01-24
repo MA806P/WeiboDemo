@@ -61,6 +61,9 @@ static NSString * const StatusCellID = @"StatusCellID";
         return;
     }
     
+    //退出按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    
     //tableView 设置
     self.tableView.backgroundColor = MYZColor(242, 242, 242);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -296,6 +299,26 @@ static NSString * const StatusCellID = @"StatusCellID";
 //点赞
 - (void)statusTouchLikeWithStatus:(MYZStatusFrame *)statusFrame
 {
+    
+}
+
+#pragma mrak - 退出
+
+- (void)logout
+{
+    NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSArray * subPaths = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
+    for (NSString * subPath in subPaths)
+    {
+        NSString * fullSubpath = [cachPath stringByAppendingPathComponent:subPath];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fullSubpath])
+        {
+            [[NSFileManager defaultManager] removeItemAtPath:fullSubpath error:nil];
+        }
+    }
+    
+    MYZOAuthController * oauthVC = [[MYZOAuthController alloc] init];
+    [[[UIApplication sharedApplication] keyWindow] setRootViewController:oauthVC];
     
 }
 
