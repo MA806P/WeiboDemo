@@ -19,5 +19,10 @@
     [super pushViewController:viewController animated:animated];
 }
 
+- (UIViewController *)childViewControllerForStatusBarStyle
+{
+    return self.topViewController;
+}
+
 
 @end

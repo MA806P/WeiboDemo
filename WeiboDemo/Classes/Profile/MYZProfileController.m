@@ -9,6 +9,7 @@
 #import "MYZProfileController.h"
 #import "MYZOAuthController.h"
 #import "WeiboSDK.h"
+#import "MYZUserInfo.h"
 
 static NSString * const CellId = @"CellId";
 static CGFloat alpha = 0;
@@ -21,9 +22,15 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 
 @property (nonatomic, assign) BOOL isChangeStatusBar;
 
-@property (nonatomic, weak) UIView * header;
+@property (nonatomic, weak) UIImageView * header;
 @property (nonatomic, weak) UIImageView * indicatorImgView;
 @property (nonatomic, strong) CABasicAnimation * rotateAnimation;
+
+@property (nonatomic, strong) MYZUserInfo * userInfo;
+@property (nonatomic, weak) UIImageView * avator;
+@property (nonatomic, weak) UILabel * nameLabel;
+@property (nonatomic, weak) UILabel * numberLabel;
+@property (nonatomic, weak) UILabel * descrLabel;
 
 @end
 
@@ -61,6 +68,35 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     imageView.image = [UIImage imageNamed:@"11"];
     [self.tableView addSubview:imageView];
     self.header = imageView;
+    
+    CGFloat avatorH = 40;
+    CGFloat avatorY = headerH*0.5 - avatorH;
+    UIImageView * avator = [[UIImageView alloc] initWithFrame:CGRectMake(0, avatorY, SCREEN_W, avatorH)];
+    avator.contentMode = UIViewContentModeScaleAspectFit;
+    [self.header addSubview:avator];
+    self.avator = avator;
+    
+    UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.avator.frame), SCREEN_W, 20)];
+    nameLabel.textColor = [UIColor whiteColor];
+    nameLabel.font = [UIFont systemFontOfSize:15];
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    [self.header addSubview:nameLabel];
+    self.nameLabel = nameLabel;
+    
+    UILabel * numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame), SCREEN_W, 20)];
+    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.font = [UIFont systemFontOfSize:13];
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    [self.header addSubview:numberLabel];
+    self.numberLabel = numberLabel;
+    
+    UILabel * descrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.numberLabel.frame), SCREEN_W, 20)];
+    descrLabel.textColor = [UIColor whiteColor];
+    descrLabel.font = [UIFont systemFontOfSize:12];
+    descrLabel.textAlignment = NSTextAlignmentCenter;
+    [self.header addSubview:descrLabel];
+    self.descrLabel = descrLabel;
+    
     UIImageView * indicatorImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
     indicatorImgView.frame = CGRectMake(20, 30, 25, 25);
     indicatorImgView.hidden = YES;
@@ -85,16 +121,24 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
         return;
     }
     
-//    //获取用户信息
-//    NSDictionary * showParameter = @{@"access_token":account.access_token,@"uid":account.uid};
-//    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
-//    } success:^(id response) {
-//        NSDictionary * userInfoDic = (NSDictionary *)response;
-//        MYZLog(@" --- %@ ", userInfoDic);
-//    } failure:^(NSError *error) {
-//        MYZLog(@" --- error %@ ", error);
-//    }];
-//    
+    //获取用户信息
+    NSDictionary * showParameter = @{@"access_token":account.access_token,@"uid":account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        NSDictionary * userInfoDic = (NSDictionary *)response;
+        self.userInfo = [[MYZUserInfo alloc] initWithValue:userInfoDic];
+        
+        [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
+        }];
+        self.nameLabel.text = self.userInfo.name;
+        self.numberLabel.text = [NSString stringWithFormat:@"关注 %ld | 粉丝 %ld", self.userInfo.friends_count, self.userInfo.followers_count];
+        self.descrLabel.text = self.userInfo.desc;
+        
+    } failure:^(NSError *error) {
+        MYZLog(@" --- error %@ ", error);
+    }];
+//
 //    //用户最新发表的微博列表
 //    /*
 //     screen_name	false	string	需要查询的用户昵称。
