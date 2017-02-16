@@ -13,7 +13,7 @@
 
 static NSString * const CellId = @"CellId";
 static CGFloat alpha = 0;
-static CGFloat const headerH = 250.0;
+static CGFloat const headerH = 180.0;
 static CGFloat const AngleScale = 2.0 * M_PI / 180.0;
 
 static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
@@ -22,10 +22,11 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 
 @property (nonatomic, assign) BOOL isChangeStatusBar;
 
-@property (nonatomic, weak) UIImageView * header;
+@property (nonatomic, weak) UIImageView * headerBgImageView;
 @property (nonatomic, weak) UIImageView * indicatorImgView;
 @property (nonatomic, strong) CABasicAnimation * rotateAnimation;
 
+@property (nonatomic, strong) MYZAccount * account;
 @property (nonatomic, strong) MYZUserInfo * userInfo;
 @property (nonatomic, weak) UIImageView * avator;
 @property (nonatomic, weak) UILabel * nameLabel;
@@ -36,6 +37,37 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 
 @implementation MYZProfileController
 
+- (MYZAccount *)account
+{
+    if (_account == nil)
+    {
+        //判断是否授权
+        MYZAccount * account = [MYZTools account];
+        if (account == nil)
+        {
+            [MYZTools showAlertWithText:@"用户未登录"];
+            return nil;
+        }
+        _account = account;
+    }
+    return _account;
+}
+
+- (MYZUserInfo *)userInfo
+{
+    if (_userInfo == nil)
+    {
+        //从数据库中查询是否有用户数据
+        RLMResults<MYZUserInfo *> *userInfo = [MYZUserInfo objectsWhere:@"idstr = %@",self.account.uid];
+        if (userInfo.count <= 0)
+        {
+            return nil;
+        }
+        _userInfo = (MYZUserInfo *)[userInfo firstObject];
+    }
+    return _userInfo;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -45,6 +77,16 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
     [self scrollViewDidScroll:self.tableView];
+    
+    //头部用户视图的数据设置
+    if (self.userInfo)
+    {
+        [self refreshHeaderViewData];
+    }
+    else
+    {
+        [self requestHeaderViewUserInfo];
+    }
     
 }
 
@@ -67,34 +109,34 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, headerH)];
     imageView.image = [UIImage imageNamed:@"11"];
     [self.tableView addSubview:imageView];
-    self.header = imageView;
+    self.headerBgImageView = imageView;
     
-    CGFloat avatorH = 40;
+    CGFloat avatorH = 50;
     CGFloat avatorY = headerH*0.5 - avatorH;
     UIImageView * avator = [[UIImageView alloc] initWithFrame:CGRectMake(0, avatorY, SCREEN_W, avatorH)];
     avator.contentMode = UIViewContentModeScaleAspectFit;
-    [self.header addSubview:avator];
+    [self.tableView addSubview:avator];
     self.avator = avator;
     
-    UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.avator.frame), SCREEN_W, 20)];
+    UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.avator.frame)+10, SCREEN_W, 20)];
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.font = [UIFont systemFontOfSize:15];
     nameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.header addSubview:nameLabel];
+    [self.tableView addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
-    UILabel * numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame), SCREEN_W, 20)];
+    UILabel * numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame)+3, SCREEN_W, 20)];
     numberLabel.textColor = [UIColor whiteColor];
     numberLabel.font = [UIFont systemFontOfSize:13];
     numberLabel.textAlignment = NSTextAlignmentCenter;
-    [self.header addSubview:numberLabel];
+    [self.tableView addSubview:numberLabel];
     self.numberLabel = numberLabel;
     
-    UILabel * descrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.numberLabel.frame), SCREEN_W, 20)];
+    UILabel * descrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.numberLabel.frame)+3, SCREEN_W, 20)];
     descrLabel.textColor = [UIColor whiteColor];
     descrLabel.font = [UIFont systemFontOfSize:12];
     descrLabel.textAlignment = NSTextAlignmentCenter;
-    [self.header addSubview:descrLabel];
+    [self.tableView addSubview:descrLabel];
     self.descrLabel = descrLabel;
     
     UIImageView * indicatorImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
@@ -111,33 +153,9 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     self.rotateAnimation.repeatCount = MAXFLOAT;
     
     
-    //判断是否授权
-    MYZAccount * account = [MYZTools account];
-    if (account == nil)
-    {
-        [MYZTools showAlertWithText:@"用户未登录"];
-        MYZOAuthController * oauthVC = [[MYZOAuthController alloc] init];
-        [[[UIApplication sharedApplication] keyWindow] setRootViewController:oauthVC];
-        return;
-    }
     
-    //获取用户信息
-    NSDictionary * showParameter = @{@"access_token":account.access_token,@"uid":account.uid};
-    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
-    } success:^(id response) {
-        NSDictionary * userInfoDic = (NSDictionary *)response;
-        self.userInfo = [[MYZUserInfo alloc] initWithValue:userInfoDic];
-        
-        [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
-        }];
-        self.nameLabel.text = self.userInfo.name;
-        self.numberLabel.text = [NSString stringWithFormat:@"关注 %ld | 粉丝 %ld", self.userInfo.friends_count, self.userInfo.followers_count];
-        self.descrLabel.text = self.userInfo.desc;
-        
-    } failure:^(NSError *error) {
-        MYZLog(@" --- error %@ ", error);
-    }];
+    
+    
 //
 //    //用户最新发表的微博列表
 //    /*
@@ -159,6 +177,38 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 //        MYZLog(@" --- error %@ ", error);
 //    }];
 }
+
+- (void)requestHeaderViewUserInfo
+{
+    //获取用户信息
+    NSDictionary * showParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        NSDictionary * userInfoDic = (NSDictionary *)response;
+        self.userInfo = [[MYZUserInfo alloc] initWithValue:userInfoDic];
+        [self refreshHeaderViewData];
+        
+        RLMRealm * realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm addOrUpdateObject:self.userInfo];
+        [realm commitWriteTransaction];
+        
+    } failure:^(NSError *error) {
+        MYZLog(@" --- error %@ ", error);
+    }];
+}
+
+- (void)refreshHeaderViewData
+{
+    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
+    }];
+    self.nameLabel.text = self.userInfo.name;
+    self.numberLabel.text = [NSString stringWithFormat:@"关注  %ld   |   粉丝  %ld", self.userInfo.friends_count, self.userInfo.followers_count];
+    self.descrLabel.text = self.userInfo.desc;
+}
+
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -204,7 +254,7 @@ CGFloat CurrentOffsetY = 0;
     {
         CGFloat headerW = screenW - offsetY;
         CGFloat headerX = (screenW - headerW) * 0.5;
-        self.header.frame = CGRectMake(headerX, offsetY, headerW, headerH-offsetY);
+        self.headerBgImageView.frame = CGRectMake(headerX, offsetY, headerW, headerH-offsetY);
         
         if (StartedLoading == NO)
         {
@@ -216,7 +266,7 @@ CGFloat CurrentOffsetY = 0;
     }
     else if (offsetY >= 0)
     {
-        self.header.frame = CGRectMake(0, 0, screenW, headerH);
+        self.headerBgImageView.frame = CGRectMake(0, 0, screenW, headerH);
         if (StartedLoading == NO) { self.indicatorImgView.hidden = YES; }
     }
     //NSLog(@"---- %.2lf  %@  %@", offsetY, NSStringFromCGRect(self.header.frame), NSStringFromCGRect(self.tableView.tableHeaderView.frame));
