@@ -10,6 +10,8 @@
 #import "MYZOAuthController.h"
 #import "WeiboSDK.h"
 #import "MYZUserInfo.h"
+#import "MYZStatusOriginal.h"
+#import "MYZStatusFrame.h"
 
 static NSString * const CellId = @"CellId";
 static CGFloat alpha = 0;
@@ -32,6 +34,9 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 @property (nonatomic, weak) UILabel * nameLabel;
 @property (nonatomic, weak) UILabel * numberLabel;
 @property (nonatomic, weak) UILabel * descrLabel;
+
+/** 我发的微博数据 */
+@property (nonatomic, strong) NSMutableArray * statusDataArray;
 
 @end
 
@@ -68,6 +73,15 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     return _userInfo;
 }
 
+- (NSMutableArray *)statusDataArray
+{
+    if (_statusDataArray == nil)
+    {
+        _statusDataArray = [NSMutableArray array];
+    }
+    return _statusDataArray;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -87,6 +101,8 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     {
         [self requestHeaderViewUserInfo];
     }
+    
+    [self requestUserTimeLine];
     
 }
 
@@ -154,28 +170,6 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     
     
     
-    
-    
-//
-//    //用户最新发表的微博列表
-//    /*
-//     screen_name	false	string	需要查询的用户昵称。
-//     since_id	false	int64	若指定此参数，则返回ID比since_id大的微博（即比since_id时间晚的微博），默认为0。
-//     max_id	false	int64	若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
-//     count	false	int	单页返回的记录条数，最大不超过100，超过100以100处理，默认为20。
-//     page	false	int	返回结果的页码，默认为1。
-//     base_app	false	int	是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
-//     feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
-//     trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
-//     */
-//    NSDictionary * userTimelineParameter = @{@"access_token":account.access_token,@"uid":account.uid};
-//    [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
-//    } success:^(id response) {
-//        NSDictionary * userTimelineDic = (NSDictionary *)response;
-//        MYZLog(@" --- %@ ", userTimelineDic);
-//    } failure:^(NSError *error) {
-//        MYZLog(@" --- error %@ ", error);
-//    }];
 }
 
 - (void)requestHeaderViewUserInfo
@@ -207,6 +201,40 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     self.nameLabel.text = self.userInfo.name;
     self.numberLabel.text = [NSString stringWithFormat:@"关注  %ld   |   粉丝  %ld", self.userInfo.friends_count, self.userInfo.followers_count];
     self.descrLabel.text = self.userInfo.desc;
+}
+
+- (void)requestUserTimeLine
+{
+    
+    //用户最新发表的微博列表
+    /*
+     screen_name	false	string	需要查询的用户昵称。
+     since_id	false	int64	若指定此参数，则返回ID比since_id大的微博（即比since_id时间晚的微博），默认为0。
+     max_id	false	int64	若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
+     count	false	int	单页返回的记录条数，最大不超过100，超过100以100处理，默认为20。
+     page	false	int	返回结果的页码，默认为1。
+     base_app	false	int	是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
+     feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
+     trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
+     */
+    NSDictionary * userTimelineParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        //NSDictionary * userTimelineDic = (NSDictionary *)response;
+        //MYZLog(@" --- %@ ", userTimelineDic);
+        
+        NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
+        for (NSDictionary * tempDic in statusDicts)
+        {
+            MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:tempDic];
+            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
+            [self.statusDataArray addObject:statusFrame];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        MYZLog(@" --- error %@ ", error);
+    }];
 }
 
 
