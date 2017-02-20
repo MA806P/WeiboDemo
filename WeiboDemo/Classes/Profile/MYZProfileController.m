@@ -12,6 +12,11 @@
 #import "MYZUserInfo.h"
 #import "MYZStatusOriginal.h"
 #import "MYZStatusFrame.h"
+#import "MYZStatusCell.h"
+#import "MYZStatusViewController.h"
+#import "MYZWebViewController.h"
+#import "MYZComposeController.h"
+#import "MYZStatusTextItem.h"
 
 static NSString * const CellId = @"CellId";
 static CGFloat alpha = 0;
@@ -19,8 +24,9 @@ static CGFloat const headerH = 180.0;
 static CGFloat const AngleScale = 2.0 * M_PI / 180.0;
 
 static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
+static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
 
-@interface MYZProfileController ()
+@interface MYZProfileController ()<MYZStatusCellDelegate>
 
 @property (nonatomic, assign) BOOL isChangeStatusBar;
 
@@ -91,6 +97,8 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
     [self scrollViewDidScroll:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:ProfileStatusCellID];
     
     //头部用户视图的数据设置
     if (self.userInfo)
@@ -102,7 +110,12 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
         [self requestHeaderViewUserInfo];
     }
     
-    [self requestUserTimeLine];
+    //我的微博数据
+    if (self.statusDataArray.count == 0)
+    {
+        [self requestUserTimeLine];
+    }
+    
     
 }
 
@@ -217,6 +230,9 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
      feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
      trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
      */
+    
+    [SVProgressHUD show];
+    
     NSDictionary * userTimelineParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
     [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
     } success:^(id response) {
@@ -224,44 +240,52 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
         //MYZLog(@" --- %@ ", userTimelineDic);
         
         NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
+        [self.statusDataArray removeAllObjects];
         for (NSDictionary * tempDic in statusDicts)
         {
             MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:tempDic];
             MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
             [self.statusDataArray addObject:statusFrame];
         }
+        [self.tableView reloadData];
         
+        [SVProgressHUD dismiss];
         
     } failure:^(NSError *error) {
         MYZLog(@" --- error %@ ", error);
+        [SVProgressHUD dismiss];
     }];
 }
 
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 3;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return self.statusDataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@" %d -- %d ", (int)indexPath.section, (int)indexPath.row];
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    MYZStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:ProfileStatusCellID forIndexPath:indexPath];
+    cell.statusFrame = statusFrame;
+    cell.delegate = self;
     return cell;
 }
 
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [NSString stringWithFormat:@"section-%d", (int)section];
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    return statusFrame.cellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+    
+    MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+    statusVC.statusFrame = statusFrame;
+    [self.navigationController pushViewController:statusVC animated:YES];
+}
 
 #pragma mark - UIScrollView delegate
 
@@ -380,5 +404,61 @@ CGFloat CurrentOffsetY = 0;
     return UIStatusBarStyleLightContent;
 }
 
+
+#pragma mark - MYZStatusCellDelegate 点击事件, 正文连接 评论 转发 点赞
+
+//点击微博正文能点的地方
+- (void)statusTouchTextLinkWithTextItem:(MYZStatusTextItem *)linkTextItem statusFrame:(MYZStatusFrame *)statusFrame
+{
+    if (linkTextItem.type == StatusTextItemTypeUrl)
+    {
+        NSString * linkString = linkTextItem.text;
+        if ([linkString hasPrefix:@"http://m.weibo.cn"])
+        {
+            if (statusFrame)
+            {
+                MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+                statusVC.statusFrame = statusFrame;
+                [self.navigationController pushViewController:statusVC animated:YES];
+            }
+        }
+        else
+        {
+            //点击微博中链接，跳转网页
+            MYZWebViewController * webViewController = [[MYZWebViewController alloc] init];
+            webViewController.urlString = linkString;
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+    }
+}
+
+//点击转发微博
+- (void)statusTouchRepostWithStatus:(MYZStatusFrame *)statusFrame
+{
+    MYZStatusOriginal * status = statusFrame.status;
+    if (status)
+    {
+        MYZComposeController * compose = [[MYZComposeController alloc] init];
+        compose.composeType = ComposeTypeRepost;
+        compose.status = status;
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:compose];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+}
+
+//点击评论
+- (void)statusTouchCommentWithStatus:(MYZStatusFrame *)statusFrame
+{
+    MYZStatusViewController * statusVC = [[MYZStatusViewController alloc] init];
+    statusVC.statusFrame = statusFrame;
+    statusVC.type = StatusViewControllerTypeComment;
+    [self.navigationController pushViewController:statusVC animated:YES];
+}
+
+////点赞
+//- (void)statusTouchLikeWithStatus:(MYZStatusFrame *)statusFrame
+//{
+//    
+//}
 
 @end

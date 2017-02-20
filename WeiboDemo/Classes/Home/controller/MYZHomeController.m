@@ -69,7 +69,6 @@ static NSString * const StatusCellID = @"StatusCellID";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //self.tableView.allowsSelection = NO;
     [self.tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:StatusCellID];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
     //获取缓存的数据
@@ -245,7 +244,7 @@ static NSString * const StatusCellID = @"StatusCellID";
 }
 
 
-#pragma mark - 点击事件, 正文连接 评论 转发 点赞
+#pragma mark - MYZStatusCellDelegate 点击事件, 正文连接 评论 转发 点赞
 
 //点击微博正文能点的地方
 - (void)statusTouchTextLinkWithTextItem:(MYZStatusTextItem *)linkTextItem statusFrame:(MYZStatusFrame *)statusFrame
