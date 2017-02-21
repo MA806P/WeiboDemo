@@ -41,6 +41,8 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
 @property (nonatomic, weak) UILabel * numberLabel;
 @property (nonatomic, weak) UILabel * descrLabel;
 
+@property (nonatomic, strong) RLMRealm * realm;
+
 /** 我发的微博数据 */
 @property (nonatomic, strong) NSMutableArray * statusDataArray;
 
@@ -84,9 +86,42 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
     if (_statusDataArray == nil)
     {
         _statusDataArray = [NSMutableArray array];
+        
+        RLMResults * statusResults = [[MYZStatusOriginal allObjectsInRealm:self.realm] sortedResultsUsingProperty:@"mid" ascending:NO];
+        
+        //得到微博数据模型, 转化模型计算各控件frame
+        for (NSInteger i=0; i<statusResults.count; i++)
+        {
+            MYZStatusOriginal * status = [statusResults objectAtIndex:i];
+            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
+            [_statusDataArray addObject:statusFrame];
+        }
     }
     return _statusDataArray;
 }
+
+
+- (RLMRealm *)realm
+{
+    if (_realm == nil)
+    {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *filePath = [path stringByAppendingPathComponent:@"profile.realm"];
+        //NSLog(@"数据库目录 = %@",filePath);
+        
+        RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
+        config.fileURL = [NSURL URLWithString:filePath];
+        
+        //config.objectClasses = @[MYZStatusOriginal.class];
+        //config.readOnly = NO;
+        
+        RLMRealm * realm = [RLMRealm realmWithConfiguration:config error:nil];
+        _realm = realm;
+    }
+    return _realm;
+}
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -246,6 +281,12 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
             MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:tempDic];
             MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
             [self.statusDataArray addObject:statusFrame];
+            
+            //存入数据库
+            [self.realm beginWriteTransaction];
+            [self.realm addOrUpdateObject:status];
+            [self.realm commitWriteTransaction];
+            
         }
         [self.tableView reloadData];
         
@@ -255,6 +296,13 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
         MYZLog(@" --- error %@ ", error);
         [SVProgressHUD dismiss];
     }];
+    
+    
+    
+    
+    
+    
+    
 }
 
 
