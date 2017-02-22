@@ -43,6 +43,9 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
 
 @property (nonatomic, strong) RLMRealm * realm;
 
+@property (nonatomic, assign) BOOL userInfoIsLoading;
+@property (nonatomic, assign) BOOL userTimeLineIsLoading;
+
 /** 我发的微博数据 */
 @property (nonatomic, strong) NSMutableArray * statusDataArray;
 
@@ -235,6 +238,11 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
         [realm addOrUpdateObject:self.userInfo];
         [realm commitWriteTransaction];
         
+        self.userInfoIsLoading = NO;
+        if (self.userTimeLineIsLoading == NO) {
+            [self headIndicatorEndRefreshing];
+        }
+        
     } failure:^(NSError *error) {
         MYZLog(@" --- error %@ ", error);
     }];
@@ -266,7 +274,7 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
      trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
      */
     
-    [SVProgressHUD show];
+    //[SVProgressHUD show];
     
     NSDictionary * userTimelineParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
     [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
@@ -290,7 +298,11 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
         }
         [self.tableView reloadData];
         
-        [SVProgressHUD dismiss];
+        //[SVProgressHUD dismiss];
+        self.userTimeLineIsLoading = NO;
+        if (self.userInfoIsLoading == NO) {
+            [self headIndicatorEndRefreshing];
+        }
         
     } failure:^(NSError *error) {
         MYZLog(@" --- error %@ ", error);
@@ -416,11 +428,14 @@ CGFloat CurrentOffsetY = 0;
         StartedLoading = YES;
         [self.indicatorImgView.layer addAnimation:self.rotateAnimation forKey:IndicatorAnimationKey];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [self headIndicatorEndRefreshing];
-            
-        });
+        self.userInfoIsLoading = YES;
+        [self requestHeaderViewUserInfo];
+        self.userTimeLineIsLoading = YES;
+        [self requestUserTimeLine];
+        
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [self headIndicatorEndRefreshing];
+//        });
     }
 }
 
