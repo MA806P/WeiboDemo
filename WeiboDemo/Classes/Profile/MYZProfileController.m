@@ -26,7 +26,9 @@ static CGFloat const AngleScale = 2.0 * M_PI / 180.0;
 static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
 static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
 
-@interface MYZProfileController ()<MYZStatusCellDelegate>
+@interface MYZProfileController ()<MYZStatusCellDelegate, UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, weak) UITableView * tableView;
 
 @property (nonatomic, assign) BOOL isChangeStatusBar;
 
@@ -163,11 +165,17 @@ static NSString * const ProfileStatusCellID = @"ProfileStatusCellID";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
     //设置当有导航栏自动添加64的高度的属性为NO
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 46, 0);
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellId];
     
+    UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableView.contentInset = UIEdgeInsetsMake(0, 0, 46, 0);
+    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellId];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
     
     //设置tableView的头部视图
     UIView * tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, headerH)];
