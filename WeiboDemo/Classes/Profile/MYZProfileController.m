@@ -389,48 +389,43 @@ CGFloat CurrentOffsetY = 0;
         self.headerBgImageView.frame = CGRectMake(0, 0, screenW, headerH);
         if (StartedLoading == NO) { self.indicatorImgView.hidden = YES; }
     }
-    //NSLog(@"---- %.2lf  %@  %@", offsetY, NSStringFromCGRect(self.header.frame), NSStringFromCGRect(self.tableView.tableHeaderView.frame));
     
+    alpha =  offsetY/headerH;
+    alpha = (alpha <= 0)?0:alpha;
+    alpha = (alpha >= 1)?1:alpha;
+    
+    UIColor * titleColor;
+    
+    if (alpha > 0.6)
     {
-        alpha =  offsetY/headerH;
-        alpha = (alpha <= 0)?0:alpha;
-        alpha = (alpha >= 1)?1:alpha;
-        
-        
-        //NSLog(@" --- %.2f", alpha);
-        
-        UIColor * titleColor;
-        
-        if (alpha > 0.6)
-        {
-            self.isChangeStatusBar = YES;
-            titleColor = [UIColor blackColor];
-        }
-        else
-        {
-            self.isChangeStatusBar = NO;
-            titleColor = [UIColor whiteColor];
-        }
-        
-        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-        {
-            [self setNeedsStatusBarAppearanceUpdate];
-        }
-        
-        //设置导航条上的标签是否跟着透明
-        //self.navigationItem.leftBarButtonItem.customView.alpha = alpha;
-        //self.navigationItem.rightBarButtonItem.customView.alpha = alpha;
-        //self.navigationItem.titleView.alpha = alpha;
-        
-        self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[titleColor colorWithAlphaComponent:alpha]};
-        [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:alpha];
+        self.isChangeStatusBar = YES;
+        titleColor = [UIColor blackColor];
     }
+    else
+    {
+        self.isChangeStatusBar = NO;
+        titleColor = [UIColor whiteColor];
+    }
+    
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
+    {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
+    //设置导航条上的标签是否跟着透明
+    //self.navigationItem.leftBarButtonItem.customView.alpha = alpha;
+    //self.navigationItem.rightBarButtonItem.customView.alpha = alpha;
+    //self.navigationItem.titleView.alpha = alpha;
+    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[titleColor colorWithAlphaComponent:alpha]};
+    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:alpha];
+    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    //NSLog(@"-- r = %.2lf", -offsetY);
+    
     if (-offsetY > 60 && StartedLoading == NO)
     {
         StartedLoading = YES;
@@ -440,15 +435,8 @@ CGFloat CurrentOffsetY = 0;
         [self requestHeaderViewUserInfo];
         self.userTimeLineIsLoading = YES;
         [self requestUserTimeLine];
-        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [self headIndicatorEndRefreshing];
-//        });
     }
 }
-
-
-
 
 //停止加载转圈的动画, 并隐藏
 - (void)headIndicatorEndRefreshing
