@@ -10,6 +10,8 @@
 		1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC41DC1D58000F27388 /* MYZComposeToolsBar.m */; };
 		1805ADC81DC1F7D500F27388 /* MYZComposePicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */; };
 		18256E641DF5536A00F487EB /* MYZStatusOriginal.m in Sources */ = {isa = PBXBuildFile; fileRef = 18256E631DF5536A00F487EB /* MYZStatusOriginal.m */; };
+		183BFE931E9F7F8E0077BD7A /* MYZMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183BFE921E9F7F8E0077BD7A /* MYZMineViewController.m */; };
+		183BFE961E9F7FC90077BD7A /* MYZMineChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183BFE951E9F7FC90077BD7A /* MYZMineChildViewController.m */; };
 		18432ACF1DB4C53C00E21F6E /* MYZStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */; };
 		18432AD21DB4C80400E21F6E /* MYZStatusFrameTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD11DB4C80400E21F6E /* MYZStatusFrameTop.m */; };
 		18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18432AD41DB4C83600E21F6E /* MYZStatusFrameMiddle.m */; };
@@ -99,6 +101,10 @@
 		1805ADC71DC1F7D500F27388 /* MYZComposePicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposePicsView.m; sourceTree = "<group>"; };
 		18256E621DF5536A00F487EB /* MYZStatusOriginal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusOriginal.h; sourceTree = "<group>"; };
 		18256E631DF5536A00F487EB /* MYZStatusOriginal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusOriginal.m; sourceTree = "<group>"; };
+		183BFE911E9F7F8E0077BD7A /* MYZMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMineViewController.h; sourceTree = "<group>"; };
+		183BFE921E9F7F8E0077BD7A /* MYZMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMineViewController.m; sourceTree = "<group>"; };
+		183BFE941E9F7FC90077BD7A /* MYZMineChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMineChildViewController.h; sourceTree = "<group>"; };
+		183BFE951E9F7FC90077BD7A /* MYZMineChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMineChildViewController.m; sourceTree = "<group>"; };
 		18432ACD1DB4C53C00E21F6E /* MYZStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrame.h; sourceTree = "<group>"; };
 		18432ACE1DB4C53C00E21F6E /* MYZStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusFrame.m; sourceTree = "<group>"; };
 		18432AD01DB4C80400E21F6E /* MYZStatusFrameTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusFrameTop.h; sourceTree = "<group>"; };
@@ -255,6 +261,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		183BFE8D1E9F7F7B0077BD7A /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				183BFE8E1E9F7F7B0077BD7A /* Controller */,
+				183BFE8F1E9F7F7B0077BD7A /* Model */,
+				183BFE901E9F7F7B0077BD7A /* View */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		183BFE8E1E9F7F7B0077BD7A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183BFE911E9F7F8E0077BD7A /* MYZMineViewController.h */,
+				183BFE921E9F7F8E0077BD7A /* MYZMineViewController.m */,
+				183BFE941E9F7FC90077BD7A /* MYZMineChildViewController.h */,
+				183BFE951E9F7FC90077BD7A /* MYZMineChildViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		183BFE8F1E9F7F7B0077BD7A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		183BFE901E9F7F7B0077BD7A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		18467D281DAE023600B1D963 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +509,7 @@
 				18CD2B151E0382BF005B1881 /* Public */,
 				DA73CA7A1D97CC1100CF5839 /* Home */,
 				DA73CA861D97CC1100CF5839 /* Profile */,
+				183BFE8D1E9F7F7B0077BD7A /* Mine */,
 				DA73CA791D97CC1100CF5839 /* Compose */,
 			);
 			path = Classes;
@@ -822,6 +864,7 @@
 			files = (
 				18CBE96E1DACB6510068832E /* MYZOAuthController.m in Sources */,
 				18D786811E0CFAD400F0EF8B /* MYZStatusComment.m in Sources */,
+				183BFE931E9F7F8E0077BD7A /* MYZMineViewController.m in Sources */,
 				188AAEA21DB627F100A8274F /* UIView+MYZ.m in Sources */,
 				DA65B9ED1D9AC0B700251B38 /* MYZTabBar.m in Sources */,
 				DA73CA8B1D97CF0E00CF5839 /* MYZNavController.m in Sources */,
@@ -879,6 +922,7 @@
 				DAD250D91DF5AFEB002EFCB4 /* MJPhoto.m in Sources */,
 				18432AD51DB4C83600E21F6E /* MYZStatusFrameMiddle.m in Sources */,
 				18C7CE801DC0ACB400B4D997 /* MYZComposeController.m in Sources */,
+				183BFE961E9F7FC90077BD7A /* MYZMineChildViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
