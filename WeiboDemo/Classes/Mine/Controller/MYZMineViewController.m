@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
 @property (nonatomic, strong) UIView * slidePageNavBarView;
+@property (nonatomic, strong) UIView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
 
@@ -90,8 +91,11 @@
     } else if (tableViewOffsetY < 0) {
         
         self.slidePageNavBarView.alpha = 0.0;
-        self.slidePageHeadView.frame = CGRectMake(0, 0, SCREEN_W, slidePageHeadH);
-        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH, SCREEN_W, slidePageSegmentH);
+        self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
+        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
+        
+        self.slidePageHeadBackgroundView.frame = CGRectMake(0, -50-tableViewOffsetY, SCREEN_W, self.slidePageHeadBackgroundView.frame.size.height);
+        
         
     } else if (tableViewOffsetY > tableViewTopOffsetY) {
         
@@ -109,8 +113,12 @@
 - (UIScrollView *)slidePageContentScrollView {
     if (_slidePageContentScrollView == nil) {
         _slidePageContentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
+        _slidePageContentScrollView.backgroundColor = [UIColor clearColor];
+        
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
+        
+        [_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
         
         for (int i = 0; i < 3; i++) {
             MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
@@ -130,6 +138,15 @@
         
     }
     return _slidePageContentScrollView;
+}
+
+
+- (UIView *)slidePageHeadBackgroundView {
+    if (_slidePageHeadBackgroundView == nil) {
+        _slidePageHeadBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 300)];
+        _slidePageHeadBackgroundView.backgroundColor = [UIColor brownColor];
+    }
+    return _slidePageHeadBackgroundView;
 }
 
 - (UIView *)slidePageHeadView {

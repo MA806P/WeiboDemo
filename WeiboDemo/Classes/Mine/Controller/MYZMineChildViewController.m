@@ -31,7 +31,7 @@
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TableViewCell"];
         
         UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, 242)];
-        tableViewHeader.backgroundColor = [UIColor brownColor];
+        tableViewHeader.backgroundColor = [UIColor clearColor];
         _tableView.tableHeaderView = tableViewHeader;
         _tableView.rowHeight = 60;
         _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
