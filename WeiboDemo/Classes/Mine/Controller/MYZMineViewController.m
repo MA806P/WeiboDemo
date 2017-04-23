@@ -58,9 +58,11 @@
     
     NSInteger slidePageIndex = (NSInteger)scrollView.contentOffset.x/scrollView.frame.size.width;
     
-    NSLog(@"scrollViewDidScroll ++** x = %.0lf y = %.0lf index = %ld", scrollView.contentOffset.x, scrollView.contentOffset.y, slidePageIndex);
+    //NSLog(@"scrollViewDidScroll ++** x = %.0lf y = %.0lf index = %ld", scrollView.contentOffset.x, scrollView.contentOffset.y, slidePageIndex);
     
     self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
+    NSLog(@"--** %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset));
+    //self.slidePageCurrentTableView.contentOffset = CGPointZero;
 }
 
 
@@ -75,7 +77,7 @@
     if (tableView != self.slidePageCurrentTableView) { return; }
     
     CGFloat tableViewOffsetY = tableView.contentOffset.y;
-    NSLog(@"observeValueForKeyPath ++-- %.2lf",tableViewOffsetY);
+    //NSLog(@"observeValueForKeyPath ++-- %.2lf",tableViewOffsetY);
     
     CGFloat slidePageHeadH = self.slidePageHeadView.frame.size.height;
     CGFloat slidePageSegmentH = self.slidePageSegmentView.frame.size.height;
@@ -191,7 +193,7 @@
 
 - (void)dealloc {
     
-    NSLog(@"dealloc");
+    //NSLog(@"dealloc");
     
     for (UITableView * tableView in self.tableViews) {
         [tableView removeObserver:self forKeyPath:@"contentOffset"];
