@@ -9,6 +9,11 @@
 #import "MYZMineViewController.h"
 #import "MYZMineChildViewController.h"
 
+
+static CGFloat kMineSlidePageHeadViewH = 200.0;
+static CGFloat kMineSlidePageSegmentViewH = 40.0;
+
+
 @interface MYZMineViewController ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray * controllers;
@@ -77,12 +82,14 @@
     if (tableView != self.slidePageCurrentTableView) { return; }
     
     CGFloat tableViewOffsetY = tableView.contentOffset.y;
-    //NSLog(@"observeValueForKeyPath ++-- %.2lf",tableViewOffsetY);
+    
     
     CGFloat slidePageHeadH = self.slidePageHeadView.frame.size.height;
     CGFloat slidePageSegmentH = self.slidePageSegmentView.frame.size.height;
     
     CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
+    
+    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
     
     if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
         
@@ -105,6 +112,20 @@
         self.slidePageHeadView.frame = CGRectMake(0, -tableViewTopOffsetY, SCREEN_W, slidePageHeadH);
         self.slidePageSegmentView.frame = CGRectMake(0, 64, SCREEN_W, slidePageSegmentH);
     }
+    
+    
+    
+    for (UITableView * tempTableView in self.tableViews) {
+        
+        if (tableView == tempTableView || tempTableView.contentOffset.y >= tableViewTopOffsetY ) { continue; }
+        
+        
+        if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
+            tempTableView.contentOffset = CGPointMake(0, tableViewOffsetY);
+        }
+    }
+    
+    
     
 }
 
@@ -153,7 +174,7 @@
 
 - (UIView *)slidePageHeadView {
     if (_slidePageHeadView == nil) {
-        _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 200)];
+        _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, kMineSlidePageHeadViewH)];
         _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
     }
     return _slidePageHeadView;
@@ -161,7 +182,7 @@
 
 - (UIView *)slidePageSegmentView {
     if (_slidePageSegmentView == nil) {
-        _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_W, 40)];
+        _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageHeadViewH, SCREEN_W, kMineSlidePageSegmentViewH)];
         _slidePageSegmentView.backgroundColor = [UIColor grayColor];
     }
     return _slidePageSegmentView;
