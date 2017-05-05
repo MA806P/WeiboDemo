@@ -66,7 +66,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     //NSLog(@"scrollViewDidScroll ++** x = %.0lf y = %.0lf index = %ld", scrollView.contentOffset.x, scrollView.contentOffset.y, slidePageIndex);
     
     self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
-    NSLog(@"--** %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset));
+    //NSLog(@"--** %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset));
     //self.slidePageCurrentTableView.contentOffset = CGPointZero;
 }
 
@@ -89,7 +89,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     
     CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
     
-    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
+    //NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
     
     if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
         
