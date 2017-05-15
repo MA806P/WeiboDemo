@@ -35,10 +35,10 @@
     MYZHomeController * home = [[MYZHomeController alloc] init];
     [self addItemController:home title:@"首页" imageName:@"tabbar_home" selectedImageName:@"tabbar_home_selected"];
     
-    MYZProfileController * profile = [[MYZProfileController alloc] init];
-    [self addItemController:profile title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
-    //MYZMineViewController * mine = [[MYZMineViewController alloc] init];
-    //[self addItemController:mine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
+    //MYZProfileController * profile = [[MYZProfileController alloc] init];
+    //[self addItemController:profile title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
+    MYZMineViewController * mine = [[MYZMineViewController alloc] init];
+    [self addItemController:mine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
 }
 
 - (void)addItemController:(UIViewController *)controller title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName
