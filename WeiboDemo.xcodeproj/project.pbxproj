@@ -70,6 +70,7 @@
 		DAD250E11DF5AFEB002EFCB4 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250D81DF5AFEB002EFCB4 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DAD250E41DF5B68A002EFCB4 /* MYZEmotionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD250E31DF5B68A002EFCB4 /* MYZEmotionTool.m */; };
 		DADB20B61DBFA691009D1ACD /* LabelScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DADB20B51DBFA691009D1ACD /* LabelScrollView.m */; };
+		DAE390E91ECB4789006305D1 /* MYZMineChildStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE390E81ECB4789006305D1 /* MYZMineChildStatusController.m */; };
 		DAEAC0881DDDF10400CDF5A2 /* MYZStatusTool.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC0871DDDF10400CDF5A2 /* MYZStatusTool.m */; };
 		DAEEC8071DBC599600DD7ADE /* MYZStatusTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8061DBC599600DD7ADE /* MYZStatusTopView.m */; };
 		DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */; };
@@ -223,6 +224,8 @@
 		DAD250E31DF5B68A002EFCB4 /* MYZEmotionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionTool.m; sourceTree = "<group>"; };
 		DADB20B41DBFA691009D1ACD /* LabelScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelScrollView.h; sourceTree = "<group>"; };
 		DADB20B51DBFA691009D1ACD /* LabelScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelScrollView.m; sourceTree = "<group>"; };
+		DAE390E71ECB4789006305D1 /* MYZMineChildStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMineChildStatusController.h; sourceTree = "<group>"; };
+		DAE390E81ECB4789006305D1 /* MYZMineChildStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMineChildStatusController.m; sourceTree = "<group>"; };
 		DAEAC0861DDDF10400CDF5A2 /* MYZStatusTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTool.h; sourceTree = "<group>"; };
 		DAEAC0871DDDF10400CDF5A2 /* MYZStatusTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusTool.m; sourceTree = "<group>"; };
 		DAEEC8051DBC599600DD7ADE /* MYZStatusTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusTopView.h; sourceTree = "<group>"; };
@@ -278,6 +281,8 @@
 				183BFE921E9F7F8E0077BD7A /* MYZMineViewController.m */,
 				183BFE941E9F7FC90077BD7A /* MYZMineChildViewController.h */,
 				183BFE951E9F7FC90077BD7A /* MYZMineChildViewController.m */,
+				DAE390E71ECB4789006305D1 /* MYZMineChildStatusController.h */,
+				DAE390E81ECB4789006305D1 /* MYZMineChildStatusController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -890,6 +895,7 @@
 				DADB20B61DBFA691009D1ACD /* LabelScrollView.m in Sources */,
 				DAA521F51DB3693C00DD29AF /* MYZHomeController.m in Sources */,
 				DAEAC0881DDDF10400CDF5A2 /* MYZStatusTool.m in Sources */,
+				DAE390E91ECB4789006305D1 /* MYZMineChildStatusController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
 				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
 				DAD250DD1DF5AFEB002EFCB4 /* MJPhotoProgressView.m in Sources */,

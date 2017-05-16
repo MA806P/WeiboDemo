@@ -8,6 +8,7 @@
 
 #import "MYZMineViewController.h"
 #import "MYZMineChildViewController.h"
+#import "MYZMineChildStatusController.h"
 #import "MYZOAuthController.h"
 #import "WeiboSDK.h"
 #import "MYZUserInfo.h"
@@ -75,21 +76,21 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     [self.view addSubview:self.slidePageNavBarView];
     
     
-//    //头部用户视图的数据设置
-//    if (self.userInfo)
-//    {
-//        [self refreshHeaderViewData];
-//    }
-//    else
-//    {
-//        [self requestHeaderViewUserInfo];
-//    }
-//    
-//    //我的微博数据
-//    if (self.statusDataArray.count == 0)
-//    {
-//        [self requestUserTimeLine];
-//    }
+    //头部用户视图的数据设置
+    if (self.userInfo)
+    {
+        [self refreshHeaderViewData];
+    }
+    else
+    {
+        [self requestHeaderViewUserInfo];
+    }
+    
+    //我的微博数据
+    if (self.statusDataArray.count == 0)
+    {
+        [self requestUserTimeLine];
+    }
 }
 
 #pragma mark - UI data
@@ -237,6 +238,9 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         }
         //[self.tableView reloadData];
         
+        MYZMineChildStatusController * slidePageTable1VC = self.controllers[1];
+        slidePageTable1VC.dataArray = self.statusDataArray;
+        
         //[SVProgressHUD dismiss];
         //self.userTimeLineIsLoading = NO;
         //if (self.userInfoIsLoading == NO) {
@@ -346,18 +350,32 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         
         [_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
         
-        for (int i = 0; i < 3; i++) {
-            MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
-            slidePageTableVC.view.frame = CGRectMake(i * SCREEN_W, 0, SCREEN_W, SCREEN_H);
-            [_slidePageContentScrollView addSubview:slidePageTableVC.view];
+        NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+        
+        MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
+        slidePageTableVC.view.frame = CGRectMake(0, 0, SCREEN_W, SCREEN_H);
+        [_slidePageContentScrollView addSubview:slidePageTableVC.view];
+        [slidePageTableVC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+        [self.controllers addObject:slidePageTableVC];
+        [self.tableViews addObject:slidePageTableVC.tableView];
+        
+        
+        MYZMineChildStatusController * slidePageTable1VC = [[MYZMineChildStatusController alloc] init];
+        slidePageTable1VC.view.frame = CGRectMake(SCREEN_W, 0, SCREEN_W, SCREEN_H);
+        [_slidePageContentScrollView addSubview:slidePageTable1VC.view];
+        [slidePageTable1VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+        [self.controllers addObject:slidePageTable1VC];
+        [self.tableViews addObject:slidePageTable1VC.tableView];
+        
             
-            NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
-            [slidePageTableVC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-            
-            [self.controllers addObject:slidePageTableVC];
-            [self.tableViews addObject:slidePageTableVC.tableView];
-            
-        }
+        
+        MYZMineChildViewController * slidePageTable2VC = [[MYZMineChildViewController alloc] init];
+        slidePageTable2VC.view.frame = CGRectMake(2 * SCREEN_W, 0, SCREEN_W, SCREEN_H);
+        [_slidePageContentScrollView addSubview:slidePageTable2VC.view];
+        [slidePageTable2VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+        [self.controllers addObject:slidePageTable2VC];
+        [self.tableViews addObject:slidePageTable2VC.tableView];
+        
         
         _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.controllers.count, 0);
         self.slidePageCurrentTableView = [self.tableViews firstObject];
