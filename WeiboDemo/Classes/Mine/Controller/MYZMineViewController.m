@@ -46,6 +46,12 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 @property (nonatomic, strong) NSMutableArray * statusDataArray;
 
 
+@property (nonatomic, weak) UIImageView * headerBgImageView;
+@property (nonatomic, weak) UIImageView * avator;
+@property (nonatomic, weak) UILabel * nameLabel;
+@property (nonatomic, weak) UILabel * numberLabel;
+@property (nonatomic, weak) UILabel * descrLabel;
+
 
 @end
 
@@ -77,18 +83,19 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     
     
     //头部用户视图的数据设置
-    if (self.userInfo)
-    {
-        [self refreshHeaderViewData];
-    }
-    else
-    {
+    if (self.userInfo) {
+        [self resetHeaderViewData];
+    } else {
         [self requestHeaderViewUserInfo];
     }
     
     //我的微博数据
-    if (self.statusDataArray.count == 0)
-    {
+    if (self.statusDataArray.count > 0) {
+        
+        MYZMineChildStatusController * slidePageTable1VC = self.controllers[1];
+        slidePageTable1VC.dataArray = self.statusDataArray;
+        
+    } else {
         [self requestUserTimeLine];
     }
 }
@@ -194,10 +201,16 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 }
 
 
-- (void)refreshHeaderViewData {
-
+- (void)resetHeaderViewData
+{
+    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
+    }];
+    self.nameLabel.text = self.userInfo.name;
+    self.numberLabel.text = [NSString stringWithFormat:@"关注  %ld   |   粉丝  %ld", self.userInfo.friends_count, self.userInfo.followers_count];
+    self.descrLabel.text = self.userInfo.desc;
 }
-
 
 - (void)requestUserTimeLine
 {
@@ -397,6 +410,44 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     if (_slidePageHeadView == nil) {
         _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, kMineSlidePageHeadViewH)];
         _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
+        
+        
+        
+        //头部视图
+        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_W, kMineSlidePageHeadViewH)];
+        imageView.image = [UIImage imageNamed:@"11"];
+        [_slidePageHeadView addSubview:imageView];
+        self.headerBgImageView = imageView;
+        
+        CGFloat avatorH = 50;
+        CGFloat avatorY = kMineSlidePageHeadViewH*0.5 - avatorH;
+        UIImageView * avator = [[UIImageView alloc] initWithFrame:CGRectMake(0, avatorY, SCREEN_W, avatorH)];
+        avator.contentMode = UIViewContentModeScaleAspectFit;
+        [_slidePageHeadView addSubview:avator];
+        self.avator = avator;
+        
+        UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.avator.frame)+10, SCREEN_W, 20)];
+        nameLabel.textColor = [UIColor whiteColor];
+        nameLabel.font = [UIFont systemFontOfSize:15];
+        nameLabel.textAlignment = NSTextAlignmentCenter;
+        [_slidePageHeadView addSubview:nameLabel];
+        self.nameLabel = nameLabel;
+        
+        UILabel * numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame)+3, SCREEN_W, 20)];
+        numberLabel.textColor = [UIColor whiteColor];
+        numberLabel.font = [UIFont systemFontOfSize:13];
+        numberLabel.textAlignment = NSTextAlignmentCenter;
+        [_slidePageHeadView addSubview:numberLabel];
+        self.numberLabel = numberLabel;
+        
+        UILabel * descrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.numberLabel.frame)+3, SCREEN_W, 20)];
+        descrLabel.textColor = [UIColor whiteColor];
+        descrLabel.font = [UIFont systemFontOfSize:12];
+        descrLabel.textAlignment = NSTextAlignmentCenter;
+        [_slidePageHeadView addSubview:descrLabel];
+        self.descrLabel = descrLabel;
+        
+        
     }
     return _slidePageHeadView;
 }
