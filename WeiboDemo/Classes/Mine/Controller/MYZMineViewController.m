@@ -85,6 +85,11 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     //头部用户视图的数据设置
     if (self.userInfo) {
         [self resetHeaderViewData];
+        
+        MYZMineChildViewController * slidePageTable0VC = self.controllers[1];
+        slidePageTable0VC.userInfo = self.userInfo;
+        
+        
     } else {
         [self requestHeaderViewUserInfo];
     }
@@ -189,6 +194,9 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [realm beginWriteTransaction];
         [realm addOrUpdateObject:self.userInfo];
         [realm commitWriteTransaction];
+        
+        MYZMineChildViewController * slidePageTable0VC = self.controllers[1];
+        slidePageTable0VC.userInfo = self.userInfo;
         
         //self.userInfoIsLoading = NO;
         //if (self.userTimeLineIsLoading == NO) {
@@ -382,12 +390,12 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         
             
         
-        MYZMineChildViewController * slidePageTable2VC = [[MYZMineChildViewController alloc] init];
-        slidePageTable2VC.view.frame = CGRectMake(2 * SCREEN_W, 0, SCREEN_W, SCREEN_H);
-        [_slidePageContentScrollView addSubview:slidePageTable2VC.view];
-        [slidePageTable2VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-        [self.controllers addObject:slidePageTable2VC];
-        [self.tableViews addObject:slidePageTable2VC.tableView];
+//        MYZMineChildViewController * slidePageTable2VC = [[MYZMineChildViewController alloc] init];
+//        slidePageTable2VC.view.frame = CGRectMake(2 * SCREEN_W, 0, SCREEN_W, SCREEN_H);
+//        [_slidePageContentScrollView addSubview:slidePageTable2VC.view];
+//        [slidePageTable2VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+//        [self.controllers addObject:slidePageTable2VC];
+//        [self.tableViews addObject:slidePageTable2VC.tableView];
         
         
         _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.controllers.count, 0);

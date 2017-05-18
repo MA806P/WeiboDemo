@@ -7,8 +7,12 @@
 //
 
 #import "MYZMineChildViewController.h"
+#import "MYZMineUserInfoCell.h"
+#import "MYZUserInfo.h"
 
 @interface MYZMineChildViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) NSArray * userInfoArray;
 
 @end
 
@@ -22,13 +26,24 @@
     
 }
 
+- (void)setUserInfo:(MYZUserInfo *)userInfo {
+    _userInfo = userInfo;
+    
+    self.userInfoArray = @[
+                           @{@"title":@"", @"subTitle":@""},
+                           @{@"title":@"", @"subTitle":@""},
+                           @{@"title":@"", @"subTitle":@""}
+                           ];
+    
+}
+
 - (UITableView *)tableView {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
         
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TableViewCell"];
+        [_tableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:@"TableViewCell"];
         
         UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, 242)];
         tableViewHeader.backgroundColor = [UIColor clearColor];
@@ -40,12 +55,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 50;
+    return self.userInfoArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"-- %ld",indexPath.row];
+    MYZMineUserInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell" forIndexPath:indexPath];
+    cell.dict = self.userInfoArray[indexPath.row];
     return cell;
 }
 

@@ -43,6 +43,7 @@
 		DA0B04E01DF0690300752E0D /* MYZEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0B04DF1DF0690300752E0D /* MYZEmotion.m */; };
 		DA0B04E31DF0691700752E0D /* MYZComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0B04E21DF0691700752E0D /* MYZComposeTextView.m */; };
 		DA0B04E61DF0694D00752E0D /* MYZEmotionAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0B04E51DF0694D00752E0D /* MYZEmotionAttachment.m */; };
+		DA1055751ECDE94900EF1E68 /* MYZMineUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1055741ECDE94900EF1E68 /* MYZMineUserInfoCell.m */; };
 		DA115E501DC6331600C22743 /* EmotionIcons in Resources */ = {isa = PBXBuildFile; fileRef = DA115E4F1DC6331600C22743 /* EmotionIcons */; };
 		DA115E591DC6346400C22743 /* MYZComposeEmotionKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */; };
 		DA20914E1DDA0702006B92E5 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = DA20914D1DDA0702006B92E5 /* NSString+Emoji.m */; };
@@ -169,6 +170,8 @@
 		DA0B04E21DF0691700752E0D /* MYZComposeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeTextView.m; sourceTree = "<group>"; };
 		DA0B04E41DF0694D00752E0D /* MYZEmotionAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZEmotionAttachment.h; sourceTree = "<group>"; };
 		DA0B04E51DF0694D00752E0D /* MYZEmotionAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZEmotionAttachment.m; sourceTree = "<group>"; };
+		DA1055731ECDE94900EF1E68 /* MYZMineUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYZMineUserInfoCell.h; path = WeiboDemo/Classes/Mine/Controller/MYZMineUserInfoCell.h; sourceTree = SOURCE_ROOT; };
+		DA1055741ECDE94900EF1E68 /* MYZMineUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYZMineUserInfoCell.m; path = WeiboDemo/Classes/Mine/Controller/MYZMineUserInfoCell.m; sourceTree = SOURCE_ROOT; };
 		DA115E4F1DC6331600C22743 /* EmotionIcons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EmotionIcons; sourceTree = "<group>"; };
 		DA115E571DC6346400C22743 /* MYZComposeEmotionKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZComposeEmotionKeyboard.h; sourceTree = "<group>"; };
 		DA115E581DC6346400C22743 /* MYZComposeEmotionKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZComposeEmotionKeyboard.m; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 		183BFE901E9F7F7B0077BD7A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA1055731ECDE94900EF1E68 /* MYZMineUserInfoCell.h */,
+				DA1055741ECDE94900EF1E68 /* MYZMineUserInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -897,6 +902,7 @@
 				DAEAC0881DDDF10400CDF5A2 /* MYZStatusTool.m in Sources */,
 				DAE390E91ECB4789006305D1 /* MYZMineChildStatusController.m in Sources */,
 				DA65B9FA1D9AC2F800251B38 /* AppDelegate.m in Sources */,
+				DA1055751ECDE94900EF1E68 /* MYZMineUserInfoCell.m in Sources */,
 				DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */,
 				DAD250DD1DF5AFEB002EFCB4 /* MJPhotoProgressView.m in Sources */,
 				1805ADC51DC1D58000F27388 /* MYZComposeToolsBar.m in Sources */,

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MYZUserInfo;
+
 @interface MYZMineChildViewController : UIViewController
 
 @property (nonatomic, strong) UITableView * tableView;
+
+@property (nonatomic, strong) MYZUserInfo * userInfo;
 
 @end
