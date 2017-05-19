@@ -31,6 +31,7 @@
         subTitle.font = [UIFont systemFontOfSize:15];
         subTitle.textColor = [UIColor grayColor];
         [self.contentView addSubview:subTitle];
+        self.subTitle = subTitle;
         
     }
     return self;
@@ -40,7 +41,7 @@
     [super layoutSubviews];
     
     self.title.frame = CGRectMake(10, 0, 80, self.bounds.size.height);
-    self.subTitle.frame = CGRectMake(110, 0, self.bounds.size.width-110, self.bounds.size.height);
+    self.subTitle.frame = CGRectMake(80, 0, self.bounds.size.width-80, self.bounds.size.height);
     
 }
 

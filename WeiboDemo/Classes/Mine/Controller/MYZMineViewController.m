@@ -86,7 +86,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     if (self.userInfo) {
         [self resetHeaderViewData];
         
-        MYZMineChildViewController * slidePageTable0VC = self.controllers[1];
+        MYZMineChildViewController * slidePageTable0VC = self.controllers[0];
         slidePageTable0VC.userInfo = self.userInfo;
         
         
@@ -463,7 +463,12 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 - (UIView *)slidePageSegmentView {
     if (_slidePageSegmentView == nil) {
         _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageHeadViewH, SCREEN_W, kMineSlidePageSegmentViewH)];
-        _slidePageSegmentView.backgroundColor = [UIColor grayColor];
+        
+        //UIButton * zhuyeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        //zhuyeBtn.frame = CGRectMake(0, 0, <#CGFloat width#>, kMineSlidePageSegmentViewH)
+        
+        
+        
     }
     return _slidePageSegmentView;
 }

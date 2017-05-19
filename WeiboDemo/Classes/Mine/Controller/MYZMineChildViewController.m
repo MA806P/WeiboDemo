@@ -29,10 +29,20 @@
 - (void)setUserInfo:(MYZUserInfo *)userInfo {
     _userInfo = userInfo;
     
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:locale];
+    dateFormatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy";
+    NSDate * createDate = [dateFormatter dateFromString:_userInfo.created_at];
+    
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString * dateStr = [dateFormatter stringFromDate:createDate];
+    
     self.userInfoArray = @[
-                           @{@"title":@"", @"subTitle":@""},
-                           @{@"title":@"", @"subTitle":@""},
-                           @{@"title":@"", @"subTitle":@""}
+                           @{@"title":@"昵称", @"subTitle":_userInfo.name},
+                           @{@"title":@"性别", @"subTitle":_userInfo.gender},
+                           @{@"title":@"简介", @"subTitle":_userInfo.desc},
+                           @{@"title":@"注册时间", @"subTitle":dateStr}
                            ];
     
 }
