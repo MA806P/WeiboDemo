@@ -463,9 +463,34 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 - (UIView *)slidePageSegmentView {
     if (_slidePageSegmentView == nil) {
         _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageHeadViewH, SCREEN_W, kMineSlidePageSegmentViewH)];
+        _slidePageSegmentView.backgroundColor = [UIColor whiteColor];
         
-        //UIButton * zhuyeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //zhuyeBtn.frame = CGRectMake(0, 0, <#CGFloat width#>, kMineSlidePageSegmentViewH)
+        UIView * seperatorLineT = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 1.0)];
+        seperatorLineT.backgroundColor = [UIColor lightGrayColor];
+        [_slidePageSegmentView addSubview:seperatorLineT];
+        UIView * seperatorLine = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageSegmentViewH-1.0, SCREEN_W, 1.0)];
+        seperatorLine.backgroundColor = [UIColor lightGrayColor];
+        [_slidePageSegmentView addSubview:seperatorLine];
+        
+        
+        CGFloat btnW = 100;
+        CGFloat btnH = kMineSlidePageSegmentViewH;
+        CGFloat btn1X = SCREEN_W * 0.5 - btnW;
+        CGFloat btn2X = SCREEN_W * 0.5;
+        
+        UIButton * zhuyeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        zhuyeBtn.frame = CGRectMake(btn1X, 0, btnW, btnH);
+        [zhuyeBtn setTitle:@"主页" forState:UIControlStateNormal];
+        zhuyeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [zhuyeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [_slidePageSegmentView addSubview:zhuyeBtn];
+        
+        UIButton * weiboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        weiboBtn.frame = CGRectMake(btn2X, 0, btnW, btnH);
+        [weiboBtn setTitle:@"微博" forState:UIControlStateNormal];
+        weiboBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [weiboBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [_slidePageSegmentView addSubview:weiboBtn];
         
         
         
