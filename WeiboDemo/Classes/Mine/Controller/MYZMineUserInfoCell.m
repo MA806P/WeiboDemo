@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) UILabel * title;
 @property (nonatomic, weak) UILabel * subTitle;
+@property (nonatomic, weak) UIView * seperatorLine;
 
 @end
 
@@ -33,6 +34,11 @@
         [self.contentView addSubview:subTitle];
         self.subTitle = subTitle;
         
+        UIView * seperatorLine = [[UIView alloc] init];
+        seperatorLine.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.9];
+        [self.contentView addSubview:seperatorLine];
+        self.seperatorLine = seperatorLine;
+        
     }
     return self;
 }
@@ -42,6 +48,7 @@
     
     self.title.frame = CGRectMake(10, 0, 80, self.bounds.size.height);
     self.subTitle.frame = CGRectMake(80, 0, self.bounds.size.width-80, self.bounds.size.height);
+    self.seperatorLine.frame = CGRectMake(0, self.bounds.size.height-1.0, self.bounds.size.width, 1.0);
     
 }
 

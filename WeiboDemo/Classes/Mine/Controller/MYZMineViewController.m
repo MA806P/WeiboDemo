@@ -35,7 +35,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 @property (nonatomic, strong) UIView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
-
+@property (nonatomic, strong) NSArray * slidePageSegmentBtnArray;
 @property (nonatomic, strong) UITableView * slidePageCurrentTableView;
 
 
@@ -356,6 +356,16 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     
     
 }
+#pragma mark - event action
+
+- (void)slideSegmentBtnTouchAction:(UIButton *)btn {
+    
+    for (UIButton * btn in self.slidePageSegmentBtnArray) {
+        btn.selected = NO;
+    }
+    btn.selected = YES;
+    
+}
 
 
 
@@ -469,7 +479,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         seperatorLineT.backgroundColor = [UIColor lightGrayColor];
         [_slidePageSegmentView addSubview:seperatorLineT];
         UIView * seperatorLine = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageSegmentViewH-1.0, SCREEN_W, 1.0)];
-        seperatorLine.backgroundColor = [UIColor lightGrayColor];
+        seperatorLine.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.9];
         [_slidePageSegmentView addSubview:seperatorLine];
         
         
@@ -483,6 +493,8 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [zhuyeBtn setTitle:@"主页" forState:UIControlStateNormal];
         zhuyeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [zhuyeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [zhuyeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+        [zhuyeBtn addTarget:self action:@selector(slideSegmentBtnTouchAction:) forControlEvents:UIControlEventTouchUpInside];
         [_slidePageSegmentView addSubview:zhuyeBtn];
         
         UIButton * weiboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -490,13 +502,16 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [weiboBtn setTitle:@"微博" forState:UIControlStateNormal];
         weiboBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [weiboBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [weiboBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+        [weiboBtn addTarget:self action:@selector(slideSegmentBtnTouchAction:) forControlEvents:UIControlEventTouchUpInside];
         [_slidePageSegmentView addSubview:weiboBtn];
         
-        
+        self.slidePageSegmentBtnArray = @[zhuyeBtn, weiboBtn];
         
     }
     return _slidePageSegmentView;
 }
+
 
 - (UIView *)slidePageNavBarView {
     if (_slidePageNavBarView == nil) {
