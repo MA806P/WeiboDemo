@@ -196,7 +196,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [realm addOrUpdateObject:self.userInfo];
         [realm commitWriteTransaction];
         
-        MYZMineChildViewController * slidePageTable0VC = self.controllers[1];
+        MYZMineChildViewController * slidePageTable0VC = self.controllers[0];
         slidePageTable0VC.userInfo = self.userInfo;
         
         //self.userInfoIsLoading = NO;
@@ -290,9 +290,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != self.slidePageContentScrollView) { return; }
     
-    NSInteger slidePageIndex = (NSInteger)scrollView.contentOffset.x/scrollView.frame.size.width;
-    
-    //NSLog(@"scrollViewDidScroll ++** x = %.0lf y = %.0lf index = %ld", scrollView.contentOffset.x, scrollView.contentOffset.y, slidePageIndex);
+    NSInteger slidePageIndex = (NSInteger)scrollView.contentOffset.x/SCREEN_W;
     
     self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
     //NSLog(@"--** %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset));
@@ -307,7 +305,10 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         }
         selectedBtn.selected = YES;
     }
-    self.slidePageSegmentLine.x = [(UIButton *)self.slidePageSegmentBtnArray[0] x] + selectedBtn.width*scrollView.contentOffset.x/scrollView.frame.size.width;
+    
+    UIButton * btn1 = (UIButton *)self.slidePageSegmentBtnArray[0];
+    UIButton * btn2 = (UIButton *)self.slidePageSegmentBtnArray[1];
+    self.slidePageSegmentLine.x = btn1.x + (btn2.x - btn1.x)*scrollView.contentOffset.x/scrollView.frame.size.width;
     
 }
 
@@ -416,19 +417,10 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [self.controllers addObject:slidePageTable1VC];
         [self.tableViews addObject:slidePageTable1VC.tableView];
         
-            
-        
-//        MYZMineChildViewController * slidePageTable2VC = [[MYZMineChildViewController alloc] init];
-//        slidePageTable2VC.view.frame = CGRectMake(2 * SCREEN_W, 0, SCREEN_W, SCREEN_H);
-//        [_slidePageContentScrollView addSubview:slidePageTable2VC.view];
-//        [slidePageTable2VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-//        [self.controllers addObject:slidePageTable2VC];
-//        [self.tableViews addObject:slidePageTable2VC.tableView];
-        
         
         _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.controllers.count, 0);
         _slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
-        self.slidePageCurrentTableView = [self.tableViews firstObject];
+        self.slidePageCurrentTableView = [self.tableViews lastObject];
         
     }
     return _slidePageContentScrollView;
@@ -500,24 +492,34 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [_slidePageSegmentView addSubview:seperatorLine];
         
         
-        CGFloat btnW = 100;
         CGFloat btnH = kMineSlidePageSegmentViewH;
-        CGFloat btn1X = SCREEN_W * 0.5 - btnW;
-        CGFloat btn2X = SCREEN_W * 0.5;
+        CGFloat btnMargin = 20;
+        UIFont * btnFont = [UIFont systemFontOfSize:14];
+        
+        
+        NSString * zhuyeBtnTitle = @"主页";
+        CGFloat btn1W = [zhuyeBtnTitle sizeWithAttributes:@{NSFontAttributeName:btnFont}].width;
+        CGFloat btn1X = SCREEN_W * 0.5 - btn1W - btnMargin;
         
         UIButton * zhuyeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        zhuyeBtn.frame = CGRectMake(btn1X, 0, btnW, btnH);
-        [zhuyeBtn setTitle:@"主页" forState:UIControlStateNormal];
-        zhuyeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        zhuyeBtn.frame = CGRectMake(btn1X, 0, btn1W, btnH);
+        [zhuyeBtn setTitle:zhuyeBtnTitle forState:UIControlStateNormal];
+        zhuyeBtn.titleLabel.font = btnFont;
         [zhuyeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [zhuyeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [zhuyeBtn addTarget:self action:@selector(slideSegmentBtnTouchAction:) forControlEvents:UIControlEventTouchUpInside];
         [_slidePageSegmentView addSubview:zhuyeBtn];
         
+        
+        
+        NSString * weiboBtnTitle = @"主页";
+        CGFloat btn2W = [weiboBtnTitle sizeWithAttributes:@{NSFontAttributeName:btnFont}].width;
+        CGFloat btn2X = SCREEN_W * 0.5 + btnMargin;
+        
         UIButton * weiboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        weiboBtn.frame = CGRectMake(btn2X, 0, btnW, btnH);
+        weiboBtn.frame = CGRectMake(btn2X, 0, btn2W, btnH);
         [weiboBtn setTitle:@"微博" forState:UIControlStateNormal];
-        weiboBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        weiboBtn.titleLabel.font = btnFont;
         [weiboBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [weiboBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [weiboBtn addTarget:self action:@selector(slideSegmentBtnTouchAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -526,7 +528,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         
         CGFloat indexLineH = 3.0;
         CGFloat indexLineY = kMineSlidePageSegmentViewH - indexLineH;
-        UIView * indexLine = [[UIView alloc] initWithFrame:CGRectMake(btn2X, indexLineY, btnW, indexLineH)];
+        UIView * indexLine = [[UIView alloc] initWithFrame:CGRectMake(btn2X, indexLineY, btn2W, indexLineH)];
         indexLine.backgroundColor = [UIColor orangeColor];
         [_slidePageSegmentView addSubview:indexLine];
         self.slidePageSegmentLine = indexLine;

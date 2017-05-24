@@ -38,7 +38,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         [_tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:@"TableViewCell"];
-        
+        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
         UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, 242)];
         tableViewHeader.backgroundColor = [UIColor clearColor];
         _tableView.tableHeaderView = tableViewHeader;
