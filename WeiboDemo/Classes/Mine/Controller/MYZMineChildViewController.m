@@ -10,6 +10,10 @@
 #import "MYZMineUserInfoCell.h"
 #import "MYZUserInfo.h"
 
+
+FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageHeadViewH;
+FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageSegmentViewH;
+
 @interface MYZMineChildViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray * userInfoArray;
@@ -55,7 +59,7 @@
         _tableView.dataSource = self;
         [_tableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:@"TableViewCell"];
         
-        UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, 242)];
+        UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH)];
         tableViewHeader.backgroundColor = [UIColor clearColor];
         _tableView.tableHeaderView = tableViewHeader;
         _tableView.rowHeight = 60;

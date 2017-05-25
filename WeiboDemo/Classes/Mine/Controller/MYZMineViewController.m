@@ -22,8 +22,8 @@
 #import "UIView+MYZ.h"
 
 
-static CGFloat kMineSlidePageHeadViewH = 200.0;
-static CGFloat kMineSlidePageSegmentViewH = 40.0;
+CGFloat MYZMineViewControllerSlidePageHeadViewH = 170.0;
+CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
 
 @interface MYZMineViewController ()<UIScrollViewDelegate>
@@ -342,8 +342,15 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
     } else if (tableViewOffsetY < 0) {
         
         self.slidePageNavBarView.alpha = 0.0;
+        
+        
         self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
         self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
+        
+        //CGRect headBgViewFrame = self.headerBgImageView.frame;
+        //headBgViewFrame.origin.y = tableViewOffsetY;
+        //self.headerBgImageView.frame = headBgViewFrame;
+        
         
         self.slidePageHeadBackgroundView.frame = CGRectMake(0, -50-tableViewOffsetY, SCREEN_W, self.slidePageHeadBackgroundView.frame.size.height);
         
@@ -437,17 +444,17 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 
 - (UIView *)slidePageHeadView {
     if (_slidePageHeadView == nil) {
-        _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, kMineSlidePageHeadViewH)];
+        _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH)];
         _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
         
         //头部视图
-        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_W, kMineSlidePageHeadViewH)];
+        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
         imageView.image = [UIImage imageNamed:@"11"];
         [_slidePageHeadView addSubview:imageView];
         self.headerBgImageView = imageView;
         
         CGFloat avatorH = 50;
-        CGFloat avatorY = kMineSlidePageHeadViewH*0.5 - avatorH;
+        CGFloat avatorY = MYZMineViewControllerSlidePageHeadViewH*0.5 - avatorH;
         UIImageView * avator = [[UIImageView alloc] initWithFrame:CGRectMake(0, avatorY, SCREEN_W, avatorH)];
         avator.contentMode = UIViewContentModeScaleAspectFit;
         [_slidePageHeadView addSubview:avator];
@@ -481,18 +488,18 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
 
 - (UIView *)slidePageSegmentView {
     if (_slidePageSegmentView == nil) {
-        _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageHeadViewH, SCREEN_W, kMineSlidePageSegmentViewH)];
+        _slidePageSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, MYZMineViewControllerSlidePageHeadViewH, SCREEN_W, MYZMineViewControllerSlidePageSegmentViewH)];
         _slidePageSegmentView.backgroundColor = [UIColor whiteColor];
         
         UIView * seperatorLineT = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 1.0)];
         seperatorLineT.backgroundColor = [UIColor lightGrayColor];
         [_slidePageSegmentView addSubview:seperatorLineT];
-        UIView * seperatorLine = [[UIView alloc] initWithFrame:CGRectMake(0, kMineSlidePageSegmentViewH-1.0, SCREEN_W, 1.0)];
+        UIView * seperatorLine = [[UIView alloc] initWithFrame:CGRectMake(0, MYZMineViewControllerSlidePageSegmentViewH-1.0, SCREEN_W, 1.0)];
         seperatorLine.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.9];
         [_slidePageSegmentView addSubview:seperatorLine];
         
         
-        CGFloat btnH = kMineSlidePageSegmentViewH;
+        CGFloat btnH = MYZMineViewControllerSlidePageSegmentViewH;
         CGFloat btnMargin = 20;
         UIFont * btnFont = [UIFont systemFontOfSize:14];
         
@@ -527,7 +534,7 @@ static CGFloat kMineSlidePageSegmentViewH = 40.0;
         [_slidePageSegmentView addSubview:weiboBtn];
         
         CGFloat indexLineH = 3.0;
-        CGFloat indexLineY = kMineSlidePageSegmentViewH - indexLineH;
+        CGFloat indexLineY = MYZMineViewControllerSlidePageSegmentViewH - indexLineH;
         UIView * indexLine = [[UIView alloc] initWithFrame:CGRectMake(btn2X, indexLineY, btn2W, indexLineH)];
         indexLine.backgroundColor = [UIColor orangeColor];
         [_slidePageSegmentView addSubview:indexLine];
