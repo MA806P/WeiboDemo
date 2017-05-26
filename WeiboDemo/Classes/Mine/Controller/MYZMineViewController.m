@@ -33,7 +33,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
 @property (nonatomic, strong) UIView * slidePageNavBarView;
-@property (nonatomic, strong) UIView * slidePageHeadBackgroundView;
+@property (nonatomic, strong) UIImageView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
 @property (nonatomic, strong) NSArray * slidePageSegmentBtnArray;
@@ -212,7 +212,9 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
 - (void)resetHeaderViewData
 {
-    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    
+    [self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+//    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
     [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
     }];
@@ -434,10 +436,10 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 }
 
 
-- (UIView *)slidePageHeadBackgroundView {
+- (UIImageView *)slidePageHeadBackgroundView {
     if (_slidePageHeadBackgroundView == nil) {
-        _slidePageHeadBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 300)];
-        _slidePageHeadBackgroundView.backgroundColor = [UIColor brownColor];
+        _slidePageHeadBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 300)];
+        _slidePageHeadBackgroundView.image = [UIImage imageNamed:@"11"];
     }
     return _slidePageHeadBackgroundView;
 }
@@ -447,11 +449,11 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH)];
         _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
         
-        //头部视图
-        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
-        imageView.image = [UIImage imageNamed:@"11"];
-        [_slidePageHeadView addSubview:imageView];
-        self.headerBgImageView = imageView;
+//        //头部视图
+//        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
+//        imageView.image = [UIImage imageNamed:@"11"];
+//        [_slidePageHeadView addSubview:imageView];
+//        self.headerBgImageView = imageView;
         
         CGFloat avatorH = 50;
         CGFloat avatorY = MYZMineViewControllerSlidePageHeadViewH*0.5 - avatorH;
