@@ -22,6 +22,7 @@ FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageSegmentViewH;
 
 @implementation MYZMineChildViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -55,15 +56,15 @@ FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageSegmentViewH;
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.rowHeight = 60;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         [_tableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:@"TableViewCell"];
         
-        UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH)];
-        tableViewHeader.backgroundColor = [UIColor clearColor];
-        _tableView.tableHeaderView = tableViewHeader;
-        _tableView.rowHeight = 60;
-        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
+        //UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH)];
+        //tableViewHeader.backgroundColor = [UIColor clearColor];
+        //_tableView.tableHeaderView = tableViewHeader;
+        //_tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
     }
     return _tableView;
 }

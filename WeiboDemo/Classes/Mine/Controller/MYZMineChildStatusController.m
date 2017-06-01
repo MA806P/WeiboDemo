@@ -42,10 +42,10 @@ FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageSegmentViewH;
         _tableView.dataSource = self;
         [_tableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:@"TableViewCell"];
         _tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
-        UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH)];
-        tableViewHeader.backgroundColor = [UIColor clearColor];
-        _tableView.tableHeaderView = tableViewHeader;
-        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
+        //UIView * tableViewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_H, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH)];
+        //tableViewHeader.backgroundColor = [UIColor clearColor];
+        //_tableView.tableHeaderView = tableViewHeader;
+        //_tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
     }
     return _tableView;
 }

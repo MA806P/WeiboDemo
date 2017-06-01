@@ -258,7 +258,6 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
             [self.realm beginWriteTransaction];
             [self.realm addOrUpdateObject:status];
             [self.realm commitWriteTransaction];
-            
         }
         //[self.tableView reloadData];
         
@@ -412,7 +411,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
         
         MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
-        slidePageTableVC.view.frame = CGRectMake(0, 0, SCREEN_W, SCREEN_H);
+        slidePageTableVC.view.frame = CGRectMake(0, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
         [_slidePageContentScrollView addSubview:slidePageTableVC.view];
         [slidePageTableVC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [self.controllers addObject:slidePageTableVC];
@@ -420,7 +419,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         
         
         MYZMineChildStatusController * slidePageTable1VC = [[MYZMineChildStatusController alloc] init];
-        slidePageTable1VC.view.frame = CGRectMake(SCREEN_W, 0, SCREEN_W, SCREEN_H);
+        slidePageTable1VC.view.frame = CGRectMake(SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
         [_slidePageContentScrollView addSubview:slidePageTable1VC.view];
         [slidePageTable1VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [self.controllers addObject:slidePageTable1VC];
@@ -447,7 +446,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 - (UIView *)slidePageHeadView {
     if (_slidePageHeadView == nil) {
         _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH)];
-        _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
+        _slidePageHeadView.backgroundColor = [UIColor clearColor];
         
 //        //头部视图
 //        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
