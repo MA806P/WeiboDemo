@@ -56,6 +56,7 @@ FOUNDATION_EXTERN CGFloat MYZMineViewControllerSlidePageSegmentViewH;
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.backgroundColor = [UIColor clearColor];
         _tableView.rowHeight = 60;
         _tableView.delegate = self;
         _tableView.dataSource = self;

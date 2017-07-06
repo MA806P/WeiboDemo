@@ -298,6 +298,9 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
     //self.slidePageCurrentTableView.contentOffset = CGPointZero;
     
     
+    NSLog(@"--- %@", NSStringFromCGPoint(scrollView.contentOffset));
+    self.slidePageHeadBackgroundView.x = scrollView.contentOffset.x;
+    
     
     UIButton * selectedBtn = self.slidePageSegmentBtnArray[slidePageIndex];
     if (selectedBtn.isSelected == NO) {
@@ -352,8 +355,8 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         //headBgViewFrame.origin.y = tableViewOffsetY;
         //self.headerBgImageView.frame = headBgViewFrame;
         
+        self.slidePageHeadBackgroundView.y = -50-tableViewOffsetY;
         
-        self.slidePageHeadBackgroundView.frame = CGRectMake(0, -50-tableViewOffsetY, SCREEN_W, self.slidePageHeadBackgroundView.frame.size.height);
         
         
     } else if (tableViewOffsetY > tableViewTopOffsetY) {
@@ -402,7 +405,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
     if (_slidePageContentScrollView == nil) {
         _slidePageContentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
         _slidePageContentScrollView.backgroundColor = [UIColor clearColor];
-        
+        _slidePageContentScrollView.bounces = NO;
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
         
