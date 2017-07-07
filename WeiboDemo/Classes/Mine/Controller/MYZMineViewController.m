@@ -298,7 +298,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
     //self.slidePageCurrentTableView.contentOffset = CGPointZero;
     
     
-    NSLog(@"--- %@", NSStringFromCGPoint(scrollView.contentOffset));
+    //NSLog(@"--- %@", NSStringFromCGPoint(scrollView.contentOffset));
     self.slidePageHeadBackgroundView.x = scrollView.contentOffset.x;
     
     
@@ -374,8 +374,14 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         
         
         if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
-            tempTableView.contentOffset = CGPointMake(0, tableViewOffsetY);
+            //tempTableView.contentOffset = CGPointMake(0, tableViewOffsetY);
+            
+            CGFloat superViewY = MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH - tableViewOffsetY;
+            tempTableView.superview.y = superViewY;
+            tempTableView.superview.height = SCREEN_H - superViewY;
         }
+        
+        //NSLog(@"------ %@ %@ %@", NSStringFromCGRect(tempTableView.superview.frame), NSStringFromCGRect(tempTableView.frame), NSStringFromCGPoint(tempTableView.contentOffset));
     }
     
     
@@ -415,7 +421,7 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         
         MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
         slidePageTableVC.view.frame = CGRectMake(0, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
-        [_slidePageContentScrollView addSubview:slidePageTableVC.view];
+        [_slidePageContentScrollView insertSubview:slidePageTableVC.view aboveSubview:self.slidePageHeadBackgroundView];
         [slidePageTableVC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [self.controllers addObject:slidePageTableVC];
         [self.tableViews addObject:slidePageTableVC.tableView];
@@ -423,10 +429,15 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         
         MYZMineChildStatusController * slidePageTable1VC = [[MYZMineChildStatusController alloc] init];
         slidePageTable1VC.view.frame = CGRectMake(SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
-        [_slidePageContentScrollView addSubview:slidePageTable1VC.view];
+        [_slidePageContentScrollView insertSubview:slidePageTable1VC.view aboveSubview:self.slidePageHeadBackgroundView];
         [slidePageTable1VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [self.controllers addObject:slidePageTable1VC];
         [self.tableViews addObject:slidePageTable1VC.tableView];
+        
+        
+        
+
+        
         
         
         _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.controllers.count, 0);
