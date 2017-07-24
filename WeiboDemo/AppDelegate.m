@@ -35,6 +35,7 @@
     if (account)
     {
         MYZTabBarController * tabBarController = [[MYZTabBarController alloc] init];
+        [tabBarController setSelectedIndex:1];
         self.window.rootViewController = tabBarController;
     }
     else
