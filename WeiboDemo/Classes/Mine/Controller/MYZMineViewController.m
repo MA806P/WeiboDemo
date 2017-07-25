@@ -7,14 +7,13 @@
 //
 
 #import "MYZMineViewController.h"
-#import "MYZMineChildViewController.h"
-#import "MYZMineChildStatusController.h"
 #import "MYZOAuthController.h"
 #import "WeiboSDK.h"
 #import "MYZUserInfo.h"
 #import "MYZStatusOriginal.h"
 #import "MYZStatusFrame.h"
 #import "MYZStatusCell.h"
+#import "MYZMineUserInfoCell.h"
 #import "MYZStatusViewController.h"
 #import "MYZWebViewController.h"
 #import "MYZComposeController.h"
@@ -22,13 +21,15 @@
 #import "UIView+MYZ.h"
 
 
-CGFloat MYZMineViewControllerSlidePageHeadViewH = 170.0;
-CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
+static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 170.0;
+static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
-@interface MYZMineViewController ()<UIScrollViewDelegate>
+static NSString * const kMineInfoCellId = @"kMineInfoCellId";
+static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
-@property (nonatomic, strong) NSMutableArray * controllers;
+@interface MYZMineViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+
 @property (nonatomic, strong) NSMutableArray * tableViews;
 
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
@@ -43,8 +44,11 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 @property (nonatomic, strong) MYZAccount * account;
 @property (nonatomic, strong) MYZUserInfo * userInfo;
 @property (nonatomic, strong) RLMRealm * realm;
+
 /** 我发的微博数据 */
 @property (nonatomic, strong) NSMutableArray * statusDataArray;
+/** 我的个人信息的数据 */
+@property (nonatomic, strong) NSMutableArray * infoDataArray;
 
 
 @property (nonatomic, weak) UIImageView * headerBgImageView;
@@ -52,6 +56,10 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 @property (nonatomic, weak) UILabel * nameLabel;
 @property (nonatomic, weak) UILabel * numberLabel;
 @property (nonatomic, weak) UILabel * descrLabel;
+
+
+@property (nonatomic, weak) UITableView * mineInfoTableView;
+@property (nonatomic, weak) UITableView * mineStatusTableView;
 
 
 @end
@@ -87,200 +95,19 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
     if (self.userInfo) {
         [self resetHeaderViewData];
         
-        MYZMineChildViewController * slidePageTable0VC = self.controllers[0];
-        slidePageTable0VC.userInfo = self.userInfo;
-        
-        
+        [self.infoDataArray removeAllObjects];
+        [self.infoDataArray addObjectsFromArray:[self resetMineInfoDataWithUserInfo:self.userInfo]];
+        [self.mineInfoTableView reloadData];
     } else {
         [self requestHeaderViewUserInfo];
     }
     
     //我的微博数据
     if (self.statusDataArray.count > 0) {
-        
-        MYZMineChildStatusController * slidePageTable1VC = self.controllers[1];
-        slidePageTable1VC.dataArray = self.statusDataArray;
-        
+        [self.mineStatusTableView reloadData];
     } else {
         [self requestUserTimeLine];
     }
-}
-
-#pragma mark - UI data
-
-
-- (MYZAccount *)account
-{
-    if (_account == nil)
-    {
-        //判断是否授权
-        MYZAccount * account = [MYZTools account];
-        if (account == nil)
-        {
-            [MYZTools showAlertWithText:@"用户未登录"];
-            return nil;
-        }
-        _account = account;
-    }
-    return _account;
-}
-
-- (MYZUserInfo *)userInfo
-{
-    if (_userInfo == nil)
-    {
-        //从数据库中查询是否有用户数据
-        RLMResults<MYZUserInfo *> *userInfo = [MYZUserInfo objectsWhere:@"idstr = %@",self.account.uid];
-        if (userInfo.count <= 0)
-        {
-            return nil;
-        }
-        _userInfo = (MYZUserInfo *)[userInfo firstObject];
-    }
-    return _userInfo;
-}
-
-- (NSMutableArray *)statusDataArray
-{
-    if (_statusDataArray == nil)
-    {
-        _statusDataArray = [NSMutableArray array];
-        
-        RLMResults * statusResults = [[MYZStatusOriginal allObjectsInRealm:self.realm] sortedResultsUsingProperty:@"mid" ascending:NO];
-        
-        //得到微博数据模型, 转化模型计算各控件frame
-        for (NSInteger i=0; i<statusResults.count; i++)
-        {
-            MYZStatusOriginal * status = [statusResults objectAtIndex:i];
-            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
-            [_statusDataArray addObject:statusFrame];
-        }
-    }
-    return _statusDataArray;
-}
-
-
-- (RLMRealm *)realm
-{
-    if (_realm == nil)
-    {
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-        NSString *filePath = [path stringByAppendingPathComponent:@"profile.realm"];
-        //NSLog(@"数据库目录 = %@",filePath);
-        
-        RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
-        config.fileURL = [NSURL URLWithString:filePath];
-        
-        //config.objectClasses = @[MYZStatusOriginal.class];
-        //config.readOnly = NO;
-        
-        RLMRealm * realm = [RLMRealm realmWithConfiguration:config error:nil];
-        _realm = realm;
-    }
-    return _realm;
-}
-
-
-- (void)requestHeaderViewUserInfo
-{
-    //获取用户信息
-    NSDictionary * showParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
-    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
-    } success:^(id response) {
-        NSDictionary * userInfoDic = (NSDictionary *)response;
-        self.userInfo = [[MYZUserInfo alloc] initWithValue:userInfoDic];
-        //[self refreshHeaderViewData];
-        
-        RLMRealm * realm = [RLMRealm defaultRealm];
-        [realm beginWriteTransaction];
-        [realm addOrUpdateObject:self.userInfo];
-        [realm commitWriteTransaction];
-        
-        MYZMineChildViewController * slidePageTable0VC = self.controllers[0];
-        slidePageTable0VC.userInfo = self.userInfo;
-        
-        //self.userInfoIsLoading = NO;
-        //if (self.userTimeLineIsLoading == NO) {
-        //    [self headIndicatorEndRefreshing];
-        //}
-        
-    } failure:^(NSError *error) {
-        MYZLog(@" --- error %@ ", error);
-    }];
-}
-
-
-- (void)resetHeaderViewData
-{
-    
-    [self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
-//    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
-    [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
-    }];
-    self.nameLabel.text = self.userInfo.name;
-    self.numberLabel.text = [NSString stringWithFormat:@"关注  %ld   |   粉丝  %ld", self.userInfo.friends_count, self.userInfo.followers_count];
-    self.descrLabel.text = self.userInfo.desc;
-}
-
-- (void)requestUserTimeLine
-{
-    
-    //用户最新发表的微博列表
-    /*
-     screen_name	false	string	需要查询的用户昵称。
-     since_id	false	int64	若指定此参数，则返回ID比since_id大的微博（即比since_id时间晚的微博），默认为0。
-     max_id	false	int64	若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
-     count	false	int	单页返回的记录条数，最大不超过100，超过100以100处理，默认为20。
-     page	false	int	返回结果的页码，默认为1。
-     base_app	false	int	是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
-     feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
-     trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
-     */
-    
-    //[SVProgressHUD show];
-    
-    NSDictionary * userTimelineParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
-    [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
-    } success:^(id response) {
-        //NSDictionary * userTimelineDic = (NSDictionary *)response;
-        //MYZLog(@" --- %@ ", userTimelineDic);
-        
-        NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
-        [self.statusDataArray removeAllObjects];
-        for (NSDictionary * tempDic in statusDicts)
-        {
-            MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:tempDic];
-            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
-            [self.statusDataArray addObject:statusFrame];
-            
-            //存入数据库
-            [self.realm beginWriteTransaction];
-            [self.realm addOrUpdateObject:status];
-            [self.realm commitWriteTransaction];
-        }
-        //[self.tableView reloadData];
-        
-        MYZMineChildStatusController * slidePageTable1VC = self.controllers[1];
-        slidePageTable1VC.dataArray = self.statusDataArray;
-        
-        //[SVProgressHUD dismiss];
-        //self.userTimeLineIsLoading = NO;
-        //if (self.userInfoIsLoading == NO) {
-        //    [self headIndicatorEndRefreshing];
-        //}
-        
-    } failure:^(NSError *error) {
-        MYZLog(@" --- error %@ ", error);
-        [SVProgressHUD dismiss];
-    }];
-    
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -400,7 +227,47 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
     [UIView animateWithDuration:0.5 animations:^{
         self.slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W*btnIndex, 0);
     }];
-    
+}
+
+
+#pragma mrak - table view deleage datasource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == self.mineInfoTableView) {
+        return self.infoDataArray.count;
+    } else if (tableView == self.mineStatusTableView) {
+        return self.statusDataArray.count;
+    } else {
+        return 0;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (tableView == self.mineInfoTableView) {
+        MYZMineUserInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:kMineInfoCellId forIndexPath:indexPath];
+        cell.dict = self.infoDataArray[indexPath.row];
+        return cell;
+    } else if (tableView == self.mineStatusTableView) {
+        MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+        MYZStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:kMineStatusCellId forIndexPath:indexPath];
+        cell.statusFrame = statusFrame;
+        return cell;
+    } else {
+        return nil;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.mineInfoTableView) {
+        return 60;
+    } else if (tableView == self.mineStatusTableView) {
+        MYZStatusFrame * statusFrame = [self.statusDataArray objectAtIndex:indexPath.row];
+        return statusFrame.cellHeight;
+    } else {
+        return 0;
+    }
 }
 
 
@@ -419,28 +286,34 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         
         NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
         
-        MYZMineChildViewController * slidePageTableVC = [[MYZMineChildViewController alloc] init];
-        slidePageTableVC.view.frame = CGRectMake(0, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
-        [_slidePageContentScrollView insertSubview:slidePageTableVC.view aboveSubview:self.slidePageHeadBackgroundView];
-        [slidePageTableVC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-        [self.controllers addObject:slidePageTableVC];
-        [self.tableViews addObject:slidePageTableVC.tableView];
+        
+        CGFloat tableViewY = MYZMineViewControllerSlidePageHeadViewH + MYZMineViewControllerSlidePageSegmentViewH;
+        CGFloat tableViewH = SCREEN_H - 64;
+        
+        UITableView * mineInfoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
+        mineInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        mineInfoTableView.backgroundColor = [UIColor clearColor];
+        mineInfoTableView.delegate = self;
+        mineInfoTableView.dataSource = self;
+        [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
+        [mineInfoTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+        [_slidePageContentScrollView addSubview:mineInfoTableView];
+        self.mineInfoTableView = mineInfoTableView;
+        [self.tableViews addObject:self.mineInfoTableView];
+        
+        UITableView * mineStatusTableView = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mineInfoTableView.frame), tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
+        mineStatusTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        mineStatusTableView.backgroundColor = [UIColor clearColor];
+        mineStatusTableView.delegate = self;
+        mineStatusTableView.dataSource = self;
+        [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
+        [mineStatusTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+        [_slidePageContentScrollView addSubview:mineStatusTableView];
+        self.mineStatusTableView = mineStatusTableView;
+        [self.tableViews addObject:self.mineStatusTableView];
         
         
-        MYZMineChildStatusController * slidePageTable1VC = [[MYZMineChildStatusController alloc] init];
-        slidePageTable1VC.view.frame = CGRectMake(SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, SCREEN_H);
-        [_slidePageContentScrollView insertSubview:slidePageTable1VC.view aboveSubview:self.slidePageHeadBackgroundView];
-        [slidePageTable1VC.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-        [self.controllers addObject:slidePageTable1VC];
-        [self.tableViews addObject:slidePageTable1VC.tableView];
-        
-        
-        
-
-        
-        
-        
-        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.controllers.count, 0);
+        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, 0);
         _slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
         self.slidePageCurrentTableView = [self.tableViews lastObject];
         
@@ -495,8 +368,6 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
         descrLabel.textAlignment = NSTextAlignmentCenter;
         [_slidePageHeadView addSubview:descrLabel];
         self.descrLabel = descrLabel;
-        
-        
     }
     return _slidePageHeadView;
 }
@@ -572,19 +443,198 @@ CGFloat MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 }
 
 
-- (NSMutableArray *)controllers {
-    if (_controllers == nil) {
-        _controllers = [NSMutableArray array];
-    }
-    return _controllers;
-}
-
 - (NSMutableArray *)tableViews {
     if (_tableViews == nil) {
         _tableViews = [NSMutableArray array];
     }
     return _tableViews;
 }
+
+
+#pragma mark - UI data
+
+
+- (MYZAccount *)account
+{
+    if (_account == nil)
+    {
+        //判断是否授权
+        MYZAccount * account = [MYZTools account];
+        if (account == nil)
+        {
+            [MYZTools showAlertWithText:@"用户未登录"];
+            return nil;
+        }
+        _account = account;
+    }
+    return _account;
+}
+
+- (MYZUserInfo *)userInfo
+{
+    if (_userInfo == nil)
+    {
+        //从数据库中查询是否有用户数据
+        RLMResults<MYZUserInfo *> *userInfo = [MYZUserInfo objectsWhere:@"idstr = %@",self.account.uid];
+        if (userInfo.count <= 0)
+        {
+            return nil;
+        }
+        _userInfo = (MYZUserInfo *)[userInfo firstObject];
+    }
+    return _userInfo;
+}
+
+- (NSMutableArray *)statusDataArray
+{
+    if (_statusDataArray == nil)
+    {
+        _statusDataArray = [NSMutableArray array];
+        
+        RLMResults * statusResults = [[MYZStatusOriginal allObjectsInRealm:self.realm] sortedResultsUsingProperty:@"mid" ascending:NO];
+        
+        //得到微博数据模型, 转化模型计算各控件frame
+        for (NSInteger i=0; i<statusResults.count; i++)
+        {
+            MYZStatusOriginal * status = [statusResults objectAtIndex:i];
+            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
+            [_statusDataArray addObject:statusFrame];
+        }
+    }
+    return _statusDataArray;
+}
+
+
+- (RLMRealm *)realm
+{
+    if (_realm == nil)
+    {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *filePath = [path stringByAppendingPathComponent:@"profile.realm"];
+        //NSLog(@"数据库目录 = %@",filePath);
+        
+        RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
+        config.fileURL = [NSURL URLWithString:filePath];
+        
+        //config.objectClasses = @[MYZStatusOriginal.class];
+        //config.readOnly = NO;
+        
+        RLMRealm * realm = [RLMRealm realmWithConfiguration:config error:nil];
+        _realm = realm;
+    }
+    return _realm;
+}
+
+
+- (void)requestHeaderViewUserInfo
+{
+    //获取用户信息
+    NSDictionary * showParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/users/show.json" parameters:showParameter progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        NSDictionary * userInfoDic = (NSDictionary *)response;
+        self.userInfo = [[MYZUserInfo alloc] initWithValue:userInfoDic];
+        
+        RLMRealm * realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm addOrUpdateObject:self.userInfo];
+        [realm commitWriteTransaction];
+        
+        [self resetHeaderViewData];
+        [self.infoDataArray removeAllObjects];
+        [self.infoDataArray addObjectsFromArray:[self resetMineInfoDataWithUserInfo:self.userInfo]];
+        [self.mineInfoTableView reloadData];
+        
+    } failure:^(NSError *error) {
+        MYZLog(@" --- error %@ ", error);
+    }];
+}
+
+
+- (void)resetHeaderViewData
+{
+    
+    [self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    //    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
+    }];
+    self.nameLabel.text = self.userInfo.name;
+    self.numberLabel.text = [NSString stringWithFormat:@"关注  %ld   |   粉丝  %ld", self.userInfo.friends_count, self.userInfo.followers_count];
+    self.descrLabel.text = self.userInfo.desc;
+}
+
+- (void)requestUserTimeLine
+{
+    
+    //用户最新发表的微博列表
+    /*
+     screen_name	false	string	需要查询的用户昵称。
+     since_id	false	int64	若指定此参数，则返回ID比since_id大的微博（即比since_id时间晚的微博），默认为0。
+     max_id	false	int64	若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
+     count	false	int	单页返回的记录条数，最大不超过100，超过100以100处理，默认为20。
+     page	false	int	返回结果的页码，默认为1。
+     base_app	false	int	是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
+     feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
+     trim_user	false	int	返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
+     */
+    
+    //[SVProgressHUD show];
+    
+    NSDictionary * userTimelineParameter = @{@"access_token":self.account.access_token,@"uid":self.account.uid};
+    [MYZHttpTools get:@"https://api.weibo.com/2/statuses/user_timeline.json" parameters:userTimelineParameter progress:^(NSProgress *progress) {
+    } success:^(id response) {
+        //NSDictionary * userTimelineDic = (NSDictionary *)response;
+        //MYZLog(@" --- %@ ", userTimelineDic);
+        
+        NSArray * statusDicts = [(NSDictionary *)response objectForKey:@"statuses"];
+        [self.statusDataArray removeAllObjects];
+        for (NSDictionary * tempDic in statusDicts)
+        {
+            MYZStatusOriginal * status = [[MYZStatusOriginal alloc] initWithValue:tempDic];
+            MYZStatusFrame * statusFrame = [MYZStatusFrame statusFrameWithStatus:status];
+            [self.statusDataArray addObject:statusFrame];
+            
+            //存入数据库
+            [self.realm beginWriteTransaction];
+            [self.realm addOrUpdateObject:status];
+            [self.realm commitWriteTransaction];
+        }
+        
+        //刷新用户微博视图
+        [self.mineStatusTableView reloadData];
+        
+    } failure:^(NSError *error) {
+        MYZLog(@" --- error %@ ", error);
+        [SVProgressHUD dismiss];
+    }];
+}
+
+
+- (NSMutableArray *)infoDataArray {
+    if (_infoDataArray == nil) {
+        _infoDataArray = [NSMutableArray array];
+    }
+    return _infoDataArray;
+}
+
+- (NSArray *)resetMineInfoDataWithUserInfo:(MYZUserInfo *)userInfo {
+    
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:locale];
+    dateFormatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy";
+    NSDate * createDate = [dateFormatter dateFromString:userInfo.created_at];
+    
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString * dateStr = [dateFormatter stringFromDate:createDate];
+    
+    return @[@{@"title":@"昵称", @"subTitle":_userInfo.name}, @{@"title":@"性别", @"subTitle":_userInfo.gender},
+             @{@"title":@"简介", @"subTitle":_userInfo.desc},  @{@"title":@"注册时间", @"subTitle":dateStr} ];
+}
+
+
+
 
 - (void)dealloc {
     
