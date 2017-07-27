@@ -162,28 +162,32 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
     
-    //NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
+    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
     
     if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
         
         self.slidePageNavBarView.alpha = tableViewOffsetY/tableViewTopOffsetY;
         self.slidePageHeadView.frame = CGRectMake(0, - tableViewOffsetY, SCREEN_W, slidePageHeadH);
-        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
+        
+        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY;
+        self.slidePageSegmentView.frame = CGRectMake(0, slidePageSegmentY, SCREEN_W, slidePageSegmentH);
+        
+        
+        for (UITableView * tempTableView in self.tableViews) {
+            if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
+                
+                CGFloat tableViewY = CGRectGetMaxY(self.slidePageSegmentView.frame);
+                CGFloat tableViewH = SCREEN_H - tableViewY - 49;
+                tempTableView.frame = CGRectMake(tempTableView.frame.origin.x, tableViewY, SCREEN_W, tableViewH);
+            }
+        }
         
     } else if (tableViewOffsetY < 0) {
         
         self.slidePageNavBarView.alpha = 0.0;
         
-        
         self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
         self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
-        
-        //CGRect headBgViewFrame = self.headerBgImageView.frame;
-        //headBgViewFrame.origin.y = tableViewOffsetY;
-        //self.headerBgImageView.frame = headBgViewFrame;
-        
-        self.slidePageHeadBackgroundView.y = -50-tableViewOffsetY;
-        
         
         
     } else if (tableViewOffsetY > tableViewTopOffsetY) {
@@ -195,21 +199,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     
     
-    for (UITableView * tempTableView in self.tableViews) {
-        
-        if (tableView == tempTableView || tempTableView.contentOffset.y >= tableViewTopOffsetY ) { continue; }
-        
-        
-        if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
-            //tempTableView.contentOffset = CGPointMake(0, tableViewOffsetY);
-            
-            CGFloat superViewY = MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH - tableViewOffsetY;
-            tempTableView.superview.y = superViewY;
-            tempTableView.superview.height = SCREEN_H - superViewY;
-        }
-        
-        //NSLog(@"------ %@ %@ %@", NSStringFromCGRect(tempTableView.superview.frame), NSStringFromCGRect(tempTableView.frame), NSStringFromCGPoint(tempTableView.contentOffset));
-    }
+    
     
     
     
