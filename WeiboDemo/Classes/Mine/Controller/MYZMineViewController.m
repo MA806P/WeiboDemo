@@ -169,7 +169,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         self.slidePageNavBarView.alpha = tableViewOffsetY/tableViewTopOffsetY;
         self.slidePageHeadView.frame = CGRectMake(0, - tableViewOffsetY, SCREEN_W, slidePageHeadH);
         
-        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY;
+        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY*2.0;
         self.slidePageSegmentView.frame = CGRectMake(0, slidePageSegmentY, SCREEN_W, slidePageSegmentH);
         
         
@@ -196,12 +196,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         self.slidePageHeadView.frame = CGRectMake(0, -tableViewTopOffsetY, SCREEN_W, slidePageHeadH);
         self.slidePageSegmentView.frame = CGRectMake(0, 64, SCREEN_W, slidePageSegmentH);
     }
-    
-    
-    
-    
-    
-    
     
 }
 #pragma mark - event action
@@ -282,7 +276,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         UITableView * mineInfoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
         mineInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        mineInfoTableView.backgroundColor = [UIColor clearColor];
+        mineInfoTableView.backgroundColor = [UIColor whiteColor];
         mineInfoTableView.delegate = self;
         mineInfoTableView.dataSource = self;
         [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
@@ -293,7 +287,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         UITableView * mineStatusTableView = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mineInfoTableView.frame), tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
         mineStatusTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        mineStatusTableView.backgroundColor = [UIColor clearColor];
+        mineStatusTableView.backgroundColor = [UIColor lightGrayColor];
         mineStatusTableView.delegate = self;
         mineStatusTableView.dataSource = self;
         [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
