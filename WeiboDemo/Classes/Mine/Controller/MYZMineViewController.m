@@ -154,48 +154,52 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     UITableView * tableView = (UITableView *)object;
     if (tableView != self.slidePageCurrentTableView) { return; }
     
+    
     CGFloat tableViewOffsetY = tableView.contentOffset.y;
+    NSLog(@"observeValueForKeyPath ++--  %.2lf", tableViewOffsetY);
     
     
-    CGFloat slidePageHeadH = self.slidePageHeadView.frame.size.height;
-    CGFloat slidePageSegmentH = self.slidePageSegmentView.frame.size.height;
     
-    CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
-    
-    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
-    
-    if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
-        
-        self.slidePageNavBarView.alpha = tableViewOffsetY/tableViewTopOffsetY;
-        self.slidePageHeadView.frame = CGRectMake(0, - tableViewOffsetY, SCREEN_W, slidePageHeadH);
-        
-        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY*2.0;
-        self.slidePageSegmentView.frame = CGRectMake(0, slidePageSegmentY, SCREEN_W, slidePageSegmentH);
-        
-        
-        for (UITableView * tempTableView in self.tableViews) {
-            if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
-                
-                CGFloat tableViewY = CGRectGetMaxY(self.slidePageSegmentView.frame);
-                CGFloat tableViewH = SCREEN_H - tableViewY - 49;
-                tempTableView.frame = CGRectMake(tempTableView.frame.origin.x, tableViewY, SCREEN_W, tableViewH);
-            }
-        }
-        
-    } else if (tableViewOffsetY < 0) {
-        
-        self.slidePageNavBarView.alpha = 0.0;
-        
-        self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
-        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
-        
-        
-    } else if (tableViewOffsetY > tableViewTopOffsetY) {
-        
-        self.slidePageNavBarView.alpha = 1.0;
-        self.slidePageHeadView.frame = CGRectMake(0, -tableViewTopOffsetY, SCREEN_W, slidePageHeadH);
-        self.slidePageSegmentView.frame = CGRectMake(0, 64, SCREEN_W, slidePageSegmentH);
-    }
+//    CGFloat tableViewOffsetY = tableView.contentOffset.y;
+//    CGFloat slidePageHeadH = self.slidePageHeadView.frame.size.height;
+//    CGFloat slidePageSegmentH = self.slidePageSegmentView.frame.size.height;
+//    
+//    CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
+//    
+//    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
+//    
+//    if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
+//        
+//        self.slidePageNavBarView.alpha = tableViewOffsetY/tableViewTopOffsetY;
+//        self.slidePageHeadView.frame = CGRectMake(0, - tableViewOffsetY, SCREEN_W, slidePageHeadH);
+//        
+//        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY*2.0;
+//        self.slidePageSegmentView.frame = CGRectMake(0, slidePageSegmentY, SCREEN_W, slidePageSegmentH);
+//        
+//        
+//        for (UITableView * tempTableView in self.tableViews) {
+//            if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
+//                
+//                CGFloat tableViewY = CGRectGetMaxY(self.slidePageSegmentView.frame);
+//                CGFloat tableViewH = SCREEN_H - tableViewY - 49;
+//                tempTableView.frame = CGRectMake(tempTableView.frame.origin.x, tableViewY, SCREEN_W, tableViewH);
+//            }
+//        }
+//        
+//    } else if (tableViewOffsetY < 0) {
+//        
+//        self.slidePageNavBarView.alpha = 0.0;
+//        
+//        self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
+//        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
+//        
+//        
+//    } else if (tableViewOffsetY > tableViewTopOffsetY) {
+//        
+//        self.slidePageNavBarView.alpha = 1.0;
+//        self.slidePageHeadView.frame = CGRectMake(0, -tableViewTopOffsetY, SCREEN_W, slidePageHeadH);
+//        self.slidePageSegmentView.frame = CGRectMake(0, 64, SCREEN_W, slidePageSegmentH);
+//    }
     
 }
 #pragma mark - event action
@@ -297,8 +301,9 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         [self.tableViews addObject:self.mineStatusTableView];
         
         
-        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, 0);
+        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, SCREEN_H+tableViewY);
         _slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
+        _slidePageContentScrollView.pagingEnabled = YES;
         self.slidePageCurrentTableView = [self.tableViews lastObject];
         
     }
