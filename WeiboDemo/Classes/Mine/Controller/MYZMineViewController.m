@@ -155,8 +155,8 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     if (tableView != self.slidePageCurrentTableView) { return; }
     
     
-    CGFloat tableViewOffsetY = tableView.contentOffset.y;
-    NSLog(@"observeValueForKeyPath ++--  %.2lf", tableViewOffsetY);
+//    CGFloat tableViewOffsetY = tableView.contentOffset.y;
+//    NSLog(@"observeValueForKeyPath ++--  %.2lf", tableViewOffsetY);
     
     
     
