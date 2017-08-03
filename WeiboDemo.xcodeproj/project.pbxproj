@@ -75,6 +75,7 @@
 		DAEEC80A1DBC59AC00DD7ADE /* MYZStatusMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC8091DBC59AC00DD7ADE /* MYZStatusMiddleView.m */; };
 		DAEEC80D1DBC59BF00DD7ADE /* MYZStatusBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */; };
 		DAEEC8121DBC6A7400DD7ADE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */; };
+		DAEEEF871F3314EC004282AB /* MYZMineArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEEEF861F3314EC004282AB /* MYZMineArchiveViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +233,8 @@
 		DAEEC80B1DBC59BF00DD7ADE /* MYZStatusBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZStatusBottomView.h; sourceTree = "<group>"; };
 		DAEEC80C1DBC59BF00DD7ADE /* MYZStatusBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZStatusBottomView.m; sourceTree = "<group>"; };
 		DAEEC8111DBC6A7400DD7ADE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DAEEEF851F3314EC004282AB /* MYZMineArchiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYZMineArchiveViewController.h; sourceTree = "<group>"; };
+		DAEEEF861F3314EC004282AB /* MYZMineArchiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYZMineArchiveViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +279,8 @@
 			children = (
 				183BFE911E9F7F8E0077BD7A /* MYZMineViewController.h */,
 				183BFE921E9F7F8E0077BD7A /* MYZMineViewController.m */,
+				DAEEEF851F3314EC004282AB /* MYZMineArchiveViewController.h */,
+				DAEEEF861F3314EC004282AB /* MYZMineArchiveViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -881,6 +886,7 @@
 				18CD2B191E038313005B1881 /* MYZWebViewController.m in Sources */,
 				DAD250E01DF5AFEB002EFCB4 /* SDWebImageManager+MJ.m in Sources */,
 				DA0B04E61DF0694D00752E0D /* MYZEmotionAttachment.m in Sources */,
+				DAEEEF871F3314EC004282AB /* MYZMineArchiveViewController.m in Sources */,
 				18E5A17D1DB9A6FE00375480 /* MYZMenuPageController.m in Sources */,
 				DAD250DE1DF5AFEB002EFCB4 /* MJPhotoToolbar.m in Sources */,
 				DA2504471DDCAB16001B4E99 /* MYZEmotionView.m in Sources */,
