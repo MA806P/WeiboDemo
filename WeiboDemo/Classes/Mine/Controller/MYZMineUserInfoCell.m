@@ -54,10 +54,12 @@
 
 
 - (void)setDict:(NSDictionary *)dict {
+    
     _dict = dict;
     
-    self.title.text = dict[@"title"];
-    self.subTitle.text = dict[@"subTitle"];
+        self.title.text = dict[@"title"];
+        self.subTitle.text = dict[@"subTitle"];
+    
 }
 
 

@@ -37,7 +37,7 @@
     {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = MYZColor(242, 242, 242);
         
         
         //子控件初始化
