@@ -24,6 +24,8 @@
 
 static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 200.0;
 static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
+static CGFloat const MYZMineViewControllerSliseHeadBgOffset = -50;
+static CGFloat const MYZMineViewControllerSliseHeadBgH = 300;
 
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
 static NSString * const kMineStatusCellId = @"kMineStatusCellId";
@@ -84,6 +86,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    [self.view addSubview:self.slidePageHeadBackgroundView];
     [self.view addSubview:self.slidePageContentScrollView];
     [self.view addSubview:self.slidePageHeadView];
     [self.view addSubview:self.slidePageSegmentView];
@@ -181,12 +184,12 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     if (tableView != self.slidePageCurrentTableView) { return; }
     
     CGPoint tableOffset = tableView.contentOffset;
-    //NSLog(@"==--== %@  %@", NSStringFromCGPoint(tableOffset), NSStringFromCGRect(tableFrame));
     
     CGFloat contentTopMaxMoveLongth = MYZMineViewControllerSlidePageHeadViewH - 64;
     
     CGFloat tableOffsetY = tableOffset.y;
     
+    NSLog(@"==--== %@  %.2lf", NSStringFromCGPoint(tableOffset), contentTopMaxMoveLongth);
     
     if (tableOffsetY < contentTopMaxMoveLongth) {
         
@@ -200,6 +203,18 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         segmentFrame.origin.y = MYZMineViewControllerSlidePageHeadViewH - tableOffsetY;
         self.slidePageSegmentView.frame = segmentFrame;
         
+        CGFloat headAlpha = 1 - tableOffsetY/contentTopMaxMoveLongth;
+        self.slidePageHeadView.alpha = headAlpha;
+        
+        if (tableOffsetY < 0) {
+            if (-tableOffsetY < 50) {
+                self.slidePageHeadBackgroundView.frame = CGRectMake(0, -50-tableOffsetY, SCREEN_W, MYZMineViewControllerSliseHeadBgH);
+            } else {
+                self.slidePageHeadBackgroundView.frame = CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSliseHeadBgH);
+            }
+        }
+        
+        
     } else {
         
         //个人信息视图位置置顶
@@ -211,6 +226,8 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         CGRect segmentFrame = self.slidePageSegmentView.frame;
         segmentFrame.origin.y = 64;
         self.slidePageSegmentView.frame = segmentFrame;
+        
+        self.slidePageHeadView.alpha = 0.0;
         
     }
     
@@ -296,7 +313,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
         
-        [_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
+        //[_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
         
         NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
         
@@ -339,7 +356,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (UIImageView *)slidePageHeadBackgroundView {
     if (_slidePageHeadBackgroundView == nil) {
-        _slidePageHeadBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 340)];
+        _slidePageHeadBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, MYZMineViewControllerSliseHeadBgOffset, SCREEN_W, MYZMineViewControllerSliseHeadBgH)];
         _slidePageHeadBackgroundView.image = [UIImage imageNamed:@"11"];
     }
     return _slidePageHeadBackgroundView;
