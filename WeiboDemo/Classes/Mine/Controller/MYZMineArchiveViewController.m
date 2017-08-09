@@ -24,8 +24,8 @@
 
 static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 200.0;
 static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
-static CGFloat const MYZMineViewControllerSliseHeadBgOffset = -50;
-static CGFloat const MYZMineViewControllerSliseHeadBgH = 300;
+static CGFloat const MYZMineViewControllerSliseHeadBgOffset = -40; //这个背景图的高-上下超出的距离=headViewH
+static CGFloat const MYZMineViewControllerSliseHeadBgH = 280;
 
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
 static NSString * const kMineStatusCellId = @"kMineStatusCellId";
@@ -36,6 +36,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
 @property (nonatomic, strong) UIView * slidePageNavBarView;
+@property (nonatomic, weak) UILabel * navTitleLabel;
 @property (nonatomic, strong) UIImageView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
@@ -72,11 +73,15 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     //self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = YES;
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     //self.tabBarController.tabBar.hidden = NO;
     self.navigationController.navigationBar.hidden = NO;
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     [super viewWillDisappear:animated];
 }
@@ -119,8 +124,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != self.slidePageContentScrollView) { return; }
-    
-    self.slidePageHeadBackgroundView.x = scrollView.contentOffset.x;
     
     NSInteger slidePageIndex = (NSInteger)(scrollView.contentOffset.x * 1.5)/SCREEN_W;
     self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
@@ -203,14 +206,23 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         segmentFrame.origin.y = MYZMineViewControllerSlidePageHeadViewH - tableOffsetY;
         self.slidePageSegmentView.frame = segmentFrame;
         
-        CGFloat headAlpha = 1 - tableOffsetY/contentTopMaxMoveLongth;
-        self.slidePageHeadView.alpha = headAlpha;
+        CGFloat headAlpha = tableOffsetY/contentTopMaxMoveLongth;
+        self.navTitleLabel.alpha = headAlpha;
+        self.slidePageHeadView.alpha = 1 - headAlpha;
+        
+        
         
         if (tableOffsetY < 0) {
-            if (-tableOffsetY < 50) {
-                self.slidePageHeadBackgroundView.frame = CGRectMake(0, -50-tableOffsetY, SCREEN_W, MYZMineViewControllerSliseHeadBgH);
+            CGFloat headBgOffsetY = tableOffsetY*0.5;
+            //NSLog(@" --++ %.1lf %.1lf ", headBgOffsetY, MYZMineViewControllerSliseHeadBgOffset-headBgOffsetY);
+            if (headBgOffsetY > MYZMineViewControllerSliseHeadBgOffset) {
+                self.slidePageHeadBackgroundView.frame = CGRectMake(0, MYZMineViewControllerSliseHeadBgOffset-headBgOffsetY, SCREEN_W, MYZMineViewControllerSliseHeadBgH);
             } else {
-                self.slidePageHeadBackgroundView.frame = CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSliseHeadBgH);
+                
+                CGFloat headBgCurrentOffset = tableOffsetY - MYZMineViewControllerSliseHeadBgOffset*2.0;
+                CGFloat headBgW = SCREEN_W - headBgCurrentOffset;
+                CGFloat headBgX = headBgCurrentOffset * 0.5;
+                self.slidePageHeadBackgroundView.frame = CGRectMake(headBgX, 0, headBgW, MYZMineViewControllerSliseHeadBgH-headBgCurrentOffset);
             }
         }
         
@@ -313,8 +325,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
         
-        //[_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
-        
         NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
         
         
@@ -326,6 +336,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         mineInfoTableView.backgroundColor = [UIColor clearColor];
         mineInfoTableView.delegate = self;
         mineInfoTableView.dataSource = self;
+        mineInfoTableView.showsVerticalScrollIndicator = NO;
         [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
         [mineInfoTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [_slidePageContentScrollView addSubview:mineInfoTableView];
@@ -337,6 +348,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         mineStatusTableView.backgroundColor = [UIColor clearColor];
         mineStatusTableView.delegate = self;
         mineStatusTableView.dataSource = self;
+        mineStatusTableView.showsVerticalScrollIndicator = NO;
         [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
         [mineStatusTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [_slidePageContentScrollView addSubview:mineStatusTableView];
@@ -366,12 +378,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     if (_slidePageHeadView == nil) {
         _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH)];
         _slidePageHeadView.backgroundColor = [UIColor clearColor];
-        
-        //        //头部视图
-        //        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
-        //        imageView.image = [UIImage imageNamed:@"11"];
-        //        [_slidePageHeadView addSubview:imageView];
-        //        self.headerBgImageView = imageView;
         
         CGFloat avatorH = 50;
         CGFloat avatorY = MYZMineViewControllerSlidePageHeadViewH*0.5 - avatorH;
@@ -468,8 +474,16 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 - (UIView *)slidePageNavBarView {
     if (_slidePageNavBarView == nil) {
         _slidePageNavBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 64)];
-        _slidePageNavBarView.backgroundColor = [UIColor whiteColor];
-        _slidePageNavBarView.alpha = 0.0;
+        _slidePageNavBarView.backgroundColor = [UIColor clearColor];
+        
+        UILabel * navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_W, 44)];
+        navTitleLabel.font = [UIFont systemFontOfSize:17];
+        navTitleLabel.textColor = [UIColor whiteColor];
+        navTitleLabel.textAlignment = NSTextAlignmentCenter;
+        navTitleLabel.alpha = 0.0;
+        [_slidePageNavBarView addSubview:navTitleLabel];
+        self.navTitleLabel = navTitleLabel;
+        
     }
     return _slidePageNavBarView;
 }
@@ -585,6 +599,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (void)resetHeaderViewData
 {
+    self.navTitleLabel.text = self.userInfo.name;
     
     [self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
     //    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
