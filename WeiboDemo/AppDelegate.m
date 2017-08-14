@@ -25,6 +25,7 @@
     
     MYZLog(@" +++ %@ ", MYZCacheFilePath);
     
+    
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kAppKey];
     

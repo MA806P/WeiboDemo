@@ -30,7 +30,14 @@ static CGFloat const MYZMineViewControllerSliseHeadBgH = 280;
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
 static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
+static CGFloat const AngleScale = 2.0 * M_PI / 180.0;
+static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
+
 @interface MYZMineArchiveViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+{
+    BOOL isRefreshData;
+    CGFloat kPullDownOffsetY;
+}
 
 @property (nonatomic, strong) NSMutableArray * tableViews;
 
@@ -53,6 +60,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 /** 我的个人信息的数据 */
 @property (nonatomic, strong) NSMutableArray * infoDataArray;
 
+@property (nonatomic, weak) UIImageView * refrshIndecatorView;
 
 @property (nonatomic, weak) UIImageView * headerBgImageView;
 @property (nonatomic, weak) UIImageView * avator;
@@ -60,9 +68,9 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 @property (nonatomic, weak) UILabel * numberLabel;
 @property (nonatomic, weak) UILabel * descrLabel;
 
-
 @property (nonatomic, weak) UITableView * mineInfoTableView;
 @property (nonatomic, weak) UITableView * mineStatusTableView;
+@property (nonatomic, strong) CABasicAnimation * rotateAnimation;
 
 @end
 
@@ -158,7 +166,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         if (tempTableView != self.slidePageCurrentTableView) {
             
-            NSLog(@"```` %@  %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset), NSStringFromCGPoint(tempTableView.contentOffset));
+            //NSLog(@"```` %@  %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset), NSStringFromCGPoint(tempTableView.contentOffset));
             
             CGFloat tempTableOffsetY = tempTableView.contentOffset.y;
             
@@ -168,10 +176,39 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
                 tempTableView.contentOffset = CGPointMake(0, topConfsetY);
             }
             
-            NSLog(@"`` %@  %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset), NSStringFromCGPoint(tempTableView.contentOffset));
+            //NSLog(@"`` %@  %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset), NSStringFromCGPoint(tempTableView.contentOffset));
         }
     }
-    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView == self.slidePageCurrentTableView) {
+        
+        CGFloat offsetY = scrollView.contentOffset.y;
+        
+        if (-offsetY > 60 && self.refrshIndecatorView.hidden == NO)
+        {
+            isRefreshData = YES;
+            [self.refrshIndecatorView.layer addAnimation:self.rotateAnimation forKey:IndicatorAnimationKey];
+            [self requestHeaderViewUserInfo];
+            [self requestUserTimeLine];
+        } else {
+            [self headIndicatorEndRefreshing];
+        }
+    }
+}
+
+
+//下拉刷新转圈指示停止加载转圈的动画, 并隐藏
+- (void)headIndicatorEndRefreshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refrshIndecatorView.layer removeAnimationForKey:IndicatorAnimationKey];
+        self.refrshIndecatorView.transform = CGAffineTransformIdentity;
+        self.refrshIndecatorView.hidden = YES;
+        
+        isRefreshData = NO;
+    });
 }
 
 #pragma mark - table view scroll action
@@ -192,7 +229,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     CGFloat tableOffsetY = tableOffset.y;
     
-    NSLog(@"==--== %@  %.2lf", NSStringFromCGPoint(tableOffset), contentTopMaxMoveLongth);
+    //NSLog(@"==--== %@  %.2lf", NSStringFromCGPoint(tableOffset), contentTopMaxMoveLongth);
     
     if (tableOffsetY < contentTopMaxMoveLongth) {
         
@@ -224,6 +261,18 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
                 CGFloat headBgX = headBgCurrentOffset * 0.5;
                 self.slidePageHeadBackgroundView.frame = CGRectMake(headBgX, 0, headBgW, MYZMineViewControllerSliseHeadBgH-headBgCurrentOffset);
             }
+            
+            //刷新显示的转圈
+            if (isRefreshData == NO) {
+                
+                self.refrshIndecatorView.hidden = NO;
+                self.refrshIndecatorView.transform = CGAffineTransformRotate(self.refrshIndecatorView.transform, (tableOffsetY-kPullDownOffsetY)*AngleScale);
+                
+                NSLog(@"00000 %.2lf - %.2lf = %.2lf",tableOffsetY,kPullDownOffsetY,tableOffsetY-kPullDownOffsetY);
+            }
+            kPullDownOffsetY = tableOffsetY;
+            
+            
         }
         
         
@@ -314,6 +363,21 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     }
     return headerView;
 }
+
+
+//#pragma mrak - Status bar style
+///**
+// * 使用下面这个方法，要在NavgationViewController中重写方法
+// * childViewControllerForStatusBarStyle
+// * 另一种方法，[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+// * 使用这种方法要在 Info.plist 文件中添加键值对 View controller-based bar appearance 值为 NO
+// * 这样才会起作用
+// */
+//-(UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;
+//}
+
 
 #pragma mark - UI init
 
@@ -496,6 +560,29 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     return _tableViews;
 }
 
+- (UIImageView *)refrshIndecatorView {
+    if (_refrshIndecatorView == nil) {
+        UIImageView * indicatorImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
+        indicatorImgView.frame = CGRectMake(20, 30, 25, 25);
+        indicatorImgView.hidden = YES;
+        [[UIApplication sharedApplication].keyWindow addSubview:indicatorImgView];
+        _refrshIndecatorView = indicatorImgView;
+    }
+    return _refrshIndecatorView;
+}
+
+- (CABasicAnimation *)rotateAnimation {
+    if (_rotateAnimation == nil) {
+        _rotateAnimation = [[CABasicAnimation alloc] init];
+        _rotateAnimation.keyPath = @"transform.rotation.z";
+        _rotateAnimation.fromValue = @0;
+        _rotateAnimation.toValue = @(M_PI * 2);
+        _rotateAnimation.duration = 0.5;
+        _rotateAnimation.repeatCount = MAXFLOAT;
+    }
+    return _rotateAnimation;
+}
+
 
 #pragma mark - UI data
 
@@ -591,6 +678,11 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         [self.infoDataArray addObjectsFromArray:[self resetMineInfoDataWithUserInfo:self.userInfo]];
         [self.mineInfoTableView reloadData];
         
+        //隐藏刷新动画
+        if (self.refrshIndecatorView.isHidden == NO) {
+            [self headIndicatorEndRefreshing];
+        }
+        
     } failure:^(NSError *error) {
         MYZLog(@" --- error %@ ", error);
     }];
@@ -650,6 +742,11 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         //刷新用户微博视图
         [self.mineStatusTableView reloadData];
+        
+        //隐藏刷新动画
+        if (self.refrshIndecatorView.isHidden == NO) {
+            [self headIndicatorEndRefreshing];
+        }
         
     } failure:^(NSError *error) {
         MYZLog(@" --- error %@ ", error);
