@@ -19,22 +19,23 @@
 #import "MYZComposeController.h"
 #import "MYZStatusTextItem.h"
 #import "UIView+MYZ.h"
+#import "MYZDynamicItem.h"
 
 
-
-static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 170.0;
+static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 120.0;
 static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
 static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
-@interface MYZMineViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface MYZMineViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSMutableArray * tableViews;
 
+@property (nonatomic, strong) UIScrollView * slidePageMainScrollView;
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
 @property (nonatomic, strong) UIView * slidePageNavBarView;
-@property (nonatomic, strong) UIImageView * slidePageHeadBackgroundView;
+//@property (nonatomic, strong) UIImageView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
 @property (nonatomic, strong) NSArray * slidePageSegmentBtnArray;
@@ -61,6 +62,9 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 @property (nonatomic, weak) UITableView * mineInfoTableView;
 @property (nonatomic, weak) UITableView * mineStatusTableView;
 
+@property (nonatomic, strong) MYZDynamicItem * dynamicItem;
+@property (nonatomic, strong) UIDynamicAnimator * animator;
+
 
 @end
 
@@ -68,15 +72,13 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    //self.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBar.hidden = NO;
     
+    self.navigationController.navigationBar.hidden = NO;
+    [self.animator removeAllBehaviors];
     [super viewWillDisappear:animated];
 }
 
@@ -85,11 +87,16 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self.view addSubview:self.slidePageContentScrollView];
-    [self.view addSubview:self.slidePageHeadView];
-    [self.view addSubview:self.slidePageSegmentView];
     [self.view addSubview:self.slidePageNavBarView];
+    [self.view addSubview:self.slidePageMainScrollView];
     
+    
+    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizerAction:)];
+    pan.delegate = self;
+    [self.view addGestureRecognizer:pan];
+    
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    self.dynamicItem = [[MYZDynamicItem alloc] init];
     
     //头部用户视图的数据设置
     if (self.userInfo) {
@@ -116,92 +123,34 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView != self.slidePageContentScrollView) { return; }
     
-    NSInteger slidePageIndex = (NSInteger)scrollView.contentOffset.x/SCREEN_W;
-    
-    self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
-    //NSLog(@"--** %@", NSStringFromCGPoint(self.slidePageCurrentTableView.contentOffset));
-    //self.slidePageCurrentTableView.contentOffset = CGPointZero;
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     
     
-    //NSLog(@"--- %@", NSStringFromCGPoint(scrollView.contentOffset));
-    self.slidePageHeadBackgroundView.x = scrollView.contentOffset.x;
-    
-    
-    UIButton * selectedBtn = self.slidePageSegmentBtnArray[slidePageIndex];
-    if (selectedBtn.isSelected == NO) {
-        for (UIButton * btn in self.slidePageSegmentBtnArray) {
-            btn.selected = NO;
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGFloat currentY = [recognizer translationInView:self.view].y;
+        CGFloat currentX = [recognizer translationInView:self.view].x;
+        
+        if (currentY == 0.0) {
+            return YES;
+        } else {
+            if (fabs(currentX)/currentY >= 5.0) {
+                return YES;
+            } else {
+                return NO;
+            }
         }
-        selectedBtn.selected = YES;
     }
+    return NO;
     
-    UIButton * btn1 = (UIButton *)self.slidePageSegmentBtnArray[0];
-    UIButton * btn2 = (UIButton *)self.slidePageSegmentBtnArray[1];
-    self.slidePageSegmentLine.x = btn1.x + (btn2.x - btn1.x)*scrollView.contentOffset.x/scrollView.frame.size.width;
     
 }
 
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    
-    if (![keyPath isEqualToString:@"contentOffset"]) {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-        return;
-    }
-    
-    UITableView * tableView = (UITableView *)object;
-    if (tableView != self.slidePageCurrentTableView) { return; }
-    
-    
-//    CGFloat tableViewOffsetY = tableView.contentOffset.y;
-//    NSLog(@"observeValueForKeyPath ++--  %.2lf", tableViewOffsetY);
-    
-    
-    
-//    CGFloat tableViewOffsetY = tableView.contentOffset.y;
-//    CGFloat slidePageHeadH = self.slidePageHeadView.frame.size.height;
-//    CGFloat slidePageSegmentH = self.slidePageSegmentView.frame.size.height;
-//    
-//    CGFloat tableViewTopOffsetY = slidePageHeadH - 64;
-//    
-//    NSLog(@"observeValueForKeyPath ++--  %.2lf %.2lf",tableViewTopOffsetY, tableViewOffsetY);
-//    
-//    if (tableViewOffsetY >= 0 && tableViewOffsetY <= tableViewTopOffsetY) {
-//        
-//        self.slidePageNavBarView.alpha = tableViewOffsetY/tableViewTopOffsetY;
-//        self.slidePageHeadView.frame = CGRectMake(0, - tableViewOffsetY, SCREEN_W, slidePageHeadH);
-//        
-//        CGFloat slidePageSegmentY = slidePageHeadH - tableViewOffsetY*2.0;
-//        self.slidePageSegmentView.frame = CGRectMake(0, slidePageSegmentY, SCREEN_W, slidePageSegmentH);
-//        
-//        
-//        for (UITableView * tempTableView in self.tableViews) {
-//            if (tableViewOffsetY > 0 && tableViewOffsetY < tableViewTopOffsetY ) {
-//                
-//                CGFloat tableViewY = CGRectGetMaxY(self.slidePageSegmentView.frame);
-//                CGFloat tableViewH = SCREEN_H - tableViewY - 49;
-//                tempTableView.frame = CGRectMake(tempTableView.frame.origin.x, tableViewY, SCREEN_W, tableViewH);
-//            }
-//        }
-//        
-//    } else if (tableViewOffsetY < 0) {
-//        
-//        self.slidePageNavBarView.alpha = 0.0;
-//        
-//        self.slidePageHeadView.frame = CGRectMake(0, -tableViewOffsetY, SCREEN_W, slidePageHeadH);
-//        self.slidePageSegmentView.frame = CGRectMake(0, slidePageHeadH - tableViewOffsetY, SCREEN_W, slidePageSegmentH);
-//        
-//        
-//    } else if (tableViewOffsetY > tableViewTopOffsetY) {
-//        
-//        self.slidePageNavBarView.alpha = 1.0;
-//        self.slidePageHeadView.frame = CGRectMake(0, -tableViewTopOffsetY, SCREEN_W, slidePageHeadH);
-//        self.slidePageSegmentView.frame = CGRectMake(0, 64, SCREEN_W, slidePageSegmentH);
-//    }
-    
-}
 #pragma mark - event action
 
 - (void)slideSegmentBtnTouchAction:(UIButton *)btn {
@@ -262,48 +211,55 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 #pragma mark - UI init
 
+- (UIScrollView *)slidePageMainScrollView {
+    if (_slidePageMainScrollView == nil) {
+        _slidePageMainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_W, SCREEN_H-64)];
+        _slidePageMainScrollView.delegate = self;
+        _slidePageMainScrollView.scrollEnabled = NO;
+        
+        [_slidePageMainScrollView addSubview:self.slidePageHeadView];
+        [_slidePageMainScrollView addSubview:self.slidePageSegmentView];
+        [_slidePageMainScrollView addSubview:self.slidePageContentScrollView];
+    }
+    return _slidePageMainScrollView;
+}
+
 - (UIScrollView *)slidePageContentScrollView {
     if (_slidePageContentScrollView == nil) {
-        _slidePageContentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, SCREEN_H)];
-        _slidePageContentScrollView.backgroundColor = [UIColor clearColor];
-        _slidePageContentScrollView.bounces = NO;
+        
+        CGFloat contentH = SCREEN_H-MYZMineViewControllerSlidePageSegmentViewH-64;
+        _slidePageContentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, MYZMineViewControllerSlidePageHeadViewH+MYZMineViewControllerSlidePageSegmentViewH, SCREEN_W, contentH)];
+        
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
         
-        [_slidePageContentScrollView addSubview:self.slidePageHeadBackgroundView];
+        [_slidePageContentScrollView addSubview:self.slidePageHeadView];
+        [_slidePageContentScrollView addSubview:self.slidePageSegmentView];
         
-        NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
         
-        
-        CGFloat tableViewY = MYZMineViewControllerSlidePageHeadViewH + MYZMineViewControllerSlidePageSegmentViewH;
-        CGFloat tableViewH = SCREEN_H - 64;
-        
-        UITableView * mineInfoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
+        UITableView * mineInfoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, contentH) style:UITableViewStylePlain];
         mineInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         mineInfoTableView.backgroundColor = [UIColor whiteColor];
         mineInfoTableView.delegate = self;
         mineInfoTableView.dataSource = self;
         [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
-        [mineInfoTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [_slidePageContentScrollView addSubview:mineInfoTableView];
         self.mineInfoTableView = mineInfoTableView;
         [self.tableViews addObject:self.mineInfoTableView];
         
-        UITableView * mineStatusTableView = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mineInfoTableView.frame), tableViewY, SCREEN_W, tableViewH) style:UITableViewStylePlain];
+        UITableView * mineStatusTableView = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mineInfoTableView.frame), 0, SCREEN_W, contentH) style:UITableViewStylePlain];
         mineStatusTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         mineStatusTableView.backgroundColor = [UIColor lightGrayColor];
         mineStatusTableView.delegate = self;
         mineStatusTableView.dataSource = self;
         [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
-        [mineStatusTableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
         [_slidePageContentScrollView addSubview:mineStatusTableView];
         self.mineStatusTableView = mineStatusTableView;
         [self.tableViews addObject:self.mineStatusTableView];
         
         
-        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, SCREEN_H+tableViewY);
-        _slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
-        _slidePageContentScrollView.pagingEnabled = YES;
+        _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, contentH);
+        //_slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
         self.slidePageCurrentTableView = [self.tableViews lastObject];
         
     }
@@ -311,24 +267,19 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 }
 
 
-- (UIImageView *)slidePageHeadBackgroundView {
-    if (_slidePageHeadBackgroundView == nil) {
-        _slidePageHeadBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 300)];
-        _slidePageHeadBackgroundView.image = [UIImage imageNamed:@"11"];
-    }
-    return _slidePageHeadBackgroundView;
-}
+//- (UIImageView *)slidePageHeadBackgroundView {
+//    if (_slidePageHeadBackgroundView == nil) {
+//        _slidePageHeadBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -50, SCREEN_W, 300)];
+//        _slidePageHeadBackgroundView.image = [UIImage imageNamed:@"11"];
+//    }
+//    return _slidePageHeadBackgroundView;
+//}
 
 - (UIView *)slidePageHeadView {
     if (_slidePageHeadView == nil) {
         _slidePageHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH)];
-        _slidePageHeadView.backgroundColor = [UIColor clearColor];
+        _slidePageHeadView.backgroundColor = [UIColor lightGrayColor];
         
-//        //头部视图
-//        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_W, MYZMineViewControllerSlidePageHeadViewH+20)];
-//        imageView.image = [UIImage imageNamed:@"11"];
-//        [_slidePageHeadView addSubview:imageView];
-//        self.headerBgImageView = imageView;
         
         CGFloat avatorH = 50;
         CGFloat avatorY = MYZMineViewControllerSlidePageHeadViewH*0.5 - avatorH;
@@ -426,7 +377,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     if (_slidePageNavBarView == nil) {
         _slidePageNavBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 64)];
         _slidePageNavBarView.backgroundColor = [UIColor whiteColor];
-        _slidePageNavBarView.alpha = 0.0;
+        _slidePageNavBarView.alpha = 1.0;
     }
     return _slidePageNavBarView;
 }
@@ -543,7 +494,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 - (void)resetHeaderViewData
 {
     
-    [self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
+    //[self.slidePageHeadBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
     //    [self.headerBgImageView sd_setImageWithURL:[NSURL URLWithString:self.userInfo.cover_image_phone]];
     [self.avator sd_setImageWithURL:[NSURL URLWithString:self.userInfo.avatar_large] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.avator.image = [UIImage myz_imageWithCircleClipImage:image];
