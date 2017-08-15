@@ -181,12 +181,12 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
     }
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout nonnull CGPoint *)targetContentOffset {
     if (scrollView == self.slidePageCurrentTableView) {
         
         CGFloat offsetY = scrollView.contentOffset.y;
         
-        if (-offsetY > 60 && self.refrshIndecatorView.hidden == NO)
+        if (-offsetY > 100 && self.refrshIndecatorView.hidden == NO)
         {
             isRefreshData = YES;
             [self.refrshIndecatorView.layer addAnimation:self.rotateAnimation forKey:IndicatorAnimationKey];
@@ -265,10 +265,14 @@ static NSString * const IndicatorAnimationKey = @"IndicatorAnimationKey";
             //刷新显示的转圈
             if (isRefreshData == NO) {
                 
-                self.refrshIndecatorView.hidden = NO;
-                self.refrshIndecatorView.transform = CGAffineTransformRotate(self.refrshIndecatorView.transform, (tableOffsetY-kPullDownOffsetY)*AngleScale);
+                if (tableOffsetY < -5) {
+                    self.refrshIndecatorView.hidden = NO;
+                    self.refrshIndecatorView.transform = CGAffineTransformRotate(self.refrshIndecatorView.transform, (tableOffsetY-kPullDownOffsetY)*AngleScale);
+                } else {
+                    self.refrshIndecatorView.hidden = YES;
+                }
                 
-                NSLog(@"00000 %.2lf - %.2lf = %.2lf",tableOffsetY,kPullDownOffsetY,tableOffsetY-kPullDownOffsetY);
+                //NSLog(@"00000 %.2lf - %.2lf = %.2lf  %@",tableOffsetY,kPullDownOffsetY,tableOffsetY-kPullDownOffsetY, change);
             }
             kPullDownOffsetY = tableOffsetY;
             
