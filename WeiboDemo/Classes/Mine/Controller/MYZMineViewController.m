@@ -22,7 +22,7 @@
 #import "MYZDynamicItem.h"
 
 
-static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 120.0;
+static CGFloat const MYZMineViewControllerSlidePageHeadViewH = 170.0;
 static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
@@ -129,6 +129,13 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     
+    /** 控制手势是否能够同时响应。
+     *  gestureRecognizer手动加在self.view上的pan手势。
+     *  otherGestureRecognizer srollview上自己的手势UIScrollViewPanGestureRecognizer
+     *  当左右滑动时允许同时响应 return yes;
+     *  当上下滑动时只允许gestureRecognizer响应 return no;
+     */
+    
     
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
@@ -147,6 +154,11 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     }
     return NO;
     
+}
+
+- (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)recongnizer {
+    
+    //NSLog(@"===== panGestureRecognizerAction");
     
 }
 
@@ -233,13 +245,9 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         _slidePageContentScrollView.delegate = self;
         _slidePageContentScrollView.pagingEnabled = YES;
         
-        [_slidePageContentScrollView addSubview:self.slidePageHeadView];
-        [_slidePageContentScrollView addSubview:self.slidePageSegmentView];
-        
         
         UITableView * mineInfoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, contentH) style:UITableViewStylePlain];
         mineInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        mineInfoTableView.backgroundColor = [UIColor whiteColor];
         mineInfoTableView.delegate = self;
         mineInfoTableView.dataSource = self;
         [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
@@ -249,7 +257,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         UITableView * mineStatusTableView = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mineInfoTableView.frame), 0, SCREEN_W, contentH) style:UITableViewStylePlain];
         mineStatusTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        mineStatusTableView.backgroundColor = [UIColor lightGrayColor];
         mineStatusTableView.delegate = self;
         mineStatusTableView.dataSource = self;
         [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
@@ -259,7 +266,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         
         _slidePageContentScrollView.contentSize = CGSizeMake(SCREEN_W * self.tableViews.count, contentH);
-        //_slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
+        _slidePageContentScrollView.contentOffset = CGPointMake(SCREEN_W, 0);
         self.slidePageCurrentTableView = [self.tableViews lastObject];
         
     }
