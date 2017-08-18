@@ -92,7 +92,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizerAction:)];
-    pan.delegate = self;
+//    pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
@@ -126,38 +126,38 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
 }
 
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
-    /** 控制手势是否能够同时响应。
-     *  gestureRecognizer手动加在self.view上的pan手势。
-     *  otherGestureRecognizer srollview上自己的手势UIScrollViewPanGestureRecognizer
-     *  当左右滑动时允许同时响应 return yes;
-     *  当上下滑动时只允许gestureRecognizer响应 return no;
-     */
-    
-    NSLog(@"****** %@  %@", [gestureRecognizer class], [otherGestureRecognizer class]);
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
-        CGFloat currentY = [recognizer translationInView:self.view].y;
-        CGFloat currentX = [recognizer translationInView:self.view].x;
-        
-        if (currentY == 0.0) {
-            NSLog(@"***** 1");
-            return YES;
-        } else {
-            if (fabs(currentX)/currentY >= 5.0) {
-                NSLog(@"***** 2");
-                return YES;
-            } else {
-                NSLog(@"***** 3");
-                return NO;
-            }
-        }
-    }
-    NSLog(@"***** 4");
-    return NO;
-}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    
+//    /** 控制手势是否能够同时响应。
+//     *  gestureRecognizer手动加在self.view上的pan手势。
+//     *  otherGestureRecognizer srollview上自己的手势UIScrollViewPanGestureRecognizer
+//     *  当左右滑动时允许同时响应 return yes;
+//     *  当上下滑动时只允许gestureRecognizer响应 return no;
+//     */
+//    
+//    NSLog(@"****** %@  %@", [gestureRecognizer class], [otherGestureRecognizer class]);
+//    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+//        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+//        CGFloat currentY = [recognizer translationInView:self.view].y;
+//        CGFloat currentX = [recognizer translationInView:self.view].x;
+//        
+//        if (currentY == 0.0) {
+//            NSLog(@"***** 1");
+//            return YES;
+//        } else {
+//            if (fabs(currentX)/currentY >= 5.0) {
+//                NSLog(@"***** 2");
+//                return YES;
+//            } else {
+//                NSLog(@"***** 3");
+//                return NO;
+//            }
+//        }
+//    }
+//    NSLog(@"***** 4");
+//    return NO;
+//}
 
 - (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)recongnizer {
     
