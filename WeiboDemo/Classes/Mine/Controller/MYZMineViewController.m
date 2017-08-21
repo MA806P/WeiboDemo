@@ -35,7 +35,6 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 @property (nonatomic, strong) UIScrollView * slidePageMainScrollView;
 @property (nonatomic, strong) UIScrollView * slidePageContentScrollView;
 @property (nonatomic, strong) UIView * slidePageNavBarView;
-//@property (nonatomic, strong) UIImageView * slidePageHeadBackgroundView;
 @property (nonatomic, strong) UIView * slidePageHeadView;
 @property (nonatomic, strong) UIView * slidePageSegmentView;
 @property (nonatomic, strong) NSArray * slidePageSegmentBtnArray;
@@ -64,6 +63,10 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 @property (nonatomic, strong) MYZDynamicItem * dynamicItem;
 @property (nonatomic, strong) UIDynamicAnimator * animator;
+@property (nonatomic, weak) UIDynamicItemBehavior *decelerationBehavior;
+
+@property (nonatomic, assign) CGFloat currentScorllY;
+@property (nonatomic, assign) __block BOOL isVertical;//是否是垂直
 
 
 @end
@@ -92,7 +95,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
     
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizerAction:)];
-//    pan.delegate = self;
+    pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
@@ -126,44 +129,108 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
 }
 
-//
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    
-//    /** 控制手势是否能够同时响应。
-//     *  gestureRecognizer手动加在self.view上的pan手势。
-//     *  otherGestureRecognizer srollview上自己的手势UIScrollViewPanGestureRecognizer
-//     *  当左右滑动时允许同时响应 return yes;
-//     *  当上下滑动时只允许gestureRecognizer响应 return no;
-//     */
-//    
-//    NSLog(@"****** %@  %@", [gestureRecognizer class], [otherGestureRecognizer class]);
-//    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-//        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
-//        CGFloat currentY = [recognizer translationInView:self.view].y;
-//        CGFloat currentX = [recognizer translationInView:self.view].x;
-//        
-//        if (currentY == 0.0) {
-//            NSLog(@"***** 1");
-//            return YES;
-//        } else {
-//            if (fabs(currentX)/currentY >= 5.0) {
-//                NSLog(@"***** 2");
-//                return YES;
-//            } else {
-//                NSLog(@"***** 3");
-//                return NO;
-//            }
-//        }
-//    }
-//    NSLog(@"***** 4");
-//    return NO;
-//}
 
-- (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)recongnizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
+    /** 控制手势是否能够同时响应。
+     *  gestureRecognizer手动加在self.view上的pan手势。
+     *  otherGestureRecognizer srollview上自己的手势UIScrollViewPanGestureRecognizer
+     *
+     *  把嵌在里面的UITableView的scrollEnabled设置为NO，不能滚动了。mainSrollView.scrollEnabled也设置为NO了
+     *  所以重写这个代理方法，是为了控制 contentSrollView的手势和加在vc.view上的pan手势的响应问题。
+     *
+     *  下面的这段代码判断，是为了在上下滑动的时候防止左右滑动
+     *  当上下滑动时只允许gestureRecognizer(vc.view上的pan手势)响应 return no;
+     */
+    
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGFloat currentY = [recognizer translationInView:self.view].y;
+        CGFloat currentX = [recognizer translationInView:self.view].x;
+        
+        if (currentY == 0.0) {
+            return YES;
+        } else {
+            if (fabs(currentX)/currentY >= 5.0) {
+                return YES;
+            } else {
+                return NO;
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)recognizer {
     
     NSLog(@"===== panGestureRecognizerAction");
     
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan: {
+            _currentScorllY = self.slidePageMainScrollView.contentOffset.y;
+            CGFloat currentY = [recognizer translationInView:self.view].y;
+            CGFloat currentX = [recognizer translationInView:self.view].x;
+            
+            if (currentY == 0.0) {
+                _isVertical = NO;
+            } else {
+                if (fabs(currentX)/currentY >= 5.0) {
+                    _isVertical = NO;
+                } else {
+                    _isVertical = YES;
+                }
+            }
+            [self.animator removeAllBehaviors];
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            
+            if (_isVertical) {
+                CGFloat currentY = [recognizer translationInView:self.view].y;
+                [self controlScrollForVertical:currentY AndState:UIGestureRecognizerStateChanged];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            if (_isVertical) {
+                self.dynamicItem.center = self.view.bounds.origin;
+                //velocity是在手势结束的时候获取的竖直方向的手势速度
+                CGPoint velocity = [recognizer velocityInView:self.view];
+                UIDynamicItemBehavior *inertialBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.dynamicItem]];
+                [inertialBehavior addLinearVelocity:CGPointMake(0, velocity.y) forItem:self.dynamicItem];
+                // 通过尝试取2.0比较像系统的效果
+                inertialBehavior.resistance = 2.0;
+                __block CGPoint lastCenter = CGPointZero;
+                __weak typeof(self) weakSelf = self;
+                inertialBehavior.action = ^{
+                    if (_isVertical) {
+                        //得到每次移动的距离
+                        CGFloat currentY = weakSelf.dynamicItem.center.y - lastCenter.y;
+                        [weakSelf controlScrollForVertical:currentY AndState:UIGestureRecognizerStateEnded];
+                    }
+                    lastCenter = weakSelf.dynamicItem.center;
+                };
+                [self.animator addBehavior:inertialBehavior];
+                self.decelerationBehavior = inertialBehavior;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    
+    //保证每次只是移动的距离，不是从头一直移动的距离
+    [recognizer setTranslation:CGPointZero inView:self.view];
+    
 }
+
+
+//控制上下滚动的方法
+- (void)controlScrollForVertical:(CGFloat)detal AndState:(UIGestureRecognizerState)state {
+    
+}
+
 
 
 #pragma mark - event action
@@ -253,6 +320,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         mineInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         mineInfoTableView.delegate = self;
         mineInfoTableView.dataSource = self;
+        mineInfoTableView.scrollEnabled = NO;
         [mineInfoTableView registerClass:[MYZMineUserInfoCell class] forCellReuseIdentifier:kMineInfoCellId];
         [_slidePageContentScrollView addSubview:mineInfoTableView];
         self.mineInfoTableView = mineInfoTableView;
@@ -262,6 +330,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         mineStatusTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         mineStatusTableView.delegate = self;
         mineStatusTableView.dataSource = self;
+        mineStatusTableView.scrollEnabled = NO;
         [mineStatusTableView registerClass:[MYZStatusCell class] forCellReuseIdentifier:kMineStatusCellId];
         [_slidePageContentScrollView addSubview:mineStatusTableView];
         self.mineStatusTableView = mineStatusTableView;
@@ -355,13 +424,13 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         
         
         
-        NSString * weiboBtnTitle = @"主页";
+        NSString * weiboBtnTitle = @"微博";
         CGFloat btn2W = [weiboBtnTitle sizeWithAttributes:@{NSFontAttributeName:btnFont}].width;
         CGFloat btn2X = SCREEN_W * 0.5 + btnMargin;
         
         UIButton * weiboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         weiboBtn.frame = CGRectMake(btn2X, 0, btn2W, btnH);
-        [weiboBtn setTitle:@"微博" forState:UIControlStateNormal];
+        [weiboBtn setTitle:weiboBtnTitle forState:UIControlStateNormal];
         weiboBtn.titleLabel.font = btnFont;
         [weiboBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [weiboBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
