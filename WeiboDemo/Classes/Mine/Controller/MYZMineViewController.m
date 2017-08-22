@@ -28,6 +28,22 @@ static CGFloat const MYZMineViewControllerSlidePageSegmentViewH = 40.0;
 static NSString * const kMineInfoCellId = @"kMineInfoCellId";
 static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
+
+/*f(x, d, c) = (x * d * c) / (d + c * x)
+ where,
+ x – distance from the edge
+ c – constant (UIScrollView uses 0.55)
+ d – dimension, either width or height*/
+
+static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
+    
+    const CGFloat constant = 0.55f;
+    CGFloat result = (constant * fabs(offset) * dimension) / (dimension + constant * fabs(offset));
+    // The algorithm expects a positive offset, so we have to negate the result if the offset was negative.
+    return offset < 0.0f ? -result : result;
+}
+
+
 @interface MYZMineViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSMutableArray * tableViews;
@@ -64,6 +80,7 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 @property (nonatomic, strong) MYZDynamicItem * dynamicItem;
 @property (nonatomic, strong) UIDynamicAnimator * animator;
 @property (nonatomic, weak) UIDynamicItemBehavior *decelerationBehavior;
+@property (nonatomic, weak) UIAttachmentBehavior *springBehavior;
 
 @property (nonatomic, assign) CGFloat currentScorllY;
 @property (nonatomic, assign) __block BOOL isVertical;//是否是垂直
@@ -129,6 +146,15 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
     
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    if (scrollView == self.slidePageContentScrollView) {
+        CGFloat index = self.slidePageContentScrollView.contentOffset.x/SCREEN_W;
+        self.slidePageCurrentTableView = [self.tableViews objectAtIndex:index];
+    }
+    
+}
+
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     
@@ -164,13 +190,15 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 
 - (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)recognizer {
     
-    NSLog(@"===== panGestureRecognizerAction");
+    //NSLog(@"===== panGestureRecognizerAction");
     
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan: {
             _currentScorllY = self.slidePageMainScrollView.contentOffset.y;
             CGFloat currentY = [recognizer translationInView:self.view].y;
             CGFloat currentX = [recognizer translationInView:self.view].x;
+            
+            NSLog(@"```` StateBegan  %.2lf %.2lf", currentX, currentY);
             
             if (currentY == 0.0) {
                 _isVertical = NO;
@@ -186,15 +214,23 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
         }
         case UIGestureRecognizerStateChanged: {
             
+            NSLog(@"`````` Changed");
+            
             if (_isVertical) {
                 CGFloat currentY = [recognizer translationInView:self.view].y;
                 [self controlScrollForVertical:currentY AndState:UIGestureRecognizerStateChanged];
+                
+                NSLog(@"``` Changed %.2lf", currentY);
             }
             break;
         }
         case UIGestureRecognizerStateEnded: {
+            
+            NSLog(@"`````` Ended");
+            
             if (_isVertical) {
                 self.dynamicItem.center = self.view.bounds.origin;
+                
                 //velocity是在手势结束的时候获取的竖直方向的手势速度
                 CGPoint velocity = [recognizer velocityInView:self.view];
                 UIDynamicItemBehavior *inertialBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.dynamicItem]];
@@ -229,8 +265,82 @@ static NSString * const kMineStatusCellId = @"kMineStatusCellId";
 //控制上下滚动的方法
 - (void)controlScrollForVertical:(CGFloat)detal AndState:(UIGestureRecognizerState)state {
     
+    NSLog(@"******** %.2lf %.2lf",self.slidePageMainScrollView.contentOffset.y, detal);
+    
+    if (self.slidePageMainScrollView.contentOffset.y >= MYZMineViewControllerSlidePageHeadViewH) {
+        
+        CGFloat offsetY = self.slidePageCurrentTableView.contentOffset.y - detal;
+        
+        NSLog(@"*** 111 %.2lf %.2lf", self.slidePageContentScrollView.contentOffset.y, detal);
+        
+        if (offsetY < 0) {
+            offsetY = 0;
+            self.slidePageMainScrollView.contentOffset = CGPointMake(0, self.slidePageMainScrollView.contentOffset.y - detal);
+        } else if (offsetY > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height)) {
+            //当子ScrollView的contentOffset大于contentSize.height时
+            offsetY = self.slidePageCurrentTableView.contentOffset.y - rubberBandDistance(detal, SCREEN_H);
+        }
+        self.slidePageCurrentTableView.contentOffset = CGPointMake(0, offsetY);
+    } else {
+        
+        CGFloat mainOffsetY = self.slidePageMainScrollView.contentOffset.y - detal;
+        if (mainOffsetY < 0) {
+            mainOffsetY = self.slidePageMainScrollView.contentOffset.y - rubberBandDistance(detal, SCREEN_H);
+        } else if (mainOffsetY > MYZMineViewControllerSlidePageHeadViewH) {
+            mainOffsetY = MYZMineViewControllerSlidePageHeadViewH;
+        }
+        self.slidePageMainScrollView.contentOffset = CGPointMake(self.slidePageMainScrollView.frame.origin.x, mainOffsetY);
+        
+        if (mainOffsetY == 0) {
+            for (UITableView *tableView in self.tableViews) {
+                tableView.contentOffset = CGPointMake(0, 0);
+            }
+        }
+    }
+    
+    
+    
+    
+    BOOL outsideFrame = self.slidePageMainScrollView.contentOffset.y < 0 || self.slidePageCurrentTableView.contentOffset.y > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height);
+    if (outsideFrame &&
+        (self.decelerationBehavior && !self.springBehavior)) {
+        
+        CGPoint target = CGPointZero;
+        BOOL isMian = NO;
+        if (self.slidePageMainScrollView.contentOffset.y < 0) {
+            self.dynamicItem.center = self.slidePageMainScrollView.contentOffset;
+            target = CGPointZero;
+            isMian = YES;
+        } else if (self.slidePageCurrentTableView.contentOffset.y > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height)) {
+            self.dynamicItem.center = self.slidePageCurrentTableView.contentOffset;
+            target = CGPointMake(self.slidePageCurrentTableView.contentOffset.x, (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height));
+            isMian = NO;
+        }
+        [self.animator removeBehavior:self.decelerationBehavior];
+        __weak typeof(self) weakSelf = self;
+        UIAttachmentBehavior *springBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.dynamicItem attachedToAnchor:target];
+        springBehavior.length = 0;
+        springBehavior.damping = 1;
+        springBehavior.frequency = 2;
+        springBehavior.action = ^{
+            if (isMian) {
+                weakSelf.slidePageMainScrollView.contentOffset = weakSelf.dynamicItem.center;
+                if (weakSelf.slidePageMainScrollView.contentOffset.y == 0) {
+                    for (UITableView *tableView in self.tableViews) {
+                        tableView.contentOffset = CGPointMake(0, 0);
+                    }
+                }
+            } else {
+                weakSelf.slidePageCurrentTableView.contentOffset = self.dynamicItem.center;
+            }
+        };
+        [self.animator addBehavior:springBehavior];
+        self.springBehavior = springBehavior;
+    }
+    
+    
+    
 }
-
 
 
 #pragma mark - event action

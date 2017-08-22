@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MYZDynamicItem : NSObject
+@interface MYZDynamicItem : NSObject <UIDynamicItem>
 
 @property (nonatomic, assign) CGPoint center;
 @property (nonatomic, assign) CGAffineTransform transform;
