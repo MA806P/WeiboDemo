@@ -40,11 +40,11 @@
 //    MYZProfileController * profile = [[MYZProfileController alloc] init];
 //    [self addItemController:profile title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
     
-    MYZMineViewController * mine = [[MYZMineViewController alloc] init];
-    [self addItemController:mine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
+//    MYZMineViewController * mine = [[MYZMineViewController alloc] init];
+//    [self addItemController:mine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
     
-//    MYZMineArchiveViewController * archiveMine = [[MYZMineArchiveViewController alloc] init];
-//    [self addItemController:archiveMine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
+    MYZMineArchiveViewController * archiveMine = [[MYZMineArchiveViewController alloc] init];
+    [self addItemController:archiveMine title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
 }
 
 - (void)addItemController:(UIViewController *)controller title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName

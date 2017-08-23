@@ -6,6 +6,16 @@
 //  Copyright © 2017年 MA806P. All rights reserved.
 //
 
+
+
+/**
+ *  参考博客
+ *  http://www.jianshu.com/p/040772693872
+ *  http://www.jianshu.com/p/df01610b4e73
+ *
+ */
+
+
 #import "MYZMineViewController.h"
 #import "MYZOAuthController.h"
 #import "WeiboSDK.h"
@@ -142,7 +152,24 @@ static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
 #pragma mark - UI Control
 
 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView != self.slidePageContentScrollView) { return; }
+    
+    NSInteger slidePageIndex = (NSInteger)(scrollView.contentOffset.x * 1.5)/SCREEN_W;
+    self.slidePageCurrentTableView = self.tableViews[slidePageIndex];
+    
+    UIButton * selectedBtn = self.slidePageSegmentBtnArray[slidePageIndex];
+    if (selectedBtn.isSelected == NO) {
+        for (UIButton * btn in self.slidePageSegmentBtnArray) {
+            btn.selected = NO;
+        }
+        selectedBtn.selected = YES;
+    }
+    
+    UIButton * btn1 = (UIButton *)self.slidePageSegmentBtnArray[0];
+    UIButton * btn2 = (UIButton *)self.slidePageSegmentBtnArray[1];
+    self.slidePageSegmentLine.x = btn1.x + (btn2.x - btn1.x)*scrollView.contentOffset.x/scrollView.frame.size.width;
     
 }
 
@@ -198,7 +225,7 @@ static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
             CGFloat currentY = [recognizer translationInView:self.view].y;
             CGFloat currentX = [recognizer translationInView:self.view].x;
             
-            NSLog(@"```` StateBegan  %.2lf %.2lf", currentX, currentY);
+            //NSLog(@"```` StateBegan  %.2lf %.2lf", currentX, currentY);
             
             if (currentY == 0.0) {
                 _isVertical = NO;
@@ -214,19 +241,19 @@ static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
         }
         case UIGestureRecognizerStateChanged: {
             
-            NSLog(@"`````` Changed");
+            //NSLog(@"`````` Changed");
             
             if (_isVertical) {
                 CGFloat currentY = [recognizer translationInView:self.view].y;
                 [self controlScrollForVertical:currentY AndState:UIGestureRecognizerStateChanged];
                 
-                NSLog(@"``` Changed %.2lf", currentY);
+                //NSLog(@"``` Changed %.2lf", currentY);
             }
             break;
         }
         case UIGestureRecognizerStateEnded: {
             
-            NSLog(@"`````` Ended");
+            //NSLog(@"`````` Ended");
             
             if (_isVertical) {
                 self.dynamicItem.center = self.view.bounds.origin;
@@ -265,26 +292,43 @@ static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
 //控制上下滚动的方法
 - (void)controlScrollForVertical:(CGFloat)detal AndState:(UIGestureRecognizerState)state {
     
-    NSLog(@"******** %.2lf %.2lf",self.slidePageMainScrollView.contentOffset.y, detal);
-    
+    /*
+     mainScrollView.frame {0, 64, w, h-64}
+     mainScrollView.contentOffset.y 为正是往上超出的部分，为负是往下超出的部分。
+     detal是加在vc.view上的手势滑动的距离，上滑为负数，下滑为正数。
+     */
     if (self.slidePageMainScrollView.contentOffset.y >= MYZMineViewControllerSlidePageHeadViewH) {
         
-        CGFloat offsetY = self.slidePageCurrentTableView.contentOffset.y - detal;
+        /*
+         当往上滑动距离超过头部的高度时，这时不用动mainScrollView.contentOffset，而是设置 currentTableView.contentOffset
+         */
         
-        NSLog(@"*** 111 %.2lf %.2lf", self.slidePageContentScrollView.contentOffset.y, detal);
+        CGFloat offsetY = self.slidePageCurrentTableView.contentOffset.y - detal;
+        //NSLog(@"--------- %.2lf - %.2lf = %.2lf  %.2lf", self.slidePageCurrentTableView.contentOffset.y, detal, offsetY, self.slidePageMainScrollView.contentOffset.y);
         
         if (offsetY < 0) {
             offsetY = 0;
+            //若猛一下拉的情况出现，显示了头部视图，设置mainScrollView.contentOffset.y
             self.slidePageMainScrollView.contentOffset = CGPointMake(0, self.slidePageMainScrollView.contentOffset.y - detal);
         } else if (offsetY > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height)) {
             //当子ScrollView的contentOffset大于contentSize.height时
             offsetY = self.slidePageCurrentTableView.contentOffset.y - rubberBandDistance(detal, SCREEN_H);
         }
         self.slidePageCurrentTableView.contentOffset = CGPointMake(0, offsetY);
+        
     } else {
         
+        /*
+         当往上滑的距离小于头部的高度或者往下拉的时候，即头部视图还有显示，走下面的代码，用来设置mainScrollView的contentOffset
+         
+         mainOffsetY = 原来mainScrollView.contentOffset.y的值（这时候为正）- detal手势滑动的距离
+         */
+        
         CGFloat mainOffsetY = self.slidePageMainScrollView.contentOffset.y - detal;
+        //NSLog(@"*** %.2lf - %.2lf = %.2lf", self.slidePageMainScrollView.contentOffset.y, detal, mainOffsetY);
+        
         if (mainOffsetY < 0) {
+            //当往下拉的弹簧效果，rubberBandDistance 这个方法用来减缓下拉的距离
             mainOffsetY = self.slidePageMainScrollView.contentOffset.y - rubberBandDistance(detal, SCREEN_H);
         } else if (mainOffsetY > MYZMineViewControllerSlidePageHeadViewH) {
             mainOffsetY = MYZMineViewControllerSlidePageHeadViewH;
@@ -301,19 +345,32 @@ static CGFloat rubberBandDistance(CGFloat offset, CGFloat dimension) {
     
     
     
-    BOOL outsideFrame = self.slidePageMainScrollView.contentOffset.y < 0 || self.slidePageCurrentTableView.contentOffset.y > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height);
-    if (outsideFrame &&
-        (self.decelerationBehavior && !self.springBehavior)) {
+    
+    CGFloat currentTableOffset = self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height;
+    
+    
+    BOOL outsideFrame = self.slidePageMainScrollView.contentOffset.y < 0 || (self.slidePageCurrentTableView.contentOffset.y > currentTableOffset);
+    
+    
+    
+    if (outsideFrame && (self.decelerationBehavior && !self.springBehavior)) {
         
         CGPoint target = CGPointZero;
         BOOL isMian = NO;
         if (self.slidePageMainScrollView.contentOffset.y < 0) {
+            
             self.dynamicItem.center = self.slidePageMainScrollView.contentOffset;
             target = CGPointZero;
             isMian = YES;
-        } else if (self.slidePageCurrentTableView.contentOffset.y > (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height)) {
-            self.dynamicItem.center = self.slidePageCurrentTableView.contentOffset;
-            target = CGPointMake(self.slidePageCurrentTableView.contentOffset.x, (self.slidePageCurrentTableView.contentSize.height - self.slidePageCurrentTableView.frame.size.height));
+            
+        } else if (self.slidePageCurrentTableView.contentOffset.y > currentTableOffset) {
+            if (currentTableOffset < 0 ) {
+                self.dynamicItem.center = CGPointZero;
+                target = CGPointZero;
+            } else {
+                self.dynamicItem.center = self.slidePageCurrentTableView.contentOffset;
+                target = CGPointMake(0, currentTableOffset);
+            }
             isMian = NO;
         }
         [self.animator removeBehavior:self.decelerationBehavior];
